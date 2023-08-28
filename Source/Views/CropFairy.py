@@ -27,7 +27,7 @@ if __name__ == "__main__":
     fontDB.addApplicationFont("../../FONT/NanumSquareRoundB.ttf")
     fontDB.addApplicationFont("../../FONT/NanumSquareRoundEB.ttf")
     fontDB.addApplicationFont("../../FONT/NanumSquareRoundL.ttf")
-    fontDB.addApplicationFont("../../FONT/NanumSquareRoundR.ttf")
+    fontDB.addApplicationFont("../../FONT/ONE Mobile POP.ttf")
 
     crop_fairy = CropFairy()
     crop_fairy.show()

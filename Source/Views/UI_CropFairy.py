@@ -16,11 +16,16 @@ class Ui_CropFairy(object):
         CropFairy.setObjectName("CropFairy")
         CropFairy.resize(600, 800)
         CropFairy.setStyleSheet("QWidget{\n"
-"background-color:white;\n"
+"background-color:rgb(160, 196, 157);\n"
+"}\n"
+"\n"
+"QLabel{\n"
+"background-color:rgba(255, 255, 255, 0);\n"
 "}\n"
 "\n"
 "QPushButton{\n"
-"border:1px solid lightgray;\n"
+"background-color:white;\n"
+"border:1px solid rgb(196, 215, 178);\n"
 "border-radius:5px;\n"
 "padding:5px;\n"
 "min-width:25px;\n"
@@ -28,23 +33,27 @@ class Ui_CropFairy(object):
 "}\n"
 "\n"
 "QLineEdit{\n"
-"border:1px solid lightgray;\n"
+"background-color:white;\n"
+"border:1px solid rgb(196, 215, 178);\n"
 "border-radius:5px;\n"
 "padding:5px;\n"
 "min-height:25px;\n"
 "}\n"
 "\n"
 "QComboBox{\n"
-"border:1px solid lightgray;\n"
+"background-color:white;\n"
+"border:1px solid rgb(196, 215, 178);\n"
 "border-radius:5px;\n"
 "padding:5px;\n"
 "min-height:25px;\n"
 "}\n"
 "\n"
 "QComboBox QAbstractItemView::item { \n"
+"background-color:white;\n"
 "padding:5px\n"
 "}")
         self.centralwidget = QtWidgets.QWidget(CropFairy)
+        self.centralwidget.setAutoFillBackground(False)
         self.centralwidget.setStyleSheet("")
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -76,82 +85,119 @@ class Ui_CropFairy(object):
         self.layout_top.addWidget(self.btn_list)
         self.verticalLayout.addLayout(self.layout_top)
         self.stacke_main = QtWidgets.QStackedWidget(self.centralwidget)
+        self.stacke_main.setAutoFillBackground(False)
         self.stacke_main.setObjectName("stacke_main")
         self.page_main = QtWidgets.QWidget()
         self.page_main.setObjectName("page_main")
-        self.verticalLayoutWidget = QtWidgets.QWidget(self.page_main)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(180, 290, 211, 231))
-        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.page_main)
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        spacerItem = QtWidgets.QSpacerItem(135, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_5.addItem(spacerItem)
+        self.verticalLayout_5 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem1)
+        self.widget = QtWidgets.QWidget(self.page_main)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
+        self.widget.setSizePolicy(sizePolicy)
+        self.widget.setMinimumSize(QtCore.QSize(0, 100))
+        self.widget.setObjectName("widget")
+        self.label_2 = QtWidgets.QLabel(self.widget)
+        self.label_2.setGeometry(QtCore.QRect(153, 4, 21, 31))
+        self.label_2.setText("")
+        self.label_2.setPixmap(QtGui.QPixmap("./UI\\../Image/sprout.png"))
+        self.label_2.setScaledContents(True)
+        self.label_2.setObjectName("label_2")
+        self.label = QtWidgets.QLabel(self.widget)
+        self.label.setGeometry(QtCore.QRect(20, 0, 231, 101))
+        font = QtGui.QFont()
+        font.setFamily("ONE 모바일POP")
+        font.setPointSize(40)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label.setFont(font)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.verticalLayout_5.addWidget(self.widget)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem2)
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.layout_login = QtWidgets.QVBoxLayout()
         self.layout_login.setObjectName("layout_login")
-        self.edt_email = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.edt_email = QtWidgets.QLineEdit(self.page_main)
         self.edt_email.setEchoMode(QtWidgets.QLineEdit.NoEcho)
         self.edt_email.setObjectName("edt_email")
         self.layout_login.addWidget(self.edt_email)
-        self.edt_pwd = QtWidgets.QLineEdit(self.verticalLayoutWidget)
+        self.edt_pwd = QtWidgets.QLineEdit(self.page_main)
         self.edt_pwd.setObjectName("edt_pwd")
         self.layout_login.addWidget(self.edt_pwd)
         self.layout_button = QtWidgets.QHBoxLayout()
         self.layout_button.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
         self.layout_button.setContentsMargins(0, 0, 0, 0)
         self.layout_button.setObjectName("layout_button")
-        self.btn_login = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.btn_login = QtWidgets.QPushButton(self.page_main)
         self.btn_login.setObjectName("btn_login")
         self.layout_button.addWidget(self.btn_login)
-        self.btn_join = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.btn_join = QtWidgets.QPushButton(self.page_main)
         self.btn_join.setObjectName("btn_join")
         self.layout_button.addWidget(self.btn_join)
         self.layout_login.addLayout(self.layout_button)
         self.verticalLayout_2.addLayout(self.layout_login)
-        self.btn_analyze = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_2.addItem(spacerItem3)
+        self.btn_analyze = QtWidgets.QPushButton(self.page_main)
         self.btn_analyze.setObjectName("btn_analyze")
         self.verticalLayout_2.addWidget(self.btn_analyze)
-        self.btn_exit = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.btn_exit = QtWidgets.QPushButton(self.page_main)
         self.btn_exit.setObjectName("btn_exit")
         self.verticalLayout_2.addWidget(self.btn_exit)
-        self.label = QtWidgets.QLabel(self.page_main)
-        self.label.setGeometry(QtCore.QRect(0, 0, 581, 651))
-        self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("./UI\\../Image/background.png"))
-        self.label.setScaledContents(False)
-        self.label.setWordWrap(False)
-        self.label.setObjectName("label")
-        self.label.raise_()
-        self.verticalLayoutWidget.raise_()
+        self.verticalLayout_5.addLayout(self.verticalLayout_2)
+        spacerItem4 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem4)
+        self.horizontalLayout_5.addLayout(self.verticalLayout_5)
+        spacerItem5 = QtWidgets.QSpacerItem(135, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_5.addItem(spacerItem5)
+        self.horizontalLayout_5.setStretch(0, 1)
+        self.horizontalLayout_5.setStretch(1, 2)
+        self.horizontalLayout_5.setStretch(2, 1)
         self.stacke_main.addWidget(self.page_main)
         self.page_analyze = QtWidgets.QWidget()
+        self.page_analyze.setAutoFillBackground(False)
+        self.page_analyze.setStyleSheet("background-color:rgb(247, 255, 229);")
         self.page_analyze.setObjectName("page_analyze")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.page_analyze)
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        spacerItem = QtWidgets.QSpacerItem(20, 305, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_3.addItem(spacerItem)
+        spacerItem6 = QtWidgets.QSpacerItem(20, 305, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem6)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem1)
+        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem7)
         self.lbl_upload_image = QtWidgets.QLabel(self.page_analyze)
         self.lbl_upload_image.setText("")
         self.lbl_upload_image.setObjectName("lbl_upload_image")
         self.horizontalLayout_2.addWidget(self.lbl_upload_image)
-        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem2)
+        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem8)
         self.verticalLayout_3.addLayout(self.horizontalLayout_2)
-        spacerItem3 = QtWidgets.QSpacerItem(20, 305, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_3.addItem(spacerItem3)
+        spacerItem9 = QtWidgets.QSpacerItem(20, 305, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem9)
         self.stacke_main.addWidget(self.page_analyze)
         self.page_list = QtWidgets.QWidget()
+        self.page_list.setStyleSheet("background-color:rgb(247, 255, 229);")
         self.page_list.setObjectName("page_list")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.page_list)
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_4.addItem(spacerItem4)
+        spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem10)
         self.cb_kind = QtWidgets.QComboBox(self.page_list)
         self.cb_kind.setObjectName("cb_kind")
         self.horizontalLayout_4.addWidget(self.cb_kind)
@@ -176,8 +222,8 @@ class Ui_CropFairy(object):
         self.btn_upload.setMinimumSize(QtCore.QSize(37, 37))
         self.btn_upload.setObjectName("btn_upload")
         self.horizontalLayout.addWidget(self.btn_upload)
-        spacerItem5 = QtWidgets.QSpacerItem(397, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem5)
+        spacerItem11 = QtWidgets.QSpacerItem(397, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem11)
         self.btn_start = QtWidgets.QPushButton(self.control_analyze)
         self.btn_start.setMinimumSize(QtCore.QSize(37, 37))
         self.btn_start.setObjectName("btn_start")
@@ -188,8 +234,8 @@ class Ui_CropFairy(object):
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.control_page)
         self.horizontalLayout_3.setSpacing(6)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        spacerItem6 = QtWidgets.QSpacerItem(238, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_3.addItem(spacerItem6)
+        spacerItem12 = QtWidgets.QSpacerItem(238, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem12)
         self.btn_left = QtWidgets.QPushButton(self.control_page)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -214,8 +260,8 @@ class Ui_CropFairy(object):
         self.btn_right.setStyleSheet("")
         self.btn_right.setObjectName("btn_right")
         self.horizontalLayout_3.addWidget(self.btn_right)
-        spacerItem7 = QtWidgets.QSpacerItem(238, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_3.addItem(spacerItem7)
+        spacerItem13 = QtWidgets.QSpacerItem(238, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem13)
         self.stack_control.addWidget(self.control_page)
         self.layout_bottom.addWidget(self.stack_control)
         self.verticalLayout.addLayout(self.layout_bottom)
@@ -226,7 +272,7 @@ class Ui_CropFairy(object):
         CropFairy.setStatusBar(self.statusbar)
 
         self.retranslateUi(CropFairy)
-        self.stacke_main.setCurrentIndex(2)
+        self.stacke_main.setCurrentIndex(0)
         self.stack_control.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(CropFairy)
 
@@ -235,6 +281,7 @@ class Ui_CropFairy(object):
         CropFairy.setWindowTitle(_translate("CropFairy", "CropFairy"))
         self.btn_back.setText(_translate("CropFairy", "<"))
         self.btn_list.setText(_translate("CropFairy", "내역조회"))
+        self.label.setText(_translate("CropFairy", "작물 요정"))
         self.edt_email.setPlaceholderText(_translate("CropFairy", "이메일 주소"))
         self.edt_pwd.setPlaceholderText(_translate("CropFairy", "비밀번호"))
         self.btn_login.setText(_translate("CropFairy", "로그인"))
