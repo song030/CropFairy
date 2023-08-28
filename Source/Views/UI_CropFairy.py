@@ -66,7 +66,7 @@ class Ui_CropFairy(object):
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.layout_top = QtWidgets.QHBoxLayout()
-        self.layout_top.setContentsMargins(9, 9, 9, 9)
+        self.layout_top.setContentsMargins(0, 0, 0, 0)
         self.layout_top.setObjectName("layout_top")
         self.btn_back = QtWidgets.QPushButton(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -292,8 +292,8 @@ class Ui_CropFairy(object):
         CropFairy.setStatusBar(self.statusbar)
 
         self.retranslateUi(CropFairy)
-        self.stacke_main.setCurrentIndex(1)
-        self.stack_control.setCurrentIndex(1)
+        self.stacke_main.setCurrentIndex(0)
+        self.stack_control.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(CropFairy)
 
     def retranslateUi(self, CropFairy):

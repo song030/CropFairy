@@ -78,16 +78,16 @@ padding:5px
     <item>
      <layout class="QHBoxLayout" name="layout_top">
       <property name="leftMargin">
-       <number>9</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
-       <number>9</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>9</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>9</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QPushButton" name="btn_back">
@@ -133,7 +133,7 @@ padding:5px
        <bool>false</bool>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_main">
        <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,2,1">
@@ -518,7 +518,7 @@ padding:5px
       <item>
        <widget class="QStackedWidget" name="stack_control">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="control_analyze">
          <layout class="QHBoxLayout" name="horizontalLayout">

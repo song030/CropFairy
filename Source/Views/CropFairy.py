@@ -23,6 +23,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
         # --- 변수 선언
         self.login = False
+        self.upload_image = False
 
         # --- 초기화
         self.set_Ui()
@@ -92,7 +93,9 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.stack_control.setCurrentWidget(self.control_analyze)
         self.stack_control.setVisible(True)
         self.btn_back.setVisible(True)
+        self.btn_start.setVisible(False)
         self.btn_list.setEnabled(True)
+        self.lbl_upload_image.setText(" ")
         self.stacke_main.setCurrentWidget(self.page_analyze)
 
     # 로그인
@@ -125,6 +128,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         if fname[0]:
             self.img_path = fname[0]
             self.lbl_upload_image.setPixmap(QPixmap(self.img_path).scaled(QSize(552, 628), Qt.KeepAspectRatio))
+            self.btn_start.setVisible(True)
 
     # 진단 시작 버튼
     def btn_start_click(self):
