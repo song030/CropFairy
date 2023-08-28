@@ -50,18 +50,14 @@ class DialogWarning(QDialog, Ui_DlgWarning):
             self.lbl_text.setText("서버에 접속 할 수 없습니다..")
         elif t_type == "login_error":
             self.lbl_text.setText("유효하지않은 아이디/비밀번호 입니다.")
-        elif t_type == "login_approve":
-            self.lbl_text.setText("회원 승인 대기중입니다.")
         elif t_type == "login_success":
             self.lbl_text.setText(f"'{text}'님 안녕하세요.")
         elif t_type == "id_check_ok":
             self.lbl_text.setText("사용가능한 아이디입니다.")
         elif t_type == "id_check_no":
             self.lbl_text.setText("이미 존재하는 아이디입니다.")
-        elif t_type == "join_id_input":
-            self.lbl_text.setText("아이디를 입력해주세요")
-        elif t_type == "join_id_check":
-            self.lbl_text.setText("아이디 중복확인을 진행해주세요.")
+        elif t_type == "join_email_input":
+            self.lbl_text.setText("이메일 주소를 입력해주세요")
         elif t_type == "join_pwd_input":
             self.lbl_text.setText("비밀번호를 입력해주세요")
         elif t_type == "join_pwd_same":
@@ -69,33 +65,7 @@ class DialogWarning(QDialog, Ui_DlgWarning):
         elif t_type == "join_name_input":
             self.lbl_text.setText("이름을 입력해주세요")
         elif t_type == "join_success":
-            self.lbl_text.setText("회원가입이 완료 되었습니다.\n관리자 승인 후 로그인 가능합니다.")
-        elif t_type == "save_fail":
-            self.lbl_text.setText("저장 실패 했습니다.")
-        elif t_type == "save_success":
-            self.lbl_text.setText("저장 완료 되었습니다.")
-        elif t_type == "no_select_row":
-            self.lbl_text.setText("선택된 행이 없습니다.")
-        elif t_type == "input_sch_name":
-            self.lbl_text.setText("학교이름을 입력해주세요.")
-        elif t_type == "input_sch_addr":
-            self.lbl_text.setText("주소를 입력해주세요.")
-        elif t_type == "brc_ctg":
-            self.lbl_text.setText("분기 카테고리를 입력해주세요.")
-        elif t_type == "brc_ctg_digit":
-            self.lbl_text.setText("분기 카테고리를 숫자만 입력해주세요.")
-        elif t_type == "talk_cnt":
-            self.lbl_text.setText("회차 카테고리를 입력해주세요.")
-        elif t_type == "talk_cnt_digit":
-            self.lbl_text.setText("회차 카테고리를 숫자만 입력해주세요.")
-        elif t_type == "talk_save_check":
-            self.lbl_text.setText("저장을 진행하는 \n경우 학교정보는 수정할수 없습니다.\n진행하시겠습니까?")
-        elif t_type == "find_before":
-            self.lbl_text.setText("엑셀파일을 열어 \n변환을 진행할 연락처 정보를 입력해주세요.")
-        elif t_type == "find_search":
-            self.lbl_text.setText("엑셀파일을 열어 \n검증을 진행할 연락처 정보를 입력해주세요.")
-        elif t_type == "find_result":
-            self.lbl_text.setText("이미 결과가 나왔습니다.\n다른 정보를 입력해주세요.")
+            self.lbl_text.setText("회원가입이 완료 되었습니다.")
 
         elif text:
             self.lbl_text.setText(text)

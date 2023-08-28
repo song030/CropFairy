@@ -17,7 +17,16 @@ class Ui_DlgWarning(object):
         DlgWarning.setWindowModality(QtCore.Qt.NonModal)
         DlgWarning.resize(329, 300)
         DlgWarning.setMinimumSize(QtCore.QSize(300, 300))
-        DlgWarning.setStyleSheet("background-color:white;")
+        DlgWarning.setStyleSheet("QWidget{\n"
+"background-color:rgb(247, 255, 229);\n"
+"}\n"
+"\n"
+"QPushButton{\n"
+"background-color:white;\n"
+"border:1px solid rgb(196, 215, 178);\n"
+"border-radius:5px;\n"
+"padding:5px;\n"
+"}")
         DlgWarning.setModal(True)
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(DlgWarning)
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
@@ -32,7 +41,7 @@ class Ui_DlgWarning(object):
         self.btn_close = QtWidgets.QPushButton(self.widget)
         self.btn_close.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../Image/img_close.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("./UI\\../Image/img_close.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_close.setIcon(icon)
         self.btn_close.setAutoDefault(False)
         self.btn_close.setFlat(True)
@@ -52,7 +61,8 @@ class Ui_DlgWarning(object):
         self.lbl_img = QtWidgets.QLabel(self.widget_3)
         self.lbl_img.setMaximumSize(QtCore.QSize(35, 35))
         self.lbl_img.setText("")
-        self.lbl_img.setPixmap(QtGui.QPixmap("../../Image/img_warning.png"))
+        self.lbl_img.setPixmap(QtGui.QPixmap("./UI\\../Image/sprout.png"))
+        self.lbl_img.setScaledContents(True)
         self.lbl_img.setObjectName("lbl_img")
         self.verticalLayout_2.addWidget(self.lbl_img)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -91,7 +101,7 @@ class Ui_DlgWarning(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_yes.sizePolicy().hasHeightForWidth())
         self.btn_yes.setSizePolicy(sizePolicy)
-        self.btn_yes.setMinimumSize(QtCore.QSize(0, 30))
+        self.btn_yes.setMinimumSize(QtCore.QSize(0, 35))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         font.setPointSize(9)
@@ -99,11 +109,7 @@ class Ui_DlgWarning(object):
         font.setItalic(False)
         font.setWeight(75)
         self.btn_yes.setFont(font)
-        self.btn_yes.setStyleSheet("QPushButton{\n"
-"border:1px solid lightgray;\n"
-"border-radius:5px;\n"
-"padding:5px;\n"
-"}")
+        self.btn_yes.setStyleSheet("")
         self.btn_yes.setObjectName("btn_yes")
         self.horizontalLayout_3.addWidget(self.btn_yes)
         self.btn_no = QtWidgets.QPushButton(self.layout_double)
@@ -112,7 +118,7 @@ class Ui_DlgWarning(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_no.sizePolicy().hasHeightForWidth())
         self.btn_no.setSizePolicy(sizePolicy)
-        self.btn_no.setMinimumSize(QtCore.QSize(0, 30))
+        self.btn_no.setMinimumSize(QtCore.QSize(0, 35))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         font.setPointSize(9)
@@ -120,9 +126,7 @@ class Ui_DlgWarning(object):
         font.setItalic(False)
         font.setWeight(75)
         self.btn_no.setFont(font)
-        self.btn_no.setStyleSheet("border:1px solid lightgray;\n"
-"border-radius:5px;\n"
-"padding:5px;")
+        self.btn_no.setStyleSheet("")
         self.btn_no.setObjectName("btn_no")
         self.horizontalLayout_3.addWidget(self.btn_no)
         self.layout_button.addWidget(self.layout_double)
@@ -132,7 +136,7 @@ class Ui_DlgWarning(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_single.sizePolicy().hasHeightForWidth())
         self.btn_single.setSizePolicy(sizePolicy)
-        self.btn_single.setMinimumSize(QtCore.QSize(0, 30))
+        self.btn_single.setMinimumSize(QtCore.QSize(0, 35))
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
         font.setPointSize(9)
@@ -140,9 +144,7 @@ class Ui_DlgWarning(object):
         font.setItalic(False)
         font.setWeight(75)
         self.btn_single.setFont(font)
-        self.btn_single.setStyleSheet("border:1px solid lightgray;\n"
-"border-radius:5px;\n"
-"padding:5px;")
+        self.btn_single.setStyleSheet("")
         self.btn_single.setObjectName("btn_single")
         self.layout_button.addWidget(self.btn_single)
         self.verticalLayout_4.addLayout(self.layout_button)
