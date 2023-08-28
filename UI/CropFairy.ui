@@ -10,6 +10,18 @@
     <height>800</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>600</width>
+    <height>800</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>CropFairy</string>
   </property>
@@ -121,7 +133,7 @@ padding:5px
        <bool>false</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_main">
        <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,2,1">
@@ -228,58 +240,72 @@ padding:5px
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0">
             <item>
-             <layout class="QVBoxLayout" name="layout_login">
-              <item>
-               <widget class="QLineEdit" name="edt_email">
-                <property name="echoMode">
-                 <enum>QLineEdit::NoEcho</enum>
-                </property>
-                <property name="placeholderText">
-                 <string>이메일 주소</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="edt_pwd">
-                <property name="placeholderText">
-                 <string>비밀번호</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="layout_button">
-                <property name="sizeConstraint">
-                 <enum>QLayout::SetDefaultConstraint</enum>
-                </property>
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QPushButton" name="btn_login">
-                  <property name="text">
-                   <string>로그인</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="btn_join">
-                  <property name="text">
-                   <string>회원가입</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
+             <widget class="QWidget" name="widget_login" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_6">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLineEdit" name="edt_email">
+                 <property name="echoMode">
+                  <enum>QLineEdit::NoEcho</enum>
+                 </property>
+                 <property name="placeholderText">
+                  <string>이메일 주소</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="edt_pwd">
+                 <property name="placeholderText">
+                  <string>비밀번호</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="layout_button">
+                 <property name="sizeConstraint">
+                  <enum>QLayout::SetDefaultConstraint</enum>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QPushButton" name="btn_login">
+                   <property name="text">
+                    <string>로그인</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="btn_join">
+                   <property name="text">
+                    <string>회원가입</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
             </item>
             <item>
              <spacer name="verticalSpacer_6">
@@ -349,16 +375,16 @@ padding:5px
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0">
         <property name="leftMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <spacer name="verticalSpacer">
@@ -390,8 +416,26 @@ padding:5px
           </item>
           <item>
            <widget class="QLabel" name="lbl_upload_image">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>552</width>
+              <height>628</height>
+             </size>
+            </property>
             <property name="text">
              <string/>
+            </property>
+            <property name="scaledContents">
+             <bool>false</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -431,16 +475,16 @@ padding:5px
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,1">
         <property name="leftMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -474,10 +518,25 @@ padding:5px
       <item>
        <widget class="QStackedWidget" name="stack_control">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="control_analyze">
          <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>5</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>5</number>
+          </property>
           <item>
            <widget class="QPushButton" name="btn_upload">
             <property name="minimumSize">
@@ -487,7 +546,7 @@ padding:5px
              </size>
             </property>
             <property name="text">
-             <string>파일 업로드</string>
+             <string>이미지 업로드</string>
             </property>
            </widget>
           </item>
@@ -523,6 +582,18 @@ padding:5px
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <property name="spacing">
            <number>6</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>5</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>5</number>
           </property>
           <item>
            <spacer name="horizontalSpacer_2">

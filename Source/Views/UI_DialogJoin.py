@@ -47,7 +47,7 @@ class Ui_DlgJoin(object):
         self.btn_close = QtWidgets.QPushButton(self.widget)
         self.btn_close.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("./UI\\../Image/img_close.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../../Image/img_close.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_close.setIcon(icon)
         self.btn_close.setAutoDefault(False)
         self.btn_close.setFlat(True)
