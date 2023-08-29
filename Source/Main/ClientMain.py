@@ -5,6 +5,8 @@ from PyQt5.QtGui import QFontDatabase
 
 from Source.Views.CropFairy import CropFairy
 
+
+
 app = QApplication(sys.argv)
 
 # 글꼴 설정
