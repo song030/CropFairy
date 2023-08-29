@@ -1,50 +1,75 @@
-import random
-import sys, os
-import shutil
-import numpy as np
+import json
+import os
 
-np.set_printoptions(linewidth=np.inf, threshold=sys.maxsize)
+import pandas as pd
 
-search_path = r"D:\104.식물 병 유발 통합 데이터\1.Training\원천데이터\고추"
-kind = "생리장해"
-move_path = r"D:\CropFairy\AI\data\고추\images"+"\\"+kind
-folder_path = f"{search_path}\\{kind}"
-targets = os.listdir(folder_path)
+pd.set_option('display.max_columns', None) # 전체 열 보기
+pd.set_option('display.max_rows', None) # 전체 행 보기
+pd.set_option('display.width', None) # 모든 value 잘리지 않고 출력하는 방법
 
-# move_image = {12: {3:[1]}, 13:{3:[1]}}
-move_image = {"b6":{13:{3:[3]}}, "b7":{11:{3:[1]}, 12:{3:[1]}}}
-move_count = [401, 500, 500]
-move_num = 0
+target_path = r"D:\CropFairy\AI\tomato"
+image_path = target_path+"\\images\\train"
+label_path = target_path+"\\labels\\train"
+json_path = r"D:\104.식물 병 유발 통합 데이터\1.Training\라벨링데이터\TL5_토마토"
 
-for disease in move_image.keys():
-    for grow in move_image[disease].keys():
-        for area in move_image[disease][grow].keys():
-            for risk in move_image[disease][grow][area]:
-                print(f"------------------ 5_2_{disease}_{area}_2_{grow}_{risk}")
-                image_list = list()
-                for target in targets:
-                    if f"5_2_{disease}_{area}_2_{grow}_{risk}" in target:
-                        image_list.append(target)
+image_list = os.listdir(image_path)
+for image in image_list:
+    print(image)
+    file_name = image.split(".")[0]
+    file_name += ".json"
+    with open(f"{json_path}\\{file_name}", "r") as json_file:
+        json_data = json.load(json_file)
+        json.dumps(json_data, indent="/t")
+        # print(json_data)
 
-                print(f"image count : {len(image_list)}")
-                goal_count = move_count[move_num]
-                gap = goal_count // len(image_list)
-                if gap == 0:
-                    gap = 1
+        code = json_data["annotations"]["disease"]
+        # '00', '01', 'A5', 'A6', 'B2', 'B3', 'B6', 'B7', 'B8'
+        if code == "00":
+            if json_data["annotations"]["area"] == 1:
+                code = 0
+            elif json_data["annotations"]["area"] == 3:
+                code = 1
+        elif code == "a5":
+            code = 2
+        elif code == "a6":
+            code = 3
+        elif code == "b2":
+            code = 4
+        elif code == "b3":
+            code = 5
+        elif code == "b6":
+            code = 6
+        elif code == "b7":
+            code = 7
+        elif code == "b8":
+            code = 8
 
-                random.shuffle(image_list)
-                idx = 0
-                mv_cnt = 0
-                temp_list = image_list.copy()
-                while goal_count != mv_cnt:
-                    # print(idx, len(temp_list[idx]))
-                    image = temp_list[idx]
-                    print(image)
-                    shutil.move(folder_path + "\\" + image, move_path + "\\" + image)
-                    idx += gap
-                    mv_cnt += 1
+        # 질병 코드 변환 넣기
+        img_width = json_data["description"]["width"]
+        img_height = json_data["description"]["height"]
 
-                move_num += 1
+        # print(position)
+        positions = json_data["annotations"]["part"]
+        text = ""
+        if len(positions) == 0:
+            positions = json_data["annotations"]["bbox"]
 
+        # print(positions)
+        for pos in positions:
+            target_width = pos["w"]
+            target_height = pos["h"]
+            x_center = pos["x"] + (target_width / 2)
+            y_center = pos["y"] + (target_height / 2)
 
+            target_width_normalized = f"{(target_width / img_width):.6f}"
+            target_height_normalized = f"{(target_height / img_height):.6f}"
+            x_center_normalized = f"{(x_center / img_width):.6f}"
+            y_center_normalized = f"{(y_center / img_height):.6f}"
 
+            text += f"{code} {x_center_normalized} {y_center_normalized} {target_width_normalized} {target_height_normalized}\n"
+            file_path = image.split(".")[0]
+            file_path += ".txt"
+
+            f = open(label_path+"\\" + file_path, "w")
+            f.write(text)
+            f.close()
