@@ -257,7 +257,7 @@ padding:5px
                <item>
                 <widget class="QLineEdit" name="edt_email">
                  <property name="echoMode">
-                  <enum>QLineEdit::NoEcho</enum>
+                  <enum>QLineEdit::Normal</enum>
                  </property>
                  <property name="placeholderText">
                   <string>이메일 주소</string>
