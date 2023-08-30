@@ -55,13 +55,15 @@ class DialogWarning(QDialog, Ui_DlgWarning):
             self.lbl_text.setText(f"'{text}'님 안녕하세요.")
         elif t_type == "id_check_ok":
             self.lbl_text.setText("사용가능한 아이디입니다.")
-        elif t_type == "id_check_not":
-            self.lbl_text.setText("아이디 중복확인 해주세요")
         elif t_type == "id_check_no":
             self.lbl_text.setText("이미 존재하는 아이디입니다.")
-        elif t_type == "join_email_input":
+        elif t_type == "email_check_not":
+            self.lbl_text.setText("이메일 중복확인을 진행 해주세요")
+        elif t_type == "email_wrong":
+            self.lbl_text.setText("이메일 주소를 올바르게 입력해주세요")
+        elif t_type == "email_input":
             self.lbl_text.setText("이메일 주소를 입력해주세요")
-        elif t_type == "join_pwd_input":
+        elif t_type == "pwd_input":
             self.lbl_text.setText("비밀번호를 입력해주세요")
         elif t_type == "join_pwd_input_len":
             self.lbl_text.setText("비밀번호를 8 자리이상 입력해주세요")

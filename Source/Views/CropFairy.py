@@ -134,7 +134,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         # 품종 맞을때
         if self.dlg_warning.exec():
             print(ml_result)
-            # TODO 서버로
+            # TODO 서버로 딥러닝 진행 시그널 보내기
 
         # 품종이 틀렸을 때
         else:
@@ -207,6 +207,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         data = data_list
         pickle_data = pickle.dumps(data)
         self.client.send(pickle_data)
+        print("전송완료")
 
     # ----------------------------------------------------- Main -----------------------------------------------------
 
@@ -226,11 +227,20 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
     # 로그인 요청
     def sign_rqst(self):
-        # TODO 로그인 예외처리 추가하기!
         edt_email = self.edt_email.text()
         edt_pwd = self.edt_pwd.text()
-        data = ["sing_in", edt_email, edt_pwd]
-        self.send_data(data)
+
+        # 이메일 입력 확인
+        if edt_email == "":
+            self.dlg_warning.set_dialog_type("email_input")
+            self.dlg_warning.exec()
+        # 비밀번호 입력 확인
+        elif edt_pwd == "":
+            self.dlg_warning.set_dialog_type("pwd_input")
+            self.dlg_warning.exec()
+        else:
+            data = ["sing_in", edt_email, edt_pwd]
+            self.send_data(data)
 
     # 회원가입
     def btn_join_click(self):
