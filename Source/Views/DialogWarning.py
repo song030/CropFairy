@@ -20,8 +20,8 @@ class DialogWarning(QDialog, Ui_DlgWarning):
         self.setResult(1)
         self.close()
 
-    def closeEvent(self, a0):
-        pass
+    # def closeEvent(self, a0):
+    #     pass
 
     # 이벤트 연결
     def connect_event(self):
@@ -71,6 +71,9 @@ class DialogWarning(QDialog, Ui_DlgWarning):
             self.lbl_text.setText("이름을 입력해주세요")
         elif t_type == "join_success":
             self.lbl_text.setText("회원가입이 완료 되었습니다.")
+
+        elif t_type == "spedies_check":
+            self.lbl_text.setText(f"촬영한 작품의 품종이 '{text}'가 맞나요?")
 
         elif text:
             self.lbl_text.setText(text)

@@ -38,7 +38,15 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.connect_Event()
         self.client = Client()
         self.connect_thread_signal()
-        self.dialog = DialogWarning()
+
+        # 검정 투명 배경
+        self.back = QLabel(self)
+        self.back.setGeometry(0, 0, 1024, 860)
+        self.back.setStyleSheet("background-color: rgba(20, 20, 20, 50);")
+        self.back.hide()
+
+        self.dlg_warning = DialogWarning()
+
     # 화면 초기화
     def set_Ui(self):
         self.setupUi(self)
@@ -52,6 +60,10 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
     # 이벤트 연결
     def connect_Event(self):
+        # 공통
+        self.dlg_warning.showEvent = lambda e: self.back.show()
+        self.dlg_warning.closeEvent = lambda e: self.back.hide()
+        
         # 메인화면
         self.btn_login.clicked.connect(self.btn_login_click)
         self.btn_join.clicked.connect(self.btn_join_click)
@@ -134,22 +146,22 @@ class CropFairy(QMainWindow, Ui_CropFairy):
     # 로그인한 유저의 정보와 로그인 결과 반환받음
     def sing_in_result(self, result):
         if result[0] == False:
-            self.dialog.set_dialog_type("login_error")
-            self.dialog.exec()
+            self.dlg_warning.set_dialog_type("login_error")
+            self.dlg_warning.exec()
         else:
             self.login = True
             self.singin_email = result[1]
             self.singin_user_id = result[0]
 
             self.move_page_main()
-            self.dialog.set_dialog_type("login_success", text=self.singin_email)
-            self.dialog.exec()
+            self.dlg_warning.set_dialog_type("login_success", text=self.singin_email)
+            self.dlg_warning.exec()
 
     # 회원가입 성공 다이얼로그 띄우기
     def sing_up_result(self, result):
         if result:
-            self.dialog.set_dialog_type("join_success")
-            self.dialog.exec()
+            self.dlg_warning.set_dialog_type("join_success")
+            self.dlg_warning.exec()
         else:
             print("일정 횟수 틀리면 로봇입니까 띄워 보고싶다")
 
@@ -157,11 +169,11 @@ class CropFairy(QMainWindow, Ui_CropFairy):
     def idrd_check_result(self, result):
         self.use_email_check = result
         if result:
-            self.dialog.set_dialog_type("id_check_ok")
-            self.dialog.exec()
+            self.dlg_warning.set_dialog_type("id_check_ok")
+            self.dlg_warning.exec()
         else:
-            self.dialog.set_dialog_type("id_check_no")
-            self.dialog.exec()
+            self.dlg_warning.set_dialog_type("id_check_no")
+            self.dlg_warning.exec()
         print(self.use_email_check, "main")
 
     # -----------------------------------------------------send-------------------------------------------------------
