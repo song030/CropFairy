@@ -1,5 +1,4 @@
 import sys
-import sys
 import cv2
 import numpy as np
 import json
@@ -143,7 +142,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
             self.singin_user_id = result[0]
 
             self.move_page_main()
-            self.dialog.set_dialog_type("login_success",self.singin_email)
+            self.dialog.set_dialog_type("login_success", text=self.singin_email)
             self.dialog.exec()
 
     # 회원가입 성공 다이얼로그 띄우기
@@ -280,17 +279,3 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         # # pass
 
     # --------------------------------------------------------------------------------------------------------------
-
-# if __name__ == "__main__":
-#             app = QApplication(sys.argv)
-#
-#             # 글꼴 설정
-#             fontDB = QFontDatabase()
-#             fontDB.addApplicationFont("../../FONT/NanumSquareRoundB.ttf")
-#             fontDB.addApplicationFont("../../FONT/NanumSquareRoundEB.ttf")
-#             fontDB.addApplicationFont("../../FONT/NanumSquareRoundL.ttf")
-#             fontDB.addApplicationFont("../../FONT/ONE Mobile POP.ttf")
-#
-#             crop_fairy = CropFairy()
-#             crop_fairy.show()
-#             app.exec()

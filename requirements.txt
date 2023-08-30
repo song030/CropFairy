@@ -4,3 +4,6 @@ pandas~=2.0.3
 Pillow~=10.0.0
 ultralytics~=8.0.161
 PyQt5~=5.15.9
+geopy~=2.4.0
+psycopg2~=2.9.7
+SQLAlchemy~=2.0.20
