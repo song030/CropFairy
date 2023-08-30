@@ -106,10 +106,11 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.client.sing_up_result.connect(self.sing_up_result)
         self.client.sing_in_result.connect(self.sing_in_result)
         self.client.get_pad_result.connect(self.set_pad_result)
-        self.client.ml_result.connect(self.get_ml_result)
-    def get_ml_result(self, result):
+        self.client.ml_result.connect(self.ml_result)
+    def ml_result(self, result):
         ml_result = result
         print(ml_result)
+
     # 반환 받은 유저 진단 내역 테이블 위젯에 집어넣기
     def set_pad_result(self, result):
         result_list = result
@@ -244,10 +245,8 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         send_data = ["send_to_imginfo", resized_image]
         print(send_data)
         self.send_data(send_data)
-        # print(data_list)
-        # print("==========================")
-        # print(data_list[0])
-        # # pass
+
+
     # def btn_start_click(self):
         # # TODO 진단 버튼 시작시 서버로 이미지 발송는 내용 추가하기
         # """
