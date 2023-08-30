@@ -106,7 +106,10 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.client.sing_up_result.connect(self.sing_up_result)
         self.client.sing_in_result.connect(self.sing_in_result)
         self.client.get_pad_result.connect(self.set_pad_result)
-
+        self.client.ml_result.connect(self.get_ml_result)
+    def get_ml_result(self, result):
+        ml_result = result
+        print(ml_result)
     # 반환 받은 유저 진단 내역 테이블 위젯에 집어넣기
     def set_pad_result(self, result):
         result_list = result

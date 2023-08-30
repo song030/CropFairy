@@ -7,10 +7,10 @@ pd.set_option('display.max_columns', None) # 전체 열 보기
 pd.set_option('display.max_rows', None) # 전체 행 보기
 pd.set_option('display.width', None) # 모든 value 잘리지 않고 출력하는 방법
 
-target_path = r"D:\CropFairy\AI\tomato"
+target_path = r"D:\CropFairy\AI\tomato" # ㅣlee 폴더
 image_path = target_path+"\\images\\train"
 label_path = target_path+"\\labels\\train"
-json_path = r"D:\104.식물 병 유발 통합 데이터\1.Training\라벨링데이터\TL5_토마토"
+json_path = r"D:\104.식물 병 유발 통합 데이터\1.Training\라벨링데이터\TL5_토마토"  #json파일 폴더 경로
 
 image_list = os.listdir(image_path)
 for image in image_list:
@@ -49,10 +49,10 @@ for image in image_list:
         img_height = json_data["description"]["height"]
 
         # print(position)
-        positions = json_data["annotations"]["part"]
+        positions = json_data["annotations"]["part"]    # 해충좌표
         text = ""
         if len(positions) == 0:
-            positions = json_data["annotations"]["bbox"]
+            positions = json_data["annotations"]["bbox"] # 작물
 
         # print(positions)
         for pos in positions:
