@@ -53,7 +53,7 @@ class Ui_DlgWarning(object):
         self.widget_2.setObjectName("widget_2")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.widget_2)
         self.horizontalLayout_2.setContentsMargins(15, 0, 15, 9)
-        self.horizontalLayout_2.setSpacing(10)
+        self.horizontalLayout_2.setSpacing(15)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.widget_3 = QtWidgets.QWidget(self.widget_2)
         self.widget_3.setObjectName("widget_3")
