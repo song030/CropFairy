@@ -36,14 +36,7 @@ class DialogWarning(QDialog, Ui_DlgWarning):
     # 다이얼로그 타입 설정
     # bt_cnt : 버튼 수량
     # t_type : 다이얼로그 타입
-    def set_dialog_type(self, bt_cnt=1, t_type="", text=""):
-        # 버튼 설정
-        if bt_cnt == 1:
-            self.layout_double.setVisible(False)
-            self.btn_single.setVisible(True)
-        elif bt_cnt == 2:
-            self.layout_double.setVisible(True)
-            self.btn_single.setVisible(False)
+    def set_dialog_type(self, t_type="", text=""):
 
         # 텍스트 설정
         if t_type == "server_error":
@@ -54,12 +47,16 @@ class DialogWarning(QDialog, Ui_DlgWarning):
             self.lbl_text.setText(f"'{text}'님 안녕하세요.")
         elif t_type == "id_check_ok":
             self.lbl_text.setText("사용가능한 아이디입니다.")
+        elif t_type == "id_check_not":
+            self.lbl_text.setText("아이디 중복확인 해주세요")
         elif t_type == "id_check_no":
             self.lbl_text.setText("이미 존재하는 아이디입니다.")
         elif t_type == "join_email_input":
             self.lbl_text.setText("이메일 주소를 입력해주세요")
         elif t_type == "join_pwd_input":
             self.lbl_text.setText("비밀번호를 입력해주세요")
+        elif t_type == "join_pwd_input_len":
+            self.lbl_text.setText("비밀번호를 8 자리이상 입력해주세요")
         elif t_type == "join_pwd_same":
             self.lbl_text.setText("비밀번호와 비밀번호 확인이 다릅니다.")
         elif t_type == "join_name_input":
