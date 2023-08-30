@@ -1,5 +1,5 @@
 
-path: D:\CropFairy\AI\cucumber  # dataset root dir
+path: D:\CropFairy\AI\cucumber  # dataset root dir lee폴더로
 train: images\train  # train images (relative to 'path')
 val: images\test  # val images (relative to 'path')
 
