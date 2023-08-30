@@ -11,11 +11,12 @@ from PyQt5.QtWidgets import QDialog, QLabel, QPushButton, QFileDialog, QLineEdit
 from PyQt5.QtGui import QBrush, QColor, QPixmap
 from PyQt5.QtCore import QSize, Qt, QDate
 from PyQt5.Qt import QMainWindow
-from PyQt5.QtCore import QThread, pyqtSignal
+
 from Source.Views.UI_CropFairy import Ui_CropFairy
 from Source.Views.DialogJoin import DialogJoin
 from Source.Views.DialogResult import DialogResult
 from Source.Views.DialogWarning import DialogWarning
+from Source.Views.DialogLoading import DialogLoading
 from Source.Client.Client import Client
 
 
@@ -25,19 +26,17 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         super().__init__()
 
         # --- 변수 선언
-        self.login = False
+        self.upload_text = "* 정확도 높이는 꿀팁 *\n\n1. 사진은 열매나 잎이 가운데, 정면으로 오도록 촬영해주세요.\n2. 열매나 잎 주위의 배경이 깨끗할수록 정확도가 올라갑니다."
         self.upload_image = False
         # --- 회원가입 변수
         self.use_email_check = False
         # --- 로그인 유저 변수
+        self.login = False
         self.singin_email = False
         self.singin_user_id = False
 
         # --- 초기화
         self.set_Ui()
-        self.connect_Event()
-        self.client = Client()
-        self.connect_thread_signal()
 
         # 검정 투명 배경
         self.back = QLabel(self)
@@ -46,6 +45,13 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.back.hide()
 
         self.dlg_warning = DialogWarning()
+
+        self.dlg_loading = DialogLoading()
+        self.dlg_loading.close()
+
+        self.connect_Event()
+        self.client = Client()
+        self.connect_thread_signal()
 
     # 화면 초기화
     def set_Ui(self):
@@ -118,9 +124,27 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.client.sing_in_result.connect(self.sing_in_result)
         self.client.get_pad_result.connect(self.set_pad_result)
         self.client.ml_result.connect(self.get_ml_result)
+
+    # 머신러닝 품종 판별 결과 회신
     def get_ml_result(self, result):
+        self.dlg_loading.hide()
         ml_result = result
-        print(ml_result)
+        self.dlg_warning.set_dialog_type("species_check", text=ml_result, bt_cnt=2)
+
+        # 품종 맞을때
+        if self.dlg_warning.exec():
+            print(ml_result)
+            # TODO 서버로
+
+        # 품종이 틀렸을 때
+        else:
+            self.dlg_warning.set_dialog_type("no_species", bt_cnt=1)
+            self.dlg_warning.exec()
+            self.lbl_upload_image.setText(self.upload_text)
+            self.btn_start.setVisible(False)
+
+
+
     # 반환 받은 유저 진단 내역 테이블 위젯에 집어넣기
     def set_pad_result(self, result):
         result_list = result
@@ -193,21 +217,20 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.btn_back.setVisible(True)
         self.btn_start.setVisible(False)
         self.btn_list.setEnabled(True)
-        self.lbl_upload_image.setText(" ")
+        self.lbl_upload_image.setText(self.upload_text)
         self.stacke_main.setCurrentWidget(self.page_analyze)
 
     # 로그인
     def btn_login_click(self):
-        # TODO 로그인 예외처리 추가하기!
         self.sign_rqst()
 
     # 로그인 요청
     def sign_rqst(self):
+        # TODO 로그인 예외처리 추가하기!
         edt_email = self.edt_email.text()
         edt_pwd = self.edt_pwd.text()
         data = ["sing_in", edt_email, edt_pwd]
         self.send_data(data)
-
 
     # 회원가입
     def btn_join_click(self):
@@ -236,7 +259,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
     # 진단 시작 버튼
     def btn_start_click(self):
-        # TODO 진단 버튼 시작시 서버로 이미지 발송는 내용 추가하기
+        self.dlg_loading.show()
         """
         원천 데이터 이미지 라벨링된 범위만큼 이미지 자르로 numpy로 변환후 저장
         """

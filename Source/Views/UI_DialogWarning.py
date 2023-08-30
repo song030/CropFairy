@@ -15,7 +15,7 @@ class Ui_DlgWarning(object):
     def setupUi(self, DlgWarning):
         DlgWarning.setObjectName("DlgWarning")
         DlgWarning.setWindowModality(QtCore.Qt.NonModal)
-        DlgWarning.resize(329, 300)
+        DlgWarning.resize(387, 322)
         DlgWarning.setMinimumSize(QtCore.QSize(300, 300))
         DlgWarning.setStyleSheet("QWidget{\n"
 "background-color:rgb(247, 255, 229);\n"
@@ -78,7 +78,7 @@ class Ui_DlgWarning(object):
         self.lbl_text = QtWidgets.QLabel(self.widget_2)
         font = QtGui.QFont()
         font.setFamily("Malgun Gothic")
-        font.setPointSize(10)
+        font.setPointSize(9)
         font.setBold(True)
         font.setWeight(75)
         self.lbl_text.setFont(font)

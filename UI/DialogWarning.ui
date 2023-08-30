@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>329</width>
-    <height>300</height>
+    <width>387</width>
+    <height>322</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -179,7 +179,7 @@ padding:5px;
           <property name="font">
            <font>
             <family>Malgun Gothic</family>
-            <pointsize>10</pointsize>
+            <pointsize>9</pointsize>
             <weight>75</weight>
             <bold>true</bold>
            </font>
