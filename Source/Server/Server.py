@@ -3,11 +3,13 @@ import socket
 import pickle
 import sys
 import cv2
+import joblib as joblib
 import numpy as np
 
 from threading import Thread
 from PyQt5.QtCore import QThread, pyqtSignal
-
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
 import json
 import sqlite3
 import select
@@ -41,10 +43,20 @@ class Server():
         self.db_conn = db_conn
         self.server_socket = None
         self.config = None
+        self.model = None
         self.sockets_list = list()
         self.clients = dict()
         self.thread_for_run = None
         self.run_signal = True
+        self.model_load()
+
+    def model_load(self):
+        print("머신러닝 모델 로드중")
+        # 모델 파일 경로 및 이름 설정
+        model_filename = '../../model/last_real_last_model.pkl'
+        # 모델 로드
+        self.model = joblib.load(model_filename)
+        print("머신러닝 모델 로드완료")
 
     def start(self):
         if self.thread_for_run is not None:  # 실행중이면 종료 시키기
@@ -163,13 +175,53 @@ class Server():
                 print("이미지 저장안됨?")
                 # print(f"이미지: {img_data}")
                 # #
-                # new_height = 150
-                # new_width = 150
+                new_height = 150
+                new_width = 150
+
+                # 이미지 리사이징
+                data = cv2.resize(img_data, (new_width, new_height))
+                data = data.reshape(-1, 150 * 150 * 3).astype("float32") / 255
+
+                result = self.model.predict(data)
+
+                print("예측중")
+                # 예측
+                predicted_probabilities = self.model.predict_proba(data)
+
+                # 예측 확률과 임계값 설정
+                threshold = 0.7
+
+                # 예측값 재설정
+                new_predictions = []
+
+                for probabilities in predicted_probabilities:
+                    new_predictions.append(probabilities)
+                    # if max(probabilities) >= threshold:
+                    #     new_predictions.append(probabilities)
+                    # else:
+                    #     new_predictions.append("Unknown")
+
+                # 모델 저장 경로 및 파일 이름 설정
+                # model_filename = 'your_model_filename.pkl'
+
+                # 모델 저장
+                # joblib.dump(model, model_filename)
+                # 결과 출력
+                print(new_predictions)
+                print(result)
+
+                send_data = ["ml_result", result]  # client send_dat(header, data)list
+                print(send_data)
+                self.send_to_pickle(client_socket, send_data)
+
+
+
+
                 # # # NumPy 파일을 저장할 리스트
                 # data_list = []
                 # np.set_printoptions(linewidth=np.inf, threshold=sys.maxsize)
                 #
-                # image = cv2.imread(img_path)
+                # image = cv2.imread(img_data)
                 # image_vector = image.flatten()
                 #
                 # image_rgb = cv2.cvtColor(image_vector, cv2.COLOR_BGR2RGB)
@@ -180,13 +232,13 @@ class Server():
                 #
                 # # 리사이징한 이미지 넘파이 리스트에 넣기 -> 이미지를 여러장 넣었을때
                 # data_list.append(resized_image)
-                #
-                # # result = self.db_conn.return_pad_info(input_data)  # DB return 값 받아옴
-                # # result2 = self.db_conn.select_pad_info(result[1])  # DB return 값 받아옴
-                #
-                # # send_data = ["get_pad_info", result + result2] # client send_dat(header, data)list
-                # # print(send_data)
-                # # self.send_to_pickle(client_socket, send_data)
+
+                # result = self.db_conn.return_pad_info(input_data)  # DB return 값 받아옴
+                # result2 = self.db_conn.select_pad_info(result[1])  # DB return 값 받아옴
+
+                # send_data = ["get_pad_info", result + result2] # client send_dat(header, data)list
+                # print(send_data)
+                # self.send_to_pickle(client_socket, send_data)
 
 
         except:

@@ -118,6 +118,18 @@ class Client(QObject):
             else:
                 self.get_pad_result.emit(result)
 
+        elif header == 'ml_result':  # 품종 판별 결과
+            result = received_object[1]
+            # result = result.strip("'")
+            print(result)
+            print(type(result))
+            # if not result:
+            #     todo: 진단 내역이 없습니다 진단하러 가시겠습니까? 기능 할까?
+            #     self.get_pad_result.emit(result)
+                # pass
+            # else:
+            #     self.get_pad_result.emit(result)
+
         elif header == 'get_pad_info':  # 병충해 정보 반환
             # todo: emit -> 회원 정보 보내서 저장 -> 저장된 유저 식별 코드로 사용내역 저장
             result = received_object[1]
