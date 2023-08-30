@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>329</width>
-    <height>300</height>
+    <width>387</width>
+    <height>322</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -56,6 +56,12 @@ padding:5px;
    <item>
     <widget class="QWidget" name="widget" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="topMargin">
+       <number>15</number>
+      </property>
+      <property name="rightMargin">
+       <number>15</number>
+      </property>
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
@@ -92,14 +98,17 @@ padding:5px;
    <item>
     <widget class="QWidget" name="widget_2" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1">
+      <property name="spacing">
+       <number>15</number>
+      </property>
       <property name="leftMargin">
-       <number>9</number>
+       <number>15</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>9</number>
+       <number>15</number>
       </property>
       <property name="bottomMargin">
        <number>9</number>
@@ -107,6 +116,9 @@ padding:5px;
       <item>
        <widget class="QWidget" name="widget_3" native="true">
         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -136,6 +148,9 @@ padding:5px;
            <property name="scaledContents">
             <bool>true</bool>
            </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
           </widget>
          </item>
          <item>
@@ -164,7 +179,7 @@ padding:5px;
           <property name="font">
            <font>
             <family>Malgun Gothic</family>
-            <pointsize>10</pointsize>
+            <pointsize>9</pointsize>
             <weight>75</weight>
             <bold>true</bold>
            </font>

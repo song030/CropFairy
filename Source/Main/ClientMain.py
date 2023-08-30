@@ -1,11 +1,10 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtGui import QFontDatabase
+from PyQt5.QtGui import QFontDatabase, QFont
 
 from Source.Views.CropFairy import CropFairy
-
-
+from Source.Views.Font import Font
 
 app = QApplication(sys.argv)
 
@@ -16,6 +15,7 @@ fontDB.addApplicationFont("../../FONT/NanumSquareRoundEB.ttf")
 fontDB.addApplicationFont("../../FONT/NanumSquareRoundL.ttf")
 fontDB.addApplicationFont("../../FONT/NanumSquareRoundR.ttf")
 fontDB.addApplicationFont("../../FONT/ONE Mobile POP.ttf")
+app.setFont(Font.text(4))
 
 crop_fairy = CropFairy()
 crop_fairy.show()

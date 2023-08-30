@@ -58,7 +58,7 @@ class DialogJoin(QDialog, Ui_DlgJoin):
             self.dialog.exec()
             return False
         elif len(edt_pw) <= 0:
-            self.dialog.set_dialog_type("join_pwd_input")
+            self.dialog.set_dialog_type("pwd_input")
             self.dialog.exec()
             return False
         elif len(edt_pw) < 8:

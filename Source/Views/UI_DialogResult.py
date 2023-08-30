@@ -18,7 +18,7 @@ class Ui_DlgResult(object):
         DlgResult.resize(422, 454)
         DlgResult.setMinimumSize(QtCore.QSize(300, 300))
         DlgResult.setStyleSheet("QWidget{\n"
-"background-color:rgb(247, 255, 229);\n"
+"background-color:rgb(196, 215, 178);\n"
 "}\n"
 "\n"
 "QPushButton{\n"
@@ -34,6 +34,11 @@ class Ui_DlgResult(object):
 "border-radius:5px;\n"
 "padding:5px;\n"
 "min-height:25px;\n"
+"}\n"
+"\n"
+"QLabel{\n"
+"background-color:white;\n"
+"padding:5px;\n"
 "}")
         DlgResult.setModal(True)
         self.verticalLayout = QtWidgets.QVBoxLayout(DlgResult)
@@ -41,6 +46,8 @@ class Ui_DlgResult(object):
         self.verticalLayout.setSpacing(10)
         self.verticalLayout.setObjectName("verticalLayout")
         self.gridLayout = QtWidgets.QGridLayout()
+        self.gridLayout.setContentsMargins(5, 5, 5, 5)
+        self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName("gridLayout")
         self.lbl_name_title = QtWidgets.QLabel(DlgResult)
         self.lbl_name_title.setObjectName("lbl_name_title")

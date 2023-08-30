@@ -38,7 +38,7 @@ QPushButton{
 background-color:white;
 border:1px solid rgb(196, 215, 178);
 border-radius:5px;
-padding:5px;
+padding: 5px 10px 5px 10px;
 min-width:25px;
 min-height:25px;
 }
@@ -87,7 +87,7 @@ padding:5px
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>9</number>
       </property>
       <item>
        <widget class="QPushButton" name="btn_back">
@@ -119,6 +119,12 @@ padding:5px
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>47</width>
+          <height>37</height>
+         </size>
         </property>
         <property name="text">
          <string>내역조회</string>
@@ -238,7 +244,7 @@ padding:5px
            </spacer>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0">
+           <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0">
             <item>
              <widget class="QWidget" name="widget_login" native="true">
               <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -326,6 +332,19 @@ padding:5px
                <string>진단하기</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_7">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
             <item>
              <widget class="QPushButton" name="btn_exit">
@@ -428,6 +447,11 @@ padding:5px
               <height>628</height>
              </size>
             </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -529,19 +553,25 @@ padding:5px
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>5</number>
+           <number>9</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>5</number>
+           <number>0</number>
           </property>
           <item>
            <widget class="QPushButton" name="btn_upload">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
-              <width>37</width>
+              <width>47</width>
               <height>37</height>
              </size>
             </property>
@@ -567,7 +597,7 @@ padding:5px
            <widget class="QPushButton" name="btn_start">
             <property name="minimumSize">
              <size>
-              <width>37</width>
+              <width>47</width>
               <height>37</height>
              </size>
             </property>
@@ -587,13 +617,13 @@ padding:5px
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>5</number>
+           <number>9</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>5</number>
+           <number>0</number>
           </property>
           <item>
            <spacer name="horizontalSpacer_2">
@@ -618,7 +648,7 @@ padding:5px
             </property>
             <property name="minimumSize">
              <size>
-              <width>37</width>
+              <width>47</width>
               <height>37</height>
              </size>
             </property>
@@ -646,7 +676,7 @@ padding:5px
             </property>
             <property name="minimumSize">
              <size>
-              <width>37</width>
+              <width>47</width>
               <height>37</height>
              </size>
             </property>

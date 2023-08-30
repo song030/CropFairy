@@ -18,7 +18,7 @@ class Ui_DlgJoin(object):
         DlgJoin.resize(422, 454)
         DlgJoin.setMinimumSize(QtCore.QSize(300, 300))
         DlgJoin.setStyleSheet("QWidget{\n"
-"background-color:rgb(247, 255, 229);\n"
+"background-color:rgb(196, 215, 178);\n"
 "}\n"
 "\n"
 "QPushButton{\n"
