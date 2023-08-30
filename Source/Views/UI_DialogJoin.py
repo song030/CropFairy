@@ -15,8 +15,9 @@ class Ui_DlgJoin(object):
     def setupUi(self, DlgJoin):
         DlgJoin.setObjectName("DlgJoin")
         DlgJoin.setWindowModality(QtCore.Qt.NonModal)
-        DlgJoin.resize(422, 454)
+        DlgJoin.resize(430, 455)
         DlgJoin.setMinimumSize(QtCore.QSize(300, 300))
+        DlgJoin.setMaximumSize(QtCore.QSize(430, 455))
         DlgJoin.setStyleSheet("QWidget{\n"
 "background-color:rgb(196, 215, 178);\n"
 "}\n"
@@ -112,6 +113,9 @@ class Ui_DlgJoin(object):
         self.horizontalLayout_3.addLayout(self.verticalLayout)
         spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem6)
+        self.horizontalLayout_3.setStretch(0, 1)
+        self.horizontalLayout_3.setStretch(1, 3)
+        self.horizontalLayout_3.setStretch(2, 1)
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
         self.verticalLayout_2.setStretch(1, 1)
 

@@ -193,10 +193,10 @@ class CropFairy(QMainWindow, Ui_CropFairy):
     def idrd_check_result(self, result):
         self.use_email_check = result
         if result:
-            self.dlg_warning.set_dialog_type("id_check_ok")
+            self.dlg_warning.set_dialog_type("email_check_ok")
             self.dlg_warning.exec()
         else:
-            self.dlg_warning.set_dialog_type("id_check_no")
+            self.dlg_warning.set_dialog_type("email_check_no")
             self.dlg_warning.exec()
         print(self.use_email_check, "main")
 
@@ -207,7 +207,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         data = data_list
         pickle_data = pickle.dumps(data)
         self.client.send(pickle_data)
-        print("전송완료")
 
     # ----------------------------------------------------- Main -----------------------------------------------------
 
@@ -245,6 +244,8 @@ class CropFairy(QMainWindow, Ui_CropFairy):
     # 회원가입
     def btn_join_click(self):
         self.dlg_join = DialogJoin(self)
+        self.dlg_join.showEvent = lambda e: self.back.show()
+        self.dlg_join.closeEvent = lambda e: self.back.hide()
         self.dlg_join.exec()
 
     # 진단하기 페이지 이동 버튼
