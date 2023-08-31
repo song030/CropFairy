@@ -16,6 +16,8 @@ import select
 from socket import *
 from threading import *
 
+from ultralytics import YOLO
+
 from Source.Common.DBConnector import DataClass
 
 # 사용할 구분자
@@ -51,13 +53,15 @@ class Server():
         self.models_load()
 
     def models_load(self):
-        # todo: 딥러닝 모델 넣기
         print("머신러닝 모델 로드중")
         # 모델 파일 경로 및 이름 설정
         model_filename = '../../model/last_real_last_model.pkl'
         # 모델 로드
         self.model = joblib.load(model_filename)
         print("머신러닝 모델 로드완료")
+
+        print("딥러닝 해충모드 모델 로드중")
+        # todo: 딥러닝 모델 넣기
 
     def start(self):
         if self.thread_for_run is not None:  # 실행중이면 종료 시키기
@@ -171,29 +175,60 @@ class Server():
 
             elif header == 'dl_start':
                 mode, crop, user_id = received_object[1:]  # input data = client recv data index[1:]
-                print("질병 딥러닝 들어와?")
+
                 dl_result_list = []
-                img_path = 'recv_img/recv_save_img.jpg'
+                img_path = './recv_img/recv_save_img.jpg'
+                object_name = ""
                 if mode == "bug":
+                    print("해충 딥러닝")
                     pass
                 else:
+                    print("질병 딥러닝")
                     if crop == "고추":
-                        pass
+                        path = r"../../model/peper_best.pt"
                     elif crop == "오이":
-                        pass
+                        path = r"../../model/cucumber_best.pt"
                     elif crop == "토마토":
-                        pass
+                        path = r"../../model/tomato_best.pt"
+
+                    model = YOLO(path)
+                    results = model.predict(source=img_path)
+
+                    for result in results:
+                        if result.boxes:
+                            box = result.boxes[0]
+                            class_id = int(box.cls)
+                            object_name = model.names[class_id]
+                            confidence = float(box.conf)
+                            print(object_name, confidence)
+
+                print("딥러닝 예측")
                 # 딥러닝이 뱉은 결과로 상세내용 가져오기
-                pad_1_result = self.db_conn.return_pad_info()
-                pad_name = pad_1_result[1]
-                pad_2_result = self.db_conn.select_pad_info(pad_name)
-                self.db_conn.insert_pad_result(user_id, "딥러닝이 뱉은 결과", crop)
+                print(object_name, '오브젝트 네임')
+                if object_name == '':
+                    send_data = ["dl_result", '']  # client send_dat(header, data)list
 
-                #
-                send_data = ["dl_result", pad_1_result, pad_2_result]  # client send_dat(header, data)list
-                print(send_data)
+                    print(f"진단결과sand내용:{send_data}")
 
-                self.send_to_pickle(send_data)
+                    self.send_to_pickle(send_data)
+                else:
+                    object_name = 103
+                    pad_1_result = self.db_conn.return_pad_info(object_name)
+                    pad_name = pad_1_result[1]
+                    pad_ctg = pad_1_result[2]
+                    print("1차정보 완")
+                    pad_2_result = self.db_conn.select_pad_info(pad_name)
+                    print("2차정보 완")
+                    dl_result = f"{pad_name}{header_split}{pad_ctg}"
+                    print(user_id, "딥러닝이 뱉은 결과", crop)
+                    self.db_conn.insert_pad_result([user_id, dl_result, crop])
+                    print("진단결과 db저장 완료")
+                    #
+                    send_data = ["dl_result", pad_1_result, pad_2_result]  # client send_dat(header, data)list
+
+                    print(f"진단결과sand내용:{send_data}")
+
+                    self.send_to_pickle(send_data)
             elif header == 'ai_result_save_to_db':
                 pass
                 # todo: 결과 저장

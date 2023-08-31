@@ -134,9 +134,14 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
     # 딥러닝 품종 판별 결과 회신
     def get_dl_result(self, result):
-        self.result_dlg(result)
+        dl_result = result[0]
+        if dl_result != '':
+            self.result_dlg(result)
+            print("결과 띄우기")
+        else:
+            # todo: 결과 못뽑음
+            print('결과를 못뽑음')
         # self.send_data(send_data)
-        pass
 
     # 도출된 결과들 다이얼로그에 띄우기
     def result_dlg(self, result):
@@ -145,14 +150,12 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         # todo 받은 결과들 다이얼로그에 띄우기 어떤식으로 받아오는지 아직 몰루
         crop, pad_name, pad_ctg, info1, info2, info3 = self.ml_result, result1[1], result1[2], result2[0], result2[1], result2[2]
 
-        pass
-
-
-
     def get_ml_result(self, result):
         self.dlg_loading.hide()
+        print("main 들어와?")
         self.ml_result = result[0]
         self.dlg_warning.set_dialog_type("species_check", text=self.ml_result, bt_cnt=2)
+        print("main 들어와?")
 
         # 품종 맞을때
         if self.dlg_warning.exec():

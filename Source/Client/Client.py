@@ -53,6 +53,7 @@ class Client(QObject):
 
     # 서버 send 함수
     def send(self, pickle_data):
+        print(f"보내는 데이터{pickle_data}")
         self.client_socket.send(pickle_data)
 
     def img_send(self, img_path):
@@ -212,13 +213,14 @@ class Client(QObject):
                 self.get_pad_result.emit(result)
 
         elif header == 'ml_result':  # 품종 판별 결과
-            result = received_object[1]
-            result = result.tolist()
+            print("client 드옴?")
+            result = [received_object[1]]
+            print(result)
             self.ml_result.emit(result)
 
         elif header == 'dl_result':  # 품종 판별 결과
             result = received_object[1:]
-            result = result.tolist()
+            result = [result]
             self.dl_result.emit(result)
 
         elif header == 'get_pad_info':  # 병충해 정보 반환

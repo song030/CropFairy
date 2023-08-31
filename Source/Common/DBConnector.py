@@ -81,10 +81,10 @@ class DataClass:
         병충해 코드가 들어오면 정보들 반환
         :return:
         """
-        pad_code = pad_code[0]
+        # pad_code = pad_code[0]
         # 커서 생성
         cur = self.pgdb.cursor()
-        sql_query = f"SELECT * FROM public.\"TB_PAD\" WHERE \"PAD_ID\" = '{pad_code}';"
+        sql_query = f"SELECT * FROM public.\"TB_PAD\" WHERE \"PAD_NAME\" = '{pad_code}';"
         cur.execute(sql_query)
         # 결과 가져오기
         results = list(cur.fetchall())  # 리스트로 변환
