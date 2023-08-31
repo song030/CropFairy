@@ -48,16 +48,16 @@ class Server():
         self.clients = dict()
         self.thread_for_run = None
         self.run_signal = True
-        self.model_load()
+        self.models_load()
 
     def models_load(self):
         # todo: 딥러닝 모델 넣기
         print("머신러닝 모델 로드중")
-        # # 모델 파일 경로 및 이름 설정
-        # model_filename = '../../model/last_real_last_model.pkl'
-        # # 모델 로드
-        # self.model = joblib.load(model_filename)
-        # print("머신러닝 모델 로드완료")
+        # 모델 파일 경로 및 이름 설정
+        model_filename = '../../model/last_real_last_model.pkl'
+        # 모델 로드
+        self.model = joblib.load(model_filename)
+        print("머신러닝 모델 로드완료")
 
     def start(self):
         if self.thread_for_run is not None:  # 실행중이면 종료 시키기
@@ -96,16 +96,11 @@ class Server():
                     self.clients[client_socket] = user
 
                 else:
-                    if notified_socket == str:
-                        message_length = int.from_bytes(client.recv(4), byteorder='big')  # 메시지 길이를 수신하고 정수로 변환
-                        # message = client.recv(message_length)  # 그 다음에 메시지 본문을 수신
-                        message = self.receive_message(message_length)  # 그 다음에 메시지 본문을 수신
-                    else:
-                        message = self.receive_message(notified_socket)
-                        if message is False:
-                            self.sockets_list.remove(notified_socket)
-                            del self.clients[notified_socket]
-                            continue
+                    message = self.receive_message(notified_socket)
+                    if message is False:
+                        self.sockets_list.remove(notified_socket)
+                        del self.clients[notified_socket]
+                        continue
 
 
             for notified_socket in exception_sockets:
