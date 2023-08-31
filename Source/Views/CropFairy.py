@@ -164,7 +164,10 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         if self.dlg_warning.exec():
             self.client.img_send(self.img_path)
             print(ml_result)
-            send_data = ["dl_start"]
+            if self.pad_choice == "해충":
+                send_data = ["dl_2_start"]
+            elif self.pad_choice == "질병":
+                send_data = ["dl_1_start"]
             self.send_data(send_data)
             # TODO 서버로 딥러닝 진행 시그널 보내기
 
