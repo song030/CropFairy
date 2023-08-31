@@ -31,16 +31,16 @@ class Ui_CropFairy(object):
 "\n"
 "QPushButton{\n"
 "background-color:white;\n"
-"border:1px solid rgb(196, 215, 178);\n"
+"border:2px solid rgb(225, 236, 200);\n"
 "border-radius:5px;\n"
-"padding: 5px 10px 5px 10px;\n"
+"padding: 5px;\n"
 "min-width:25px;\n"
 "min-height:25px;\n"
 "}\n"
 "\n"
 "QLineEdit{\n"
 "background-color:white;\n"
-"border:1px solid rgb(196, 215, 178);\n"
+"border:2px solid rgb(225, 236, 200);\n"
 "border-radius:5px;\n"
 "padding:5px;\n"
 "min-height:25px;\n"
@@ -77,6 +77,10 @@ class Ui_CropFairy(object):
         self.btn_back.setObjectName("btn_back")
         self.layout_top.addWidget(self.btn_back)
         self.lbl_title = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setFamily("ONE 모바일POP")
+        font.setPointSize(14)
+        self.lbl_title.setFont(font)
         self.lbl_title.setText("")
         self.lbl_title.setAlignment(QtCore.Qt.AlignCenter)
         self.lbl_title.setObjectName("lbl_title")
@@ -87,7 +91,7 @@ class Ui_CropFairy(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_list.sizePolicy().hasHeightForWidth())
         self.btn_list.setSizePolicy(sizePolicy)
-        self.btn_list.setMinimumSize(QtCore.QSize(47, 37))
+        self.btn_list.setMinimumSize(QtCore.QSize(39, 39))
         self.btn_list.setObjectName("btn_list")
         self.layout_top.addWidget(self.btn_list)
         self.verticalLayout.addLayout(self.layout_top)
@@ -115,7 +119,7 @@ class Ui_CropFairy(object):
         self.label_2 = QtWidgets.QLabel(self.widget)
         self.label_2.setGeometry(QtCore.QRect(153, 4, 21, 31))
         self.label_2.setText("")
-        self.label_2.setPixmap(QtGui.QPixmap("./UI\\../Image/sprout.png"))
+        self.label_2.setPixmap(QtGui.QPixmap("../../Image/sprout.png"))
         self.label_2.setScaledContents(True)
         self.label_2.setObjectName("label_2")
         self.label = QtWidgets.QLabel(self.widget)
@@ -249,13 +253,13 @@ class Ui_CropFairy(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_upload.sizePolicy().hasHeightForWidth())
         self.btn_upload.setSizePolicy(sizePolicy)
-        self.btn_upload.setMinimumSize(QtCore.QSize(47, 37))
+        self.btn_upload.setMinimumSize(QtCore.QSize(39, 39))
         self.btn_upload.setObjectName("btn_upload")
         self.horizontalLayout.addWidget(self.btn_upload)
         spacerItem12 = QtWidgets.QSpacerItem(397, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem12)
         self.btn_start = QtWidgets.QPushButton(self.control_analyze)
-        self.btn_start.setMinimumSize(QtCore.QSize(47, 37))
+        self.btn_start.setMinimumSize(QtCore.QSize(39, 39))
         self.btn_start.setObjectName("btn_start")
         self.horizontalLayout.addWidget(self.btn_start)
         self.stack_control.addWidget(self.control_analyze)
@@ -273,8 +277,11 @@ class Ui_CropFairy(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_left.sizePolicy().hasHeightForWidth())
         self.btn_left.setSizePolicy(sizePolicy)
-        self.btn_left.setMinimumSize(QtCore.QSize(47, 37))
+        self.btn_left.setMinimumSize(QtCore.QSize(39, 39))
         self.btn_left.setMaximumSize(QtCore.QSize(30, 16777215))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.btn_left.setFont(font)
         self.btn_left.setObjectName("btn_left")
         self.horizontalLayout_3.addWidget(self.btn_left)
         self.layout_page = QtWidgets.QHBoxLayout()
@@ -286,8 +293,11 @@ class Ui_CropFairy(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_right.sizePolicy().hasHeightForWidth())
         self.btn_right.setSizePolicy(sizePolicy)
-        self.btn_right.setMinimumSize(QtCore.QSize(47, 37))
+        self.btn_right.setMinimumSize(QtCore.QSize(39, 39))
         self.btn_right.setMaximumSize(QtCore.QSize(30, 16777215))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.btn_right.setFont(font)
         self.btn_right.setStyleSheet("")
         self.btn_right.setObjectName("btn_right")
         self.horizontalLayout_3.addWidget(self.btn_right)
@@ -304,14 +314,14 @@ class Ui_CropFairy(object):
 
         self.retranslateUi(CropFairy)
         self.stacke_main.setCurrentIndex(0)
-        self.stack_control.setCurrentIndex(0)
+        self.stack_control.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(CropFairy)
 
     def retranslateUi(self, CropFairy):
         _translate = QtCore.QCoreApplication.translate
         CropFairy.setWindowTitle(_translate("CropFairy", "CropFairy"))
         self.btn_back.setText(_translate("CropFairy", "<"))
-        self.btn_list.setText(_translate("CropFairy", "내역조회"))
+        self.btn_list.setText(_translate("CropFairy", "내역 조회"))
         self.label.setText(_translate("CropFairy", "작물 요정"))
         self.edt_email.setPlaceholderText(_translate("CropFairy", "이메일 주소"))
         self.edt_pwd.setPlaceholderText(_translate("CropFairy", "비밀번호"))
@@ -320,6 +330,6 @@ class Ui_CropFairy(object):
         self.btn_analyze.setText(_translate("CropFairy", "진단하기"))
         self.btn_exit.setText(_translate("CropFairy", "종료"))
         self.btn_upload.setText(_translate("CropFairy", "이미지 업로드"))
-        self.btn_start.setText(_translate("CropFairy", "진단"))
+        self.btn_start.setText(_translate("CropFairy", "진단 시작"))
         self.btn_left.setText(_translate("CropFairy", "◀"))
         self.btn_right.setText(_translate("CropFairy", "▶"))

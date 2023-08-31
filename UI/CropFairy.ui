@@ -36,16 +36,16 @@ background-color:rgba(255, 255, 255, 0);
 
 QPushButton{
 background-color:white;
-border:1px solid rgb(196, 215, 178);
+border:2px solid rgb(225, 236, 200);
 border-radius:5px;
-padding: 5px 10px 5px 10px;
+padding: 5px;
 min-width:25px;
 min-height:25px;
 }
 
 QLineEdit{
 background-color:white;
-border:1px solid rgb(196, 215, 178);
+border:2px solid rgb(225, 236, 200);
 border-radius:5px;
 padding:5px;
 min-height:25px;
@@ -104,6 +104,12 @@ padding:5px
       </item>
       <item>
        <widget class="QLabel" name="lbl_title">
+        <property name="font">
+         <font>
+          <family>ONE 모바일POP</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -122,12 +128,12 @@ padding:5px
         </property>
         <property name="minimumSize">
          <size>
-          <width>47</width>
-          <height>37</height>
+          <width>39</width>
+          <height>39</height>
          </size>
         </property>
         <property name="text">
-         <string>내역조회</string>
+         <string>내역 조회</string>
         </property>
        </widget>
       </item>
@@ -542,7 +548,7 @@ padding:5px
       <item>
        <widget class="QStackedWidget" name="stack_control">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="control_analyze">
          <layout class="QHBoxLayout" name="horizontalLayout">
@@ -571,8 +577,8 @@ padding:5px
             </property>
             <property name="minimumSize">
              <size>
-              <width>47</width>
-              <height>37</height>
+              <width>39</width>
+              <height>39</height>
              </size>
             </property>
             <property name="text">
@@ -597,12 +603,12 @@ padding:5px
            <widget class="QPushButton" name="btn_start">
             <property name="minimumSize">
              <size>
-              <width>47</width>
-              <height>37</height>
+              <width>39</width>
+              <height>39</height>
              </size>
             </property>
             <property name="text">
-             <string>진단</string>
+             <string>진단 시작</string>
             </property>
            </widget>
           </item>
@@ -648,8 +654,8 @@ padding:5px
             </property>
             <property name="minimumSize">
              <size>
-              <width>47</width>
-              <height>37</height>
+              <width>39</width>
+              <height>39</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -657,6 +663,11 @@ padding:5px
               <width>30</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
             </property>
             <property name="text">
              <string>◀</string>
@@ -676,8 +687,8 @@ padding:5px
             </property>
             <property name="minimumSize">
              <size>
-              <width>47</width>
-              <height>37</height>
+              <width>39</width>
+              <height>39</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -685,6 +696,11 @@ padding:5px
               <width>30</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
             </property>
             <property name="styleSheet">
              <string notr="true"/>
