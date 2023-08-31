@@ -53,10 +53,10 @@ class DialogWarning(QDialog, Ui_DlgWarning):
             self.lbl_text.setText("유효하지않은 아이디/비밀번호 입니다.")
         elif t_type == "login_success":
             self.lbl_text.setText(f"'{text}'님 안녕하세요.")
-        elif t_type == "id_check_ok":
-            self.lbl_text.setText("사용가능한 아이디입니다.")
-        elif t_type == "id_check_no":
-            self.lbl_text.setText("이미 존재하는 아이디입니다.")
+        elif t_type == "email_check_ok":
+            self.lbl_text.setText("사용가능한 이메일 주소입니다.")
+        elif t_type == "email_check_no":
+            self.lbl_text.setText("이미 존재하는 이메일 주소입니다.")
         elif t_type == "email_check_not":
             self.lbl_text.setText("이메일 중복확인을 진행 해주세요")
         elif t_type == "email_wrong":

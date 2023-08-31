@@ -1,13 +1,8 @@
-import sys
-import sys
+
 import cv2
 import numpy as np
-import json
-import base64
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtGui import QFontDatabase
 import pickle
-from PyQt5.QtWidgets import QLayout, QComboBox, QCompleter, QPlainTextEdit, QListView, QCheckBox, QDateEdit
+
 from PyQt5.QtWidgets import QDialog, QLabel, QPushButton, QFileDialog, QLineEdit, QTableWidget, QTableWidgetItem
 from PyQt5.QtGui import QBrush, QColor, QPixmap
 from PyQt5.QtCore import QSize, Qt, QDate
@@ -28,7 +23,8 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
         # --- 변수 선언
         self.upload_text = "* 정확도 높이는 꿀팁 *\n\n1. 사진은 열매나 잎이 가운데, 정면으로 오도록 촬영해주세요.\n2. 열매나 잎 주위의 배경이 깨끗할수록 정확도가 올라갑니다."
-        self.upload_image = False
+        self.mode = ""
+        # self.upload_image = False
         # --- 회원가입 변수
         self.use_email_check = False
         # --- 로그인 유저 변수
@@ -77,7 +73,8 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         # 메인화면
         self.btn_login.clicked.connect(self.btn_login_click)
         self.btn_join.clicked.connect(self.btn_join_click)
-        self.btn_analyze.clicked.connect(self.btn_analyze_click)
+        self.btn_bug.clicked.connect(self.btn_bug_click)
+        self.btn_disease.clicked.connect(self.btn_disease_click)
         self.btn_exit.clicked.connect(self.btn_exit_click)
         self.btn_list.clicked.connect(self.btn_list_click)
         self.btn_back.clicked.connect(self.btn_back_click)
@@ -90,16 +87,20 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
     # 메인으로 이동시 화면 설정
     def move_page_main(self):
+        self.mode = ""
         self.stack_control.setVisible(False)
         self.btn_back.setVisible(False)
-        self.btn_list.setEnabled(True)
+        self.btn_logout.setVisible(False)
+        self.lbl_title.setText(" ")
 
         if self.login:
             self.widget_login.setVisible(False)
-            self.btn_analyze.setVisible(True)
+            self.widget_analyze.setVisible(True)
+            self.btn_list.setVisible(True)
         else:
             self.widget_login.setVisible(True)
-            self.btn_analyze.setVisible(False)
+            self.widget_analyze.setVisible(False)
+            self.btn_list.setVisible(False)
 
         self.stacke_main.setCurrentWidget(self.page_main)
 
@@ -108,7 +109,9 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.stack_control.setCurrentWidget(self.control_page)
         self.stack_control.setVisible(True)
         self.btn_back.setVisible(True)
+        self.btn_logout.setVisible(True)
         self.btn_list.setEnabled(False)
+        self.lbl_title.setText("진단 내역 조회")
         self.stacke_main.setCurrentWidget(self.page_list)
 
     # 진단 내역 버튼
@@ -225,10 +228,10 @@ class CropFairy(QMainWindow, Ui_CropFairy):
     def idrd_check_result(self, result):
         self.use_email_check = result
         if result:
-            self.dlg_warning.set_dialog_type("id_check_ok")
+            self.dlg_warning.set_dialog_type("email_check_ok")
             self.dlg_warning.exec()
         else:
-            self.dlg_warning.set_dialog_type("id_check_no")
+            self.dlg_warning.set_dialog_type("email_check_no")
             self.dlg_warning.exec()
         print(self.use_email_check, "main")
 
@@ -239,7 +242,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         data = data_list
         pickle_data = pickle.dumps(data)
         self.client.send(pickle_data)
-        print("전송완료")
 
     # ----------------------------------------------------- Main -----------------------------------------------------
 
@@ -251,6 +253,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.btn_start.setVisible(False)
         self.btn_list.setEnabled(True)
         self.lbl_upload_image.setText(self.upload_text)
+        self.lbl_title.setText("진단하기")
         self.stacke_main.setCurrentWidget(self.page_analyze)
 
     # 로그인
@@ -277,10 +280,17 @@ class CropFairy(QMainWindow, Ui_CropFairy):
     # 회원가입
     def btn_join_click(self):
         self.dlg_join = DialogJoin(self)
+        self.dlg_join.showEvent = lambda e: self.back.show()
+        self.dlg_join.closeEvent = lambda e: self.back.hide()
         self.dlg_join.exec()
 
     # 진단하기 페이지 이동 버튼
-    def btn_analyze_click(self):
+    def btn_disease_click(self):
+        self.mode = "disease"
+        self.move_page_analyze()
+
+    def btn_bug_click(self):
+        self.mode = "bug"
         self.move_page_analyze()
 
     # 종료
