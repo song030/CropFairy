@@ -15,4 +15,5 @@ class DialogLoading(QWidget, Ui_DlgLoading):
         self.movie = QMovie("../../Image/loading.gif", QByteArray(), self)
         self.lbl_loading.setMovie(self.movie)
         self.movie.start()
+        self.movie.frameChanged()
 

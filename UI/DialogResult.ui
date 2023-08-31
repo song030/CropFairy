@@ -29,14 +29,14 @@ background-color:rgb(196, 215, 178);
 
 QPushButton{
 background-color:white;
-border:1px solid rgb(196, 215, 178);
+border:2px solid rgb(196, 215, 178);
 border-radius:5px;
 padding:5px;
 }
 
 QLineEdit{
 background-color:white;
-border:1px solid rgb(196, 215, 178);
+border:2px solid rgb(196, 215, 178);
 border-radius:5px;
 padding:5px;
 min-height:25px;
