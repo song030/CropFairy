@@ -57,7 +57,8 @@ class Ui_CropFairy(object):
 "QComboBox QAbstractItemView::item { \n"
 "background-color:white;\n"
 "padding:5px\n"
-"}")
+"}\n"
+"")
         self.centralwidget = QtWidgets.QWidget(CropFairy)
         self.centralwidget.setAutoFillBackground(False)
         self.centralwidget.setStyleSheet("")
@@ -223,7 +224,9 @@ class Ui_CropFairy(object):
         self.stacke_main.addWidget(self.page_main)
         self.page_analyze = QtWidgets.QWidget()
         self.page_analyze.setAutoFillBackground(False)
-        self.page_analyze.setStyleSheet("background-color:rgb(247, 255, 229);")
+        self.page_analyze.setStyleSheet("QWidget{\n"
+"background-color:rgb(247, 255, 229);\n"
+"}")
         self.page_analyze.setObjectName("page_analyze")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.page_analyze)
         self.verticalLayout_3.setContentsMargins(9, 9, 9, 9)
@@ -256,7 +259,9 @@ class Ui_CropFairy(object):
         self.verticalLayout_3.addItem(spacerItem10)
         self.stacke_main.addWidget(self.page_analyze)
         self.page_list = QtWidgets.QWidget()
-        self.page_list.setStyleSheet("background-color:rgb(247, 255, 229);")
+        self.page_list.setStyleSheet("QWidget{\n"
+"background-color:rgb(247, 255, 229);\n"
+"}")
         self.page_list.setObjectName("page_list")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.page_list)
         self.verticalLayout_4.setContentsMargins(9, 9, 9, 9)
@@ -276,6 +281,41 @@ class Ui_CropFairy(object):
         self.verticalLayout_4.addWidget(self.table_list)
         self.verticalLayout_4.setStretch(1, 1)
         self.stacke_main.addWidget(self.page_list)
+        self.page_view = QtWidgets.QWidget()
+        self.page_view.setStyleSheet("QWidget{\n"
+"background-color:rgb(247, 255, 229);\n"
+"}\n"
+"\n"
+"QPushButton{\n"
+"background-color:white;\n"
+"padding:1px;\n"
+"}")
+        self.page_view.setObjectName("page_view")
+        self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.page_view)
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.btn_view_disease = QtWidgets.QPushButton(self.page_view)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap("../../Image/view_disease.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_view_disease.setIcon(icon4)
+        self.btn_view_disease.setIconSize(QtCore.QSize(60, 50))
+        self.btn_view_disease.setObjectName("btn_view_disease")
+        self.horizontalLayout_6.addWidget(self.btn_view_disease)
+        self.btn_view_bug = QtWidgets.QPushButton(self.page_view)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap("../../Image/view_bug.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_view_bug.setIcon(icon5)
+        self.btn_view_bug.setIconSize(QtCore.QSize(60, 50))
+        self.btn_view_bug.setObjectName("btn_view_bug")
+        self.horizontalLayout_6.addWidget(self.btn_view_bug)
+        self.verticalLayout_7.addLayout(self.horizontalLayout_6)
+        self.tableWidget = QtWidgets.QTableWidget(self.page_view)
+        self.tableWidget.setObjectName("tableWidget")
+        self.tableWidget.setColumnCount(0)
+        self.tableWidget.setRowCount(0)
+        self.verticalLayout_7.addWidget(self.tableWidget)
+        self.stacke_main.addWidget(self.page_view)
         self.verticalLayout.addWidget(self.stacke_main)
         self.layout_bottom = QtWidgets.QHBoxLayout()
         self.layout_bottom.setObjectName("layout_bottom")
@@ -326,14 +366,20 @@ class Ui_CropFairy(object):
 "padding:1px;\n"
 "}")
         self.btn_left.setText("")
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("../../Image/left.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_left.setIcon(icon4)
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap("../../Image/left.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_left.setIcon(icon6)
         self.btn_left.setIconSize(QtCore.QSize(29, 29))
         self.btn_left.setObjectName("btn_left")
         self.horizontalLayout_3.addWidget(self.btn_left)
         self.layout_page = QtWidgets.QHBoxLayout()
         self.layout_page.setObjectName("layout_page")
+        self.label_3 = QtWidgets.QLabel(self.control_page)
+        self.label_3.setText("")
+        self.label_3.setPixmap(QtGui.QPixmap("../../Image/page_02.png"))
+        self.label_3.setScaledContents(False)
+        self.label_3.setObjectName("label_3")
+        self.layout_page.addWidget(self.label_3)
         self.horizontalLayout_3.addLayout(self.layout_page)
         self.btn_right = QtWidgets.QPushButton(self.control_page)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -350,14 +396,17 @@ class Ui_CropFairy(object):
 "padding:1px;\n"
 "}")
         self.btn_right.setText("")
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("../../Image/right.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_right.setIcon(icon5)
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap("../../Image/right.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_right.setIcon(icon7)
         self.btn_right.setIconSize(QtCore.QSize(29, 29))
         self.btn_right.setObjectName("btn_right")
         self.horizontalLayout_3.addWidget(self.btn_right)
         spacerItem14 = QtWidgets.QSpacerItem(238, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem14)
+        self.horizontalLayout_3.setStretch(1, 1)
+        self.horizontalLayout_3.setStretch(2, 1)
+        self.horizontalLayout_3.setStretch(3, 1)
         self.stack_control.addWidget(self.control_page)
         self.layout_bottom.addWidget(self.stack_control)
         self.verticalLayout.addLayout(self.layout_bottom)
@@ -365,7 +414,7 @@ class Ui_CropFairy(object):
         CropFairy.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(CropFairy)
-        self.stacke_main.setCurrentIndex(0)
+        self.stacke_main.setCurrentIndex(3)
         self.stack_control.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(CropFairy)
 
@@ -379,5 +428,7 @@ class Ui_CropFairy(object):
         self.btn_join.setText(_translate("CropFairy", "회원가입"))
         self.btn_analyze.setText(_translate("CropFairy", "진단하기"))
         self.btn_exit.setText(_translate("CropFairy", "종료"))
+        self.btn_view_disease.setText(_translate("CropFairy", "     질병 조회"))
+        self.btn_view_bug.setText(_translate("CropFairy", "     해충 조회"))
         self.btn_upload.setText(_translate("CropFairy", "이미지 업로드"))
         self.btn_start.setText(_translate("CropFairy", "진단 시작"))

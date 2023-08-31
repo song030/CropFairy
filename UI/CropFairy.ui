@@ -62,7 +62,8 @@ min-height:25px;
 QComboBox QAbstractItemView::item { 
 background-color:white;
 padding:5px
-}</string>
+}
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="autoFillBackground">
@@ -222,7 +223,7 @@ padding:1px;
        <bool>false</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="page_main">
        <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,2,1">
@@ -473,7 +474,9 @@ padding:1px;
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color:rgb(247, 255, 229);</string>
+        <string notr="true">QWidget{
+background-color:rgb(247, 255, 229);
+}</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0">
         <property name="leftMargin">
@@ -578,7 +581,9 @@ padding:1px;
       </widget>
       <widget class="QWidget" name="page_list">
        <property name="styleSheet">
-        <string notr="true">background-color:rgb(247, 255, 229);</string>
+        <string notr="true">QWidget{
+background-color:rgb(247, 255, 229);
+}</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,1">
         <property name="leftMargin">
@@ -615,6 +620,61 @@ padding:1px;
         </item>
         <item>
          <widget class="QTableWidget" name="table_list"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_view">
+       <property name="styleSheet">
+        <string notr="true">QWidget{
+background-color:rgb(247, 255, 229);
+}
+
+QPushButton{
+background-color:white;
+padding:1px;
+}</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QPushButton" name="btn_view_disease">
+            <property name="text">
+             <string>     질병 조회</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../Image/view_disease.png</normaloff>../Image/view_disease.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>60</width>
+              <height>50</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_view_bug">
+            <property name="text">
+             <string>     해충 조회</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../Image/view_bug.png</normaloff>../Image/view_bug.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>60</width>
+              <height>50</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableWidget"/>
         </item>
        </layout>
       </widget>
@@ -692,7 +752,7 @@ padding:1px;
          </layout>
         </widget>
         <widget class="QWidget" name="control_page">
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1,1,1,0">
           <property name="spacing">
            <number>6</number>
           </property>
@@ -767,7 +827,21 @@ padding:1px;
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="layout_page"/>
+           <layout class="QHBoxLayout" name="layout_page">
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>../Image/page_02.png</pixmap>
+              </property>
+              <property name="scaledContents">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="QPushButton" name="btn_right">
