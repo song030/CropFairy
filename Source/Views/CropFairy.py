@@ -131,7 +131,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.client.sing_in_result.connect(self.sing_in_result)
         self.client.get_pad_result.connect(self.set_pad_result)
         self.client.ml_result.connect(self.get_ml_result)
-        # self.client.dl_result.connect(self.get_dl_result)
+        self.client.dl_result.connect(self.get_dl_result)
 
     # 딥러닝 품종 판별 결과 회신
     def get_dl_result(self, result):
