@@ -35,7 +35,10 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.login = False
         self.singin_email = False
         self.singin_user_id = False
-
+        # --- ai 결과 변수
+        self.ml_result = None
+        self.dl_result = None
+        # ---
         # --- 초기화
         self.set_Ui()
 
@@ -108,7 +111,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.btn_list.setEnabled(False)
         self.stacke_main.setCurrentWidget(self.page_list)
 
-    #진단 내역 버튼
+    # 진단 내역 버튼
     def btn_list_click(self):
         senddata = ["get_pad_result", self.singin_user_id]
         self.send_data(senddata)
@@ -125,8 +128,33 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.client.sing_in_result.connect(self.sing_in_result)
         self.client.get_pad_result.connect(self.set_pad_result)
         self.client.ml_result.connect(self.get_ml_result)
+        self.client.dl_result.connect(self.get_dl_result)
 
-    # 머신러닝 품종 판별 결과 회신
+    # 딥러닝 품종 판별 결과 회신
+    def get_dl_result(self, result):
+        self.dl_result = result
+
+        # self.send_data(send_data)
+        pass
+
+    # 도출된 결과들 다이얼로그에 띄우기
+    def result_dlg(self, result):
+        # todo 받은 결과들 다이얼로그에 띄우기 어떤식으로 받아오는지 아직 몰루
+        if len(result) == 1:  # 해충 or 질병
+            send_data = ["ai_result_save_to_db", ]
+            pass
+        else:  # 해충 and 질병
+            send_data = ["ai_result_save_to_db", ]
+            pass
+        self.save_result(result) # 다이얼 로그를 닫으면 db에 저장
+        pass
+
+    # 결과들 db에 저장
+    def save_result(self, result):
+        send_data = ["ai_result_save_to_db", self.ml_result, self.dl_result]
+        self.send_data(send_data)
+        pass
+
     def get_ml_result(self, result):
         self.dlg_loading.hide()
         ml_result = result
@@ -134,7 +162,10 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
         # 품종 맞을때
         if self.dlg_warning.exec():
+            self.client.img_send(self.img_path)
             print(ml_result)
+            send_data = ["dl_start"]
+            self.send_data(send_data)
             # TODO 서버로 딥러닝 진행 시그널 보내기
 
         # 품종이 틀렸을 때
@@ -143,8 +174,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
             self.dlg_warning.exec()
             self.lbl_upload_image.setText(self.upload_text)
             self.btn_start.setVisible(False)
-
-
 
     # 반환 받은 유저 진단 내역 테이블 위젯에 집어넣기
     def set_pad_result(self, result):
@@ -163,10 +192,9 @@ class CropFairy(QMainWindow, Ui_CropFairy):
             current_row_count = self.table_list.rowCount()
             self.table_list.insertRow(current_row_count)
             print(result)
-            for col,info in enumerate(result):
+            for col, info in enumerate(result):
                 item = QTableWidgetItem(f"{info}")
                 self.table_list.setItem(current_row_count, col, item)
-
 
     # 로그인한 유저의 정보와 로그인 결과 반환받음
     def sing_in_result(self, result):
@@ -243,7 +271,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
             data = ["sing_in", edt_email, edt_pwd]
             self.send_data(data)
 
-
     # 회원가입
     def btn_join_click(self):
         self.dlg_join = DialogJoin(self)
@@ -275,8 +302,9 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         """
         원천 데이터 이미지 라벨링된 범위만큼 이미지 자르로 numpy로 변환후 저장
         """
-        new_height = 650
-        new_width = 650
+        self.client.img_send(self.img_path)
+        new_height = 640
+        new_width = 640
         img_path = self.img_path
 
         # 이미지를 읽어 넘파이 배열로 변환
@@ -287,43 +315,45 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         resized_image = cv2.resize(image_np, (new_width, new_height))
         # image_bytes = pickle.dumps(resized_image)
 
-        send_data = ["send_to_imginfo", resized_image]
+        send_data = ["send_to_img_save", resized_image]
+        # send_data = ["send_to_imginfo", image_np]
         print(send_data)
         self.send_data(send_data)
+
         # print(data_list)
         # print("==========================")
         # print(data_list[0])
         # # pass
     # def btn_start_click(self):
-        # # TODO 진단 버튼 시작시 서버로 이미지 발송는 내용 추가하기
-        # """
-        # 원천 데이터 이미지 라벨링된 범위만큼 이미지 자르로 numpy로 변환후 저장
-        # """
-        # img_path = self.img_path
-        #
-        # # 이미지 파일 열기
-        # print("img1")
-        # with open(img_path, 'rb') as f:
-        #     img_data = base64.b64encode(f.read()).decode('utf-8')
-        #     # image_data = image_file.read(2048)
-        # print("img2")
-        #
-        # # while image_data:
-        # #     client.send(image_data)
-        # #     image_data = file.read(2048)
-        # send_data = ["send_to_imginfo", img_data]
-        # # print(send_data)
-        # # self.send_data(send_data)
-        #
-        # # user_info = json.dumps(send_data)
-        # # message = f"{f'insertuser{header_split}{user_info}'}"
-        #
-        # print("img3")
-        # self.send_data(send_data)
-        # # print(data_list)
-        # # print("==========================")
-        # # print(data_list[0])
-        # # pass
+    # # TODO 진단 버튼 시작시 서버로 이미지 발송는 내용 추가하기
+    # """
+    # 원천 데이터 이미지 라벨링된 범위만큼 이미지 자르로 numpy로 변환후 저장
+    # """
+    # img_path = self.img_path
+    #
+    # # 이미지 파일 열기
+    # print("img1")
+    # with open(img_path, 'rb') as f:
+    #     img_data = base64.b64encode(f.read()).decode('utf-8')
+    #     # image_data = image_file.read(2048)
+    # print("img2")
+    #
+    # # while image_data:
+    # #     client.send(image_data)
+    # #     image_data = file.read(2048)
+    # send_data = ["send_to_imginfo", img_data]
+    # # print(send_data)
+    # # self.send_data(send_data)
+    #
+    # # user_info = json.dumps(send_data)
+    # # message = f"{f'insertuser{header_split}{user_info}'}"
+    #
+    # print("img3")
+    # self.send_data(send_data)
+    # # print(data_list)
+    # # print("==========================")
+    # # print(data_list[0])
+    # # pass
 
     # --------------------------------------------------------------------------------------------------------------
 
