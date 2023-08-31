@@ -27,7 +27,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
         # --- 변수 선언
         self.upload_text = "* 정확도 높이는 꿀팁 *\n\n1. 사진은 열매나 잎이 가운데, 정면으로 오도록 촬영해주세요.\n2. 열매나 잎 주위의 배경이 깨끗할수록 정확도가 올라갑니다."
-        self.upload_image = False
+        # self.upload_image = False
         # --- 회원가입 변수
         self.use_email_check = False
         # --- 로그인 유저 변수
@@ -89,6 +89,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.stack_control.setVisible(False)
         self.btn_back.setVisible(False)
         self.btn_list.setEnabled(True)
+        self.lbl_title.setText(" ")
 
         if self.login:
             self.widget_login.setVisible(False)
@@ -105,6 +106,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.stack_control.setVisible(True)
         self.btn_back.setVisible(True)
         self.btn_list.setEnabled(False)
+        self.lbl_title.setText("진단 내역 조회")
         self.stacke_main.setCurrentWidget(self.page_list)
 
     #진단 내역 버튼
@@ -166,7 +168,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
                 item = QTableWidgetItem(f"{info}")
                 self.table_list.setItem(current_row_count, col, item)
 
-
     # 로그인한 유저의 정보와 로그인 결과 반환받음
     def sing_in_result(self, result):
         if result[0] == False:
@@ -218,6 +219,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.btn_start.setVisible(False)
         self.btn_list.setEnabled(True)
         self.lbl_upload_image.setText(self.upload_text)
+        self.lbl_title.setText("진단하기")
         self.stacke_main.setCurrentWidget(self.page_analyze)
 
     # 로그인
