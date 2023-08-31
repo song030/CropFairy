@@ -20,8 +20,12 @@ class DialogResult(QDialog, Ui_DlgResult):
         self.setResult(1)
         self.close()
 
-    def closeEvent(self, a0):
-        pass
+    def set_dialog(self, crop, pad_name, pad_ctg, info1, info2, info3):
+        self.lbl_spedies_txt.setText(crop)
+        self.lbl_ctg_txt.setText(pad_ctg)
+        self.lbl_name_txt.setText(pad_name)
+        self.lbl_info_1_txt.setText(info1)
+        self.lbl_info_2_txt.setText(info2)
 
     # 이벤트 연결
     def connect_event(self):

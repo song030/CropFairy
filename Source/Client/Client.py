@@ -212,8 +212,9 @@ class Client(QObject):
                 self.get_pad_result.emit(result)
 
         elif header == 'ml_result':  # 품종 판별 결과
-            result = received_object[1]
-            result = result.tolist()
+            print("client 드옴?")
+            result = [received_object[1]]
+            print(result)
             self.ml_result.emit(result)
 
         elif header == 'dl_result':  # 품종 판별 결과

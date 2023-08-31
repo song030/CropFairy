@@ -16,6 +16,8 @@ import select
 from socket import *
 from threading import *
 
+from ultralytics import YOLO
+
 from Source.Common.DBConnector import DataClass
 
 # 사용할 구분자
@@ -48,16 +50,19 @@ class Server():
         self.clients = dict()
         self.thread_for_run = None
         self.run_signal = True
-        self.model_load()
+        self.models_load()
 
     def models_load(self):
-        # todo: 딥러닝 모델 넣기
         print("머신러닝 모델 로드중")
-        # # 모델 파일 경로 및 이름 설정
-        # model_filename = '../../model/last_real_last_model.pkl'
-        # # 모델 로드
+        # 모델 파일 경로 및 이름 설정
+        model_filename = '../../model/last_real_last_model.pkl'
+        # 모델 로드
         # self.model = joblib.load(model_filename)
-        # print("머신러닝 모델 로드완료")
+        print("머신러닝 모델 로드 완료")
+
+        print("딥러닝 해충모드 모델 로드중")
+        # todo: 딥러닝 모델 넣기
+        print("딥러닝 모델 로드 완료")
 
     def start(self):
         if self.thread_for_run is not None:  # 실행중이면 종료 시키기
@@ -96,16 +101,11 @@ class Server():
                     self.clients[client_socket] = user
 
                 else:
-                    if notified_socket == str:
-                        message_length = int.from_bytes(client.recv(4), byteorder='big')  # 메시지 길이를 수신하고 정수로 변환
-                        # message = client.recv(message_length)  # 그 다음에 메시지 본문을 수신
-                        message = self.receive_message(message_length)  # 그 다음에 메시지 본문을 수신
-                    else:
-                        message = self.receive_message(notified_socket)
-                        if message is False:
-                            self.sockets_list.remove(notified_socket)
-                            del self.clients[notified_socket]
-                            continue
+                    message = self.receive_message(notified_socket)
+                    if message is False:
+                        self.sockets_list.remove(notified_socket)
+                        del self.clients[notified_socket]
+                        continue
 
 
             for notified_socket in exception_sockets:
@@ -178,21 +178,34 @@ class Server():
                 mode, crop, user_id = received_object[1:]  # input data = client recv data index[1:]
                 print("질병 딥러닝 들어와?")
                 dl_result_list = []
-                img_path = 'recv_img/recv_save_img.jpg'
+                img_path = './recv_img/recv_save_img.jpg'
+                object_name = ""
                 if mode == "bug":
                     pass
                 else:
                     if crop == "고추":
-                        pass
+                        path = r"../../model/peper_best.pt"
                     elif crop == "오이":
-                        pass
+                        path = r"../../model/cucumber_best.pt"
                     elif crop == "토마토":
-                        pass
+                        path = r"../../model/tomato_best.pt"
+
+                    model = YOLO(path)
+                    results = model.predict(source=img_path)
+
+                    for result in results:
+                        if result.boxes:
+                            box = result.boxes[0]
+                            class_id = int(box.cls)
+                            object_name = model.names[class_id]
+                            confidence = float(box.conf)
+                            print(object_name, confidence)
+
                 # 딥러닝이 뱉은 결과로 상세내용 가져오기
-                pad_1_result = self.db_conn.return_pad_info()
+                pad_1_result = self.db_conn.return_pad_info(object_name)
                 pad_name = pad_1_result[1]
                 pad_2_result = self.db_conn.select_pad_info(pad_name)
-                self.db_conn.insert_pad_result(user_id, "딥러닝이 뱉은 결과", crop)
+                self.db_conn.insert_pad_result([user_id, "딥러닝이 뱉은 결과", crop])
 
                 #
                 send_data = ["dl_result", pad_1_result, pad_2_result]  # client send_dat(header, data)list

@@ -23,14 +23,14 @@ class Ui_DlgResult(object):
 "\n"
 "QPushButton{\n"
 "background-color:white;\n"
-"border:1px solid rgb(196, 215, 178);\n"
+"border:2px solid rgb(196, 215, 178);\n"
 "border-radius:5px;\n"
 "padding:5px;\n"
 "}\n"
 "\n"
 "QLineEdit{\n"
 "background-color:white;\n"
-"border:1px solid rgb(196, 215, 178);\n"
+"border:2px solid rgb(196, 215, 178);\n"
 "border-radius:5px;\n"
 "padding:5px;\n"
 "min-height:25px;\n"
@@ -76,10 +76,10 @@ class Ui_DlgResult(object):
         self.lbl_name_txt.setText("")
         self.lbl_name_txt.setObjectName("lbl_name_txt")
         self.gridLayout.addWidget(self.lbl_name_txt, 2, 1, 1, 1)
-        self.lbl_info_txt = QtWidgets.QLabel(DlgResult)
-        self.lbl_info_txt.setText("")
-        self.lbl_info_txt.setObjectName("lbl_info_txt")
-        self.gridLayout.addWidget(self.lbl_info_txt, 3, 1, 1, 1)
+        self.lbl_info_1_txt = QtWidgets.QLabel(DlgResult)
+        self.lbl_info_1_txt.setText("")
+        self.lbl_info_1_txt.setObjectName("lbl_info_1_txt")
+        self.gridLayout.addWidget(self.lbl_info_1_txt, 3, 1, 1, 1)
         self.lbl_info_2_txt = QtWidgets.QLabel(DlgResult)
         self.lbl_info_2_txt.setText("")
         self.lbl_info_2_txt.setObjectName("lbl_info_2_txt")

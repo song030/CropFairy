@@ -150,7 +150,7 @@ class DataClass:
         # 결과값 리턴
         if len(results) > 0:
             return results
-        return [False]
+        return []
 
     def return_datetime(self, type):
         """원하는 날짜/시간 포멧을 반환"""

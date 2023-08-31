@@ -223,7 +223,7 @@ padding:1px;
        <bool>false</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_main">
        <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,2,1">
@@ -639,7 +639,23 @@ background-color:rgb(247, 255, 229);
            </spacer>
           </item>
           <item>
-           <widget class="QComboBox" name="cb_kind"/>
+           <widget class="QComboBox" name="cb_kind">
+            <item>
+             <property name="text">
+              <string> 고추</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string> 오이</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string> 토마토</string>
+             </property>
+            </item>
+           </widget>
           </item>
          </layout>
         </item>
@@ -869,6 +885,12 @@ min-height:25px;
            <layout class="QHBoxLayout" name="layout_page">
             <item>
              <widget class="QLabel" name="label_3">
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>15</height>
+               </size>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -876,7 +898,7 @@ min-height:25px;
                <pixmap>../Image/page_02.png</pixmap>
               </property>
               <property name="scaledContents">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
              </widget>
             </item>

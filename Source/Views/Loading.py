@@ -4,7 +4,7 @@ from PyQt5.QtCore import QByteArray, Qt
 
 from Source.Views.UI_DialogLoading import Ui_DlgLoading
 
-class DialogLoading(QWidget, Ui_DlgLoading):
+class Loading(QWidget, Ui_DlgLoading):
     def __init__(self):
         super().__init__()
         self.setupUi(self)

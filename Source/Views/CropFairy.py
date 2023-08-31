@@ -11,7 +11,7 @@ from Source.Views.UI_CropFairy import Ui_CropFairy
 from Source.Views.DialogJoin import DialogJoin
 from Source.Views.DialogResult import DialogResult
 from Source.Views.DialogWarning import DialogWarning
-from Source.Views.DialogLoading import DialogLoading
+from Source.Views.Loading import Loading
 from Source.Client.Client import Client
 
 
@@ -45,8 +45,10 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
         self.dlg_warning = DialogWarning()
 
-        self.dlg_loading = DialogLoading()
+        self.dlg_loading = Loading()
         self.dlg_loading.close()
+
+        self.dlg_result = DialogResult()
 
         self.connect_Event()
         self.client = Client()
@@ -68,6 +70,8 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         # 공통
         self.dlg_warning.showEvent = lambda e: self.back.show()
         self.dlg_warning.closeEvent = lambda e: self.back.hide()
+        self.dlg_result.showEvent = lambda e: self.back.show()
+        self.dlg_result.closeEvent = lambda e: self.back.hide()
 
         # 메인화면
         self.btn_login.clicked.connect(self.btn_login_click)
@@ -77,6 +81,8 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.btn_exit.clicked.connect(self.btn_exit_click)
         self.btn_list.clicked.connect(self.btn_list_click)
         self.btn_back.clicked.connect(self.btn_back_click)
+        self.btn_logout.clicked.connect(self.btn_logout_click)
+        self.btn_view.clicked.connect(self.move_page_view)
 
         # 진단하기
         self.btn_upload.clicked.connect(self.btn_upload_click)
@@ -89,17 +95,20 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.mode = ""
         self.stack_control.setVisible(False)
         self.btn_back.setVisible(False)
-        self.btn_logout.setVisible(False)
+        self.btn_list.setEnabled(True)
+        self.btn_view.setEnabled(True)
         self.lbl_title.setText(" ")
 
         if self.login:
             self.widget_login.setVisible(False)
             self.widget_analyze.setVisible(True)
             self.btn_list.setVisible(True)
+            self.btn_logout.setVisible(True)
         else:
             self.widget_login.setVisible(True)
             self.widget_analyze.setVisible(False)
             self.btn_list.setVisible(False)
+            self.btn_logout.setVisible(False)
 
         self.stacke_main.setCurrentWidget(self.page_main)
 
@@ -108,10 +117,20 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.stack_control.setCurrentWidget(self.control_page)
         self.stack_control.setVisible(True)
         self.btn_back.setVisible(True)
-        self.btn_logout.setVisible(True)
         self.btn_list.setEnabled(False)
+        self.btn_view.setEnabled(True)
         self.lbl_title.setText("진단 내역 조회")
         self.stacke_main.setCurrentWidget(self.page_list)
+
+    # 병해충 조회 화면으로 이동시 화면 설정
+    def move_page_view(self):
+        self.stack_control.setCurrentWidget(self.control_page)
+        self.stack_control.setVisible(True)
+        self.btn_back.setVisible(True)
+        self.btn_list.setEnabled(True)
+        self.btn_view.setEnabled(False)
+        self.lbl_title.setText("병해충 조회")
+        self.stacke_main.setCurrentWidget(self.page_view)
 
     # 진단 내역 버튼
     def btn_list_click(self):
@@ -120,6 +139,12 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.move_page_list()
 
     def btn_back_click(self):
+        self.move_page_main()
+
+    def btn_logout_click(self):
+        self.login = False
+        self.edt_email.setText("")
+        self.edt_pwd.setText("")
         self.move_page_main()
 
     # -----------------------------------------------------signal-----------------------------------------------------
@@ -143,11 +168,13 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         result1 = result[0]
         result2 = result[1]
         # todo 받은 결과들 다이얼로그에 띄우기 어떤식으로 받아오는지 아직 몰루
-        crop, pad_name, pad_ctg, info1, info2, info3 = self.ml_result, result1[1], result1[2], result2[0], result2[1], result2[2]
-
-        pass
-
-
+        # crop, pad_name, pad_ctg, info1, info2, info3
+        self.dlg_result.set_dialog(self.ml_result, result1[1], result1[2], result2[0], result2[1], result2[2])
+        if self.dlg_result.exec():
+            self.lbl_upload_image.setText(" ")
+            self.btn_start.setVisible(False)
+        else:
+            self.move_page_main()
 
     def get_ml_result(self, result):
         self.dlg_loading.hide()
@@ -242,7 +269,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.btn_start.setVisible(False)
         self.btn_list.setEnabled(True)
         self.lbl_upload_image.setText(self.upload_text)
-        self.lbl_title.setText("진단하기")
         self.stacke_main.setCurrentWidget(self.page_analyze)
 
     # 로그인
@@ -276,10 +302,12 @@ class CropFairy(QMainWindow, Ui_CropFairy):
     # 진단하기 페이지 이동 버튼
     def btn_disease_click(self):
         self.mode = "disease"
+        self.lbl_title.setText("질병 진단하기")
         self.move_page_analyze()
 
     def btn_bug_click(self):
         self.mode = "bug"
+        self.lbl_title.setText("해충 진단하기")
         self.move_page_analyze()
 
     # 종료
