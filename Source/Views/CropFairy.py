@@ -159,7 +159,13 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
     # 딥러닝 품종 판별 결과 회신
     def get_dl_result(self, result):
-        self.result_dlg(result)
+        dl_result = result[0]
+        if dl_result != '':
+            self.result_dlg(result)
+            print("결과 띄우기")
+        else:
+            # todo: 결과 못뽑음
+            print('결과를 못뽑음')
         # self.send_data(send_data)
         pass
 
@@ -180,6 +186,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.dlg_loading.hide()
         self.ml_result = result[0]
         self.dlg_warning.set_dialog_type("species_check", text=self.ml_result, bt_cnt=2)
+        print("main 들어와?")
 
         # 품종 맞을때
         if self.dlg_warning.exec():
