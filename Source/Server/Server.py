@@ -52,11 +52,11 @@ class Server():
 
     def model_load(self):
         print("머신러닝 모델 로드중")
-        # 모델 파일 경로 및 이름 설정
-        model_filename = '../../model/last_real_last_model.pkl'
-        # 모델 로드
-        self.model = joblib.load(model_filename)
-        print("머신러닝 모델 로드완료")
+        # # 모델 파일 경로 및 이름 설정
+        # model_filename = '../../model/last_real_last_model.pkl'
+        # # 모델 로드
+        # self.model = joblib.load(model_filename)
+        # print("머신러닝 모델 로드완료")
 
     def start(self):
         if self.thread_for_run is not None:  # 실행중이면 종료 시키기
@@ -169,12 +169,9 @@ class Server():
 
             elif header == 'send_to_imginfo':  # 이미지 정보 받아와서 모델 평가
                 img_data = received_object[1]  # input data = client recv data index[1:]
-                print(img_data)
                 # 이미지 저장
                 cv2.imwrite('server_test_save_img.jpg', img_data)
-                print("이미지 저장안됨?")
-                # print(f"이미지: {img_data}")
-                # #
+                # 리사이즈 크기
                 new_height = 150
                 new_width = 150
 
@@ -182,10 +179,10 @@ class Server():
                 data = cv2.resize(img_data, (new_width, new_height))
                 data = data.reshape(-1, 150 * 150 * 3).astype("float32") / 255
 
+                # 모델에 데이터 입력
                 result = self.model.predict(data)
-
                 print("예측중")
-                # 예측
+                # 모델 예측값 반환
                 predicted_probabilities = self.model.predict_proba(data)
 
                 # 예측 확률과 임계값 설정
@@ -207,15 +204,12 @@ class Server():
                 # 모델 저장
                 # joblib.dump(model, model_filename)
                 # 결과 출력
-                print(new_predictions)
-                print(result)
+                print(f"예측치: {new_predictions}")
+                print(f"결과: {result}")
 
                 send_data = ["ml_result", result]  # client send_dat(header, data)list
                 print(send_data)
                 self.send_to_pickle(client_socket, send_data)
-
-
-
 
                 # # # NumPy 파일을 저장할 리스트
                 # data_list = []
