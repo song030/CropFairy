@@ -174,28 +174,31 @@ class Server():
                 print(send_data)
                 self.send_to_pickle(client_socket, send_data)
 
-            elif header == 'dl_2_start':
-                print("해충 딥러닝 들어와?")
-                dl_result_list = []
-                img_path = 'recv_img/recv_save_img.jpg'
-
-
-                # 딥러닝이 뱉은 결과로 상세내용 가져오기
-                send_data = ["dl_result", result]  # client send_dat(header, data)list
-                print(send_data)
-                self.send_to_pickle(client_socket, send_data)
-
-               elif header == 'dl_1_start':
+            elif header == 'dl_start':
+                mode, crop, user_id = received_object[1:]  # input data = client recv data index[1:]
                 print("질병 딥러닝 들어와?")
                 dl_result_list = []
                 img_path = 'recv_img/recv_save_img.jpg'
-
+                if mode == "bug":
+                    pass
+                else:
+                    if crop == "고추":
+                        pass
+                    elif crop == "오이":
+                        pass
+                    elif crop == "토마토":
+                        pass
                 # 딥러닝이 뱉은 결과로 상세내용 가져오기
-                self.db_conn.
-                send_data = ["dl_result", result]  # client send_dat(header, data)list
+                pad_1_result = self.db_conn.return_pad_info()
+                pad_name = pad_1_result[1]
+                pad_2_result = self.db_conn.select_pad_info(pad_name)
+                self.db_conn.insert_pad_result(user_id, "딥러닝이 뱉은 결과", crop)
+
+                #
+                send_data = ["dl_result", pad_1_result, pad_2_result]  # client send_dat(header, data)list
                 print(send_data)
 
-                self.send_to_pickle(client_socket, send_data)
+                self.send_to_pickle(send_data)
             elif header == 'ai_result_save_to_db':
                 pass
                 # todo: 결과 저장
@@ -243,8 +246,13 @@ class Server():
 
                 print(f"예측치: {new_predictions}")
                 print(f"결과: {result}")
-
-                send_data = ["ml_result", result]  # client send_dat(header, data)list
+                if "고추" in result[0]:
+                    data = "고추"
+                elif "오이" in result[0]:
+                    data = "오이"
+                elif "토마토" in result[0]:
+                    data = "토마토"
+                send_data = ["ml_result", data]  # client send_dat(header, data)list
                 print(send_data)
                 self.send_to_pickle(client_socket, send_data)
 

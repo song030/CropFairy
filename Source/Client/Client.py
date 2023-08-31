@@ -217,7 +217,7 @@ class Client(QObject):
             self.ml_result.emit(result)
 
         elif header == 'dl_result':  # 품종 판별 결과
-            result = received_object[1]
+            result = received_object[1:]
             result = result.tolist()
             self.dl_result.emit(result)
 
