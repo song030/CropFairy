@@ -76,7 +76,10 @@ padding:5px
      <number>0</number>
     </property>
     <item>
-     <layout class="QHBoxLayout" name="layout_top">
+     <layout class="QHBoxLayout" name="layout_top" stretch="0,0,1,0,0">
+      <property name="spacing">
+       <number>10</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -90,6 +93,28 @@ padding:5px
        <number>9</number>
       </property>
       <item>
+       <widget class="QPushButton" name="btn_logout">
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+padding:1px;
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../Image/logout.png</normaloff>../Image/logout.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>29</width>
+          <height>29</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btn_back">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -97,8 +122,23 @@ padding:5px
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+padding:1px;
+}</string>
+        </property>
         <property name="text">
-         <string>&lt;</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../Image/home.png</normaloff>../Image/home.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>29</width>
+          <height>29</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -119,6 +159,28 @@ padding:5px
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btn_view">
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+padding:1px;
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../Image/view.png</normaloff>../Image/view.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>29</width>
+          <height>29</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btn_list">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -128,12 +190,27 @@ padding:5px
         </property>
         <property name="minimumSize">
          <size>
-          <width>39</width>
-          <height>39</height>
+          <width>31</width>
+          <height>31</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+padding:1px;
+}</string>
+        </property>
         <property name="text">
-         <string>내역 조회</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../Image/list.png</normaloff>../Image/list.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>29</width>
+          <height>29</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -654,8 +731,8 @@ padding:5px
             </property>
             <property name="minimumSize">
              <size>
-              <width>39</width>
-              <height>39</height>
+              <width>31</width>
+              <height>31</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -669,8 +746,23 @@ padding:5px
               <pointsize>9</pointsize>
              </font>
             </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+padding:1px;
+}</string>
+            </property>
             <property name="text">
-             <string>◀</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../Image/left.png</normaloff>../Image/left.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>29</width>
+              <height>29</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -687,8 +779,8 @@ padding:5px
             </property>
             <property name="minimumSize">
              <size>
-              <width>39</width>
-              <height>39</height>
+              <width>31</width>
+              <height>31</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -703,10 +795,22 @@ padding:5px
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true"/>
+             <string notr="true">QPushButton{
+padding:1px;
+}</string>
             </property>
             <property name="text">
-             <string>▶</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../Image/right.png</normaloff>../Image/right.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>29</width>
+              <height>29</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -731,7 +835,6 @@ padding:5px
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
