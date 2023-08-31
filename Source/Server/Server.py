@@ -53,15 +53,17 @@ class Server():
         self.models_load()
 
     def models_load(self):
+        # todo: 딥러닝 모델 넣기
         print("머신러닝 모델 로드중")
         # 모델 파일 경로 및 이름 설정
         model_filename = '../../model/last_real_last_model.pkl'
         # 모델 로드
-        self.model = joblib.load(model_filename)
-        print("머신러닝 모델 로드완료")
+        # self.model = joblib.load(model_filename)
+        print("머신러닝 모델 로드 완료")
 
         print("딥러닝 해충모드 모델 로드중")
         # todo: 딥러닝 모델 넣기
+        print("딥러닝 모델 로드 완료")
 
     def start(self):
         if self.thread_for_run is not None:  # 실행중이면 종료 시키기
@@ -175,7 +177,7 @@ class Server():
 
             elif header == 'dl_start':
                 mode, crop, user_id = received_object[1:]  # input data = client recv data index[1:]
-
+                print("질병 딥러닝 들어와?")
                 dl_result_list = []
                 img_path = './recv_img/recv_save_img.jpg'
                 object_name = ""
