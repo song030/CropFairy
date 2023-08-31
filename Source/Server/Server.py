@@ -50,7 +50,8 @@ class Server():
         self.run_signal = True
         self.model_load()
 
-    def model_load(self):
+    def models_load(self):
+        # todo: 딥러닝 모델 넣기
         print("머신러닝 모델 로드중")
         # # 모델 파일 경로 및 이름 설정
         # model_filename = '../../model/last_real_last_model.pkl'
@@ -95,11 +96,17 @@ class Server():
                     self.clients[client_socket] = user
 
                 else:
-                    message = self.receive_message(notified_socket)
-                    if message is False:
-                        self.sockets_list.remove(notified_socket)
-                        del self.clients[notified_socket]
-                        continue
+                    if notified_socket == str:
+                        message_length = int.from_bytes(client.recv(4), byteorder='big')  # 메시지 길이를 수신하고 정수로 변환
+                        # message = client.recv(message_length)  # 그 다음에 메시지 본문을 수신
+                        message = self.receive_message(message_length)  # 그 다음에 메시지 본문을 수신
+                    else:
+                        message = self.receive_message(notified_socket)
+                        if message is False:
+                            self.sockets_list.remove(notified_socket)
+                            del self.clients[notified_socket]
+                            continue
+
 
             for notified_socket in exception_sockets:
                 self.sockets_list.remove(notified_socket)
@@ -119,7 +126,7 @@ class Server():
             received_data = client_socket.recv(self.BUFFER)  # client recv data
             received_object = pickle.loads(received_data)  # 이진 데이터를 파이썬 객체로 역직렬화
             header = received_object[0]  # header = client recv data index[0]
-
+            print(header)
             if header == 'idrd_check':  # email 중복 확인
                 input_email = received_object[1]  # input data = client recv data index[1:]
                 result = self.db_conn.idrd_check(input_email)  # 입력한 email 사용가능 여부 반환
@@ -167,10 +174,49 @@ class Server():
                 print(send_data)
                 self.send_to_pickle(client_socket, send_data)
 
-            elif header == 'send_to_imginfo':  # 이미지 정보 받아와서 모델 평가
+            elif header == 'dl_start':
+                mode, crop, user_id = received_object[1:]  # input data = client recv data index[1:]
+                print("질병 딥러닝 들어와?")
+                dl_result_list = []
+                img_path = 'recv_img/recv_save_img.jpg'
+                if mode == "bug":
+                    pass
+                else:
+                    if crop == "고추":
+                        pass
+                    elif crop == "오이":
+                        pass
+                    elif crop == "토마토":
+                        pass
+                # 딥러닝이 뱉은 결과로 상세내용 가져오기
+                pad_1_result = self.db_conn.return_pad_info()
+                pad_name = pad_1_result[1]
+                pad_2_result = self.db_conn.select_pad_info(pad_name)
+                self.db_conn.insert_pad_result(user_id, "딥러닝이 뱉은 결과", crop)
+
+                #
+                send_data = ["dl_result", pad_1_result, pad_2_result]  # client send_dat(header, data)list
+                print(send_data)
+
+                self.send_to_pickle(send_data)
+            elif header == 'ai_result_save_to_db':
+                pass
+                # todo: 결과 저장
+                # print("딥러닝 들어와?")
+                # dl_result_list = []
+                # img_path = 'recv_img/recv_save_img.jpg'
+                # print("해충 딥러닝")
+                # print("질병 딥러닝")
+                #
+                # send_data = ["dl_result", result]  # client send_dat(header, data)list
+                # print(send_data)
+                # self.send_to_pickle(client_socket, send_data)
+
+            elif header == 'send_to_img_save':  # 이미지 정보 받아와서 모델 평가
                 img_data = received_object[1]  # input data = client recv data index[1:]
+                print(img_data)
                 # 이미지 저장
-                cv2.imwrite('server_test_save_img.jpg', img_data)
+                cv2.imwrite('recv_img/recv_save_img.jpg', img_data)
                 # 리사이즈 크기
                 new_height = 150
                 new_width = 150
@@ -198,16 +244,15 @@ class Server():
                     # else:
                     #     new_predictions.append("Unknown")
 
-                # 모델 저장 경로 및 파일 이름 설정
-                # model_filename = 'your_model_filename.pkl'
-
-                # 모델 저장
-                # joblib.dump(model, model_filename)
-                # 결과 출력
                 print(f"예측치: {new_predictions}")
                 print(f"결과: {result}")
-
-                send_data = ["ml_result", result]  # client send_dat(header, data)list
+                if "고추" in result[0]:
+                    data = "고추"
+                elif "오이" in result[0]:
+                    data = "오이"
+                elif "토마토" in result[0]:
+                    data = "토마토"
+                send_data = ["ml_result", data]  # client send_dat(header, data)list
                 print(send_data)
                 self.send_to_pickle(client_socket, send_data)
 

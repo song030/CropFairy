@@ -1,4 +1,3 @@
-
 import cv2
 import numpy as np
 import pickle
@@ -135,39 +134,32 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
     # 딥러닝 품종 판별 결과 회신
     def get_dl_result(self, result):
-        self.dl_result = result
-
+        self.result_dlg(result)
         # self.send_data(send_data)
         pass
 
     # 도출된 결과들 다이얼로그에 띄우기
     def result_dlg(self, result):
+        result1 = result[0]
+        result2 = result[1]
         # todo 받은 결과들 다이얼로그에 띄우기 어떤식으로 받아오는지 아직 몰루
-        if len(result) == 1:  # 해충 or 질병
-            send_data = ["ai_result_save_to_db", ]
-            pass
-        else:  # 해충 and 질병
-            send_data = ["ai_result_save_to_db", ]
-            pass
-        self.save_result(result) # 다이얼 로그를 닫으면 db에 저장
+        crop, pad_name, pad_ctg, info1, info2, info3 = self.ml_result, result1[1], result1[2], result2[0], result2[1], result2[2]
+
         pass
 
-    # 결과들 db에 저장
-    def save_result(self, result):
-        send_data = ["ai_result_save_to_db", self.ml_result, self.dl_result]
-        self.send_data(send_data)
-        pass
+
 
     def get_ml_result(self, result):
         self.dlg_loading.hide()
-        ml_result = result
-        self.dlg_warning.set_dialog_type("species_check", text=ml_result, bt_cnt=2)
+        self.ml_result = result[0]
+        self.dlg_warning.set_dialog_type("species_check", text=self.ml_result, bt_cnt=2)
 
         # 품종 맞을때
         if self.dlg_warning.exec():
             self.client.img_send(self.img_path)
-            print(ml_result)
-            send_data = ["dl_start"]
+            print(self.ml_result)
+            send_data = ["dl_start", self.mode, self.ml_result, self.singin_user_id]
+
             self.send_data(send_data)
             # TODO 서버로 딥러닝 진행 시그널 보내기
 
