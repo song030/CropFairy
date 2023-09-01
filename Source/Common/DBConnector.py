@@ -112,7 +112,9 @@ class DataClass:
         cur.execute(sql_query)
         # 결과 가져오기
         results = list(cur.fetchall())  # 리스트로 변환
+        print(results)
         results = [(list(record)) for record in results]
+        print(results)
         # 연결 종료
         # self.end_conn()
 

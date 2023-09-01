@@ -148,7 +148,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
     def btn_list_click(self):
         senddata = ["get_pad_result", self.singin_user_id]
         self.send_data(senddata)
-        # self.move_page_list()
+        self.move_page_list()
 
     def btn_back_click(self):
         self.move_page_main()

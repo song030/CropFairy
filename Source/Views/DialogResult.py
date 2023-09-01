@@ -26,13 +26,16 @@ class DialogResult(QDialog, Ui_DlgResult):
 
         # self.lbl_info_3_txt.setText(info3)
         if pad_name == "정상":
-            self.lbl_ctg_txt.setText(pad_ctg)
-            self.lbl_info_1_txt.setText(info1)
-            self.lbl_info_2_txt.setText(info2)
+            self.widget_detail.setVisible(False)
+            self.lbl_ctg_txt.setText("")
+            self.lbl_info_1_txt.setText("")
+            self.lbl_info_2_txt.setText("")
         else:
+            self.widget_detail.setVisible(True)
             self.lbl_ctg_txt.setText(pad_ctg)
-            self.lbl_info_1_txt.setText(info1)
-            self.lbl_info_2_txt.setText(info2)
+            # self.lbl_info_1_txt.setText(info1)
+            # self.lbl_info_2_txt.setText(info2)
+
     # 이벤트 연결
     def connect_event(self):
         # 예, 확인 : accept (1)
