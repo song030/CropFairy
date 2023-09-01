@@ -84,7 +84,7 @@ class DataClass:
         # pad_code = pad_code[0]
         # 커서 생성
         cur = self.pgdb.cursor()
-        sql_query = f"SELECT * FROM public.\"TB_PAD\" WHERE \"PAD_NAME\" = '{pad_code}';"
+        sql_query = f"SELECT * FROM public.\"TB_PAD\" WHERE \"PAD_ID\" = {pad_code};"
         cur.execute(sql_query)
         # 결과 가져오기
         results = list(cur.fetchall())  # 리스트로 변환
@@ -102,13 +102,14 @@ class DataClass:
         pad_name = pad_name
         # 커서 생성
         cur = self.pgdb.cursor()
-        sql_query = f"SELECT \"PAD_INFO1\", \"PAD_INFO2\", \"PAD_INFO3\" FROM \"TB_PAD_INFO\" WHERE \"PAD_NAME\" = '{pad_name}';"
+        # sql_query = f"SELECT \"PAD_INFO1\", \"PAD_INFO2\", \"PAD_INFO3\" FROM \"TB_PAD_INFO\" WHERE \"PAD_NAME\" = '{pad_name}';"
+        sql_query = f"SELECT * FROM public.\"TB_PAD_INFO\" WHERE \"PAD_NAME\" = '{pad_name}';"
         cur.execute(sql_query)
         # 결과 가져오기
         results = list(cur.fetchall())  # 리스트로 변환
         results = [(list(record)) for record in results]
         # 연결 종료
-        self.end_conn()
+        # self.end_conn()
         # 결과값 리턴
         if len(results) > 0:
             return results[0]
@@ -139,7 +140,8 @@ class DataClass:
         user_id = user_id[0]
         # 커서 생성
         cur = self.pgdb.cursor()
-        sql_query = f"SELECT * FROM public.\"TB_RESULT\" WHERE \"USER_ID\" = '{user_id}';"
+        sql_query = f"SELECT \"RESULT_SPECIES\", \"RESULT_STAT\", \"SAVE_TIME\" FROM public.\"TB_RESULT\" WHERE \"USER_ID\" = '{user_id}';"
+        # sql_query = f"SELECT \"RESULT_SPECIES\" \"RESULT_STAT\" \"SAVE_TIME FROM\" public.\"TB_RESULT\" WHERE \"USER_ID\" = '{user_id}';"
         cur.execute(sql_query)
         # 결과 가져오기
         # results = list(cur.fetchall())  # 리스트로 변환
