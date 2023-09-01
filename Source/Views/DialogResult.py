@@ -32,8 +32,8 @@ class DialogResult(QDialog, Ui_DlgResult):
         else:
             self.widget_detail.setVisible(True)
             self.lbl_ctg_txt.setText(pad_ctg)
-            self.lbl_info_1_txt.setText(info1)
-            self.lbl_info_2_txt.setText(info2)
+            # self.lbl_info_1_txt.setText(info1)
+            # self.lbl_info_2_txt.setText(info2)
 
     # 이벤트 연결
     def connect_event(self):

@@ -237,6 +237,7 @@ class Server():
                     pad_ctg = pad_1_result[2]
                     print("1차정보 완")
                     pad_2_result = self.db_conn.select_pad_info(pad_code)
+                    print(pad_2_result)
                     print("2차정보 완")
                     dl_result = f"{pad_name}{header_split}{pad_ctg}"
                     print(user_id, "딥러닝이 뱉은 결과", crop)
