@@ -74,6 +74,9 @@ class DialogWarning(QDialog, Ui_DlgWarning):
         elif t_type == "join_success":
             self.lbl_text.setText("회원가입이 완료 되었습니다.")
 
+        elif t_type == "fail_analyze":
+            self.lbl_text.setText("사진 분석에 실패했습니다.")
+
         elif t_type == "species_check":
             self.lbl_text.setText(f"촬영한 작품의 품종이\n'{text}'가 맞나요?")
         elif t_type == "no_species":

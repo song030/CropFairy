@@ -2,6 +2,8 @@ import base64
 import socket
 import pickle
 import sys
+import time
+
 import cv2
 import joblib as joblib
 import numpy as np
@@ -180,7 +182,8 @@ class Server():
                 print("질병 딥러닝 들어와?")
                 dl_result_list = []
                 img_path = './recv_img/recv_save_img.jpg'
-                object_name = ""
+
+                pad_code = ""
                 if mode == "bug":
                     print("해충 딥러닝")
                     # todo: 해충 딥러닝 모델 경로넣기
@@ -205,44 +208,47 @@ class Server():
                         path = r"../../model/tomato_best.pt"
 
                     model = YOLO(path)
+                    start = time.time()
                     results = model.predict(source=img_path)
+                    print(time.time()-start)
 
                     for result in results:
                         if result.boxes:
                             box = result.boxes[0]
                             class_id = int(box.cls)
-                            object_name = model.names[class_id]
+                            pad_code = model.names[class_id]
                             confidence = float(box.conf)
-                            print(object_name, confidence)
+                            print(pad_code, confidence)
 
                 print("딥러닝 예측")
                 # 딥러닝이 뱉은 결과로 상세내용 가져오기
-                print(object_name, '오브젝트 네임')
-                if object_name == '':
+                print(pad_code, '질병 코드번호')
+                if pad_code == '':
                     send_data = ["dl_result", '']  # client send_dat(header, data)list
 
                     print(f"진단결과sand내용:{send_data}")
 
-                    self.send_to_pickle(send_data)
+                    self.send_to_pickle(client_socket, send_data)
                 else:
-                    object_name = 103
-                    pad_1_result = self.db_conn.return_pad_info(object_name)
+                    # pad_code = 103
+                    pad_1_result = self.db_conn.return_pad_info(pad_code)
+                    print(pad_1_result)
                     pad_name = pad_1_result[1]
                     pad_ctg = pad_1_result[2]
                     print("1차정보 완")
-                    pad_2_result = self.db_conn.select_pad_info(pad_name)
+                    pad_2_result = self.db_conn.select_pad_info(pad_code)
                     print("2차정보 완")
                     dl_result = f"{pad_name}{header_split}{pad_ctg}"
                     print(user_id, "딥러닝이 뱉은 결과", crop)
 
                     self.db_conn.insert_pad_result([user_id, dl_result, crop])
                     print("진단결과 db저장 완료")
-                    #
+
                     send_data = ["dl_result", pad_1_result, pad_2_result]  # client send_dat(header, data)list
 
                     print(f"진단결과sand내용:{send_data}")
 
-                    self.send_to_pickle(send_data)
+                    self.send_to_pickle(client_socket, send_data)
             elif header == 'ai_result_save_to_db':
                 pass
                 # todo: 결과 저장
@@ -259,7 +265,7 @@ class Server():
                 print("이거는?")
             elif header == 'send_to_img_save':  # 이미지 정보 받아와서 모델 평가
                 img_data = received_object[1]  # input data = client recv data index[1:]
-                print(img_data)
+                # print(img_data)
                 # 이미지 저장
                 cv2.imwrite('recv_img/recv_save_img.jpg', img_data)
                 # 리사이즈 크기
@@ -268,11 +274,11 @@ class Server():
 
                 # 이미지 리사이징
                 data = cv2.resize(img_data, (new_width, new_height))
-                data = data.reshape(-1, 150 * 150 * 3).astype("float32") / 255
+                data = data.reshape(-1, new_width * new_height * 3).astype("float32") / 255
 
                 # 모델에 데이터 입력
-                result = self.model.predict(data)
                 print("예측중")
+                result = self.model.predict(data)
                 # 모델 예측값 반환
                 predicted_probabilities = self.model.predict_proba(data)
 

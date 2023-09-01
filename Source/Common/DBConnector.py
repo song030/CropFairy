@@ -84,7 +84,7 @@ class DataClass:
         # pad_code = pad_code[0]
         # 커서 생성
         cur = self.pgdb.cursor()
-        sql_query = f"SELECT * FROM public.\"TB_PAD\" WHERE \"PAD_ID\" = {pad_code};"
+        sql_query = f"SELECT * FROM public.\"TB_PAD\" WHERE \"PAD_ID\" = '{pad_code}';"
         cur.execute(sql_query)
         # 결과 가져오기
         results = list(cur.fetchall())  # 리스트로 변환
@@ -94,22 +94,20 @@ class DataClass:
             return results[0]
         return [False]
 
-    def select_pad_info(self, pad_name):
+    def select_pad_info(self, pad_code):
         """
         병충해 이름을 받아 info 반환
         """
-        print(pad_name)
-        pad_name = pad_name
+        print(pad_code)
         # 커서 생성
         cur = self.pgdb.cursor()
-        # sql_query = f"SELECT \"PAD_INFO1\", \"PAD_INFO2\", \"PAD_INFO3\" FROM \"TB_PAD_INFO\" WHERE \"PAD_NAME\" = '{pad_name}';"
-        sql_query = f"SELECT * FROM public.\"TB_PAD_INFO\" WHERE \"PAD_NAME\" = '{pad_name}';"
+        sql_query = f"SELECT * FROM public.\"TB_PAD\" WHERE \"PAD_ID\" = '{pad_code}';"
         cur.execute(sql_query)
         # 결과 가져오기
         results = list(cur.fetchall())  # 리스트로 변환
         results = [(list(record)) for record in results]
         # 연결 종료
-        # self.end_conn()
+        self.end_conn()
         # 결과값 리턴
         if len(results) > 0:
             return results[0]
@@ -122,15 +120,22 @@ class DataClass:
         result_stat : 머신러닝 결과
         :return:
         """
+
         user_id, result_species, result_stat = pad_result_data
+        print(pad_result_data)
         save_time = self.return_datetime('time')
-        cur = self.pgdb.cursor()
-        # 쿼리문 및 중복 확인
-        query = f"INSERT INTO public.\"TB_RESULT\" (\"USER_ID\", \"RESULT_SPECIES\", \"RESULT_STAT\", \"SAVE_TIME\") " \
-                f"VALUES ('{user_id}', '{result_species}', '{result_stat}', '{save_time}')"
-        cur.execute(query)
-        self.pgdb.commit()
-        print("내역 저장 성공")
+        print(save_time)
+        try:
+            cur = self.pgdb.cursor()
+            # 쿼리문 및 중복 확인
+            query = f"INSERT INTO public.\"TB_RESULT\" (\"USER_ID\", \"RESULT_SPECIES\", \"RESULT_STAT\", \"SAVE_TIME\") VALUES ('{user_id}', '{result_species}', '{result_stat}', '{save_time}')"
+            print(query)
+            cur.execute(query)
+            self.pgdb.commit()
+            print("내역 저장 성공")
+
+        except Exception as ex:
+            print(ex)
 
     def return_pad_result(self, user_id):
         """

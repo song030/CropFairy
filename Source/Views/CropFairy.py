@@ -169,6 +169,8 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
     # 딥러닝 품종 판별 결과 회신
     def get_dl_result(self, result):
+        self.dlg_loading.hide()
+
         dl_result = result[0]
         if dl_result != '':
             self.result_dlg(result)
@@ -177,20 +179,27 @@ class CropFairy(QMainWindow, Ui_CropFairy):
             # todo: 결과 못뽑음
             print('결과를 못뽑음')
         # self.send_data(send_data)
-        pass
 
     # 도출된 결과들 다이얼로그에 띄우기
     def result_dlg(self, result):
+        result = result[0]
         result1 = result[0]
-        result2 = result[1]
-        # todo 받은 결과들 다이얼로그에 띄우기 어떤식으로 받아오는지 아직 몰루
-        # crop, pad_name, pad_ctg, info1, info2, info3
-        self.dlg_result.set_dialog(self.ml_result, result1[1], result1[2], result2[0], result2[1], result2[2])
-        if self.dlg_result.exec():
+
+        if result1[0] == "":
+            self.dlg_warning.set_dialog_type("fail_analyze")
+            self.dlg_warning.exec()
             self.lbl_upload_image.setText(" ")
             self.btn_start.setVisible(False)
         else:
-            self.move_page_main()
+            result2 = result[1]
+
+            # crop, pad_name, pad_ctg, info1, info2, info3
+            self.dlg_result.set_dialog(self.ml_result, result1[1], result1[2], result2[0], result2[1], result2[2])
+            if self.dlg_result.exec():
+                self.lbl_upload_image.setText(" ")
+                self.btn_start.setVisible(False)
+            else:
+                self.move_page_main()
 
     def get_ml_result(self, result):
         send_data2 = ["test"]
@@ -202,11 +211,10 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
         # 품종 맞을때
         if self.dlg_warning.exec():
-            # self.client.img_send(self.img_path)
+            self.dlg_loading.show()
             print(self.ml_result)
             send_data = ["dl_start", self.mode, self.ml_result, self.singin_user_id]
-
-            # TODO 서버로 딥러닝 진행 시그널 보내기
+            self.send_data(send_data)
 
         # 품종이 틀렸을 때
         else:
@@ -215,13 +223,8 @@ class CropFairy(QMainWindow, Ui_CropFairy):
             self.lbl_upload_image.setText(self.upload_text)
             self.btn_start.setVisible(False)
 
-        self.send_data(send_data)
-
-        self.send_data(send_data2)
-
     # 반환 받은 유저 진단 내역 테이블 위젯에 집어넣기
     def set_pad_result(self, result):
-
         result_list = result
         # 초기화: 열과 행의 수를 설정하고, 모든 항목을 제거합니다.
         self.tableWidget.setRowCount(0)  # 행 수를 0으로 설정하여 모든 행을 제거합니다.
@@ -368,7 +371,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         """
         원천 데이터 이미지 라벨링된 범위만큼 이미지 자르로 numpy로 변환후 저장
         """
-        # self.client.img_send(self.img_path)
+
         new_height = 640
         new_width = 640
         img_path = self.img_path
