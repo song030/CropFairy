@@ -145,7 +145,8 @@ class DataClass:
         user_id = user_id[0]
         # 커서 생성
         cur = self.pgdb.cursor()
-        sql_query = f"SELECT * FROM public.\"TB_RESULT\" WHERE \"USER_ID\" = '{user_id}';"
+        sql_query = f"SELECT \"RESULT_SPECIES\", \"RESULT_STAT\", \"SAVE_TIME\" FROM public.\"TB_RESULT\" WHERE \"USER_ID\" = '{user_id}';"
+        # sql_query = f"SELECT \"RESULT_SPECIES\" \"RESULT_STAT\" \"SAVE_TIME FROM\" public.\"TB_RESULT\" WHERE \"USER_ID\" = '{user_id}';"
         cur.execute(sql_query)
         # 결과 가져오기
         # results = list(cur.fetchall())  # 리스트로 변환

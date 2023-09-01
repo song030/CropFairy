@@ -186,7 +186,18 @@ class Server():
                 pad_code = ""
                 if mode == "bug":
                     print("해충 딥러닝")
-                    pass
+                    # todo: 해충 딥러닝 모델 경로넣기
+                    path = r"../../model"
+                    model = YOLO(path)
+                    results = model.predict(source=img_path)
+
+                    for result in results:
+                        if result.boxes:
+                            box = result.boxes[0]
+                            class_id = int(box.cls)
+                            object_name = model.names[class_id]
+                            confidence = float(box.conf)
+                            print(object_name, confidence)
                 else:
                     print("질병 딥러닝")
                     if crop == "고추":
@@ -229,6 +240,7 @@ class Server():
                     print("2차정보 완")
                     dl_result = f"{pad_name}{header_split}{pad_ctg}"
                     print(user_id, "딥러닝이 뱉은 결과", crop)
+
                     self.db_conn.insert_pad_result([user_id, dl_result, crop])
                     print("진단결과 db저장 완료")
 
@@ -249,7 +261,8 @@ class Server():
                 # send_data = ["dl_result", result]  # client send_dat(header, data)list
                 # print(send_data)
                 # self.send_to_pickle(client_socket, send_data)
-
+            elif header == 'test':
+                print("이거는?")
             elif header == 'send_to_img_save':  # 이미지 정보 받아와서 모델 평가
                 img_data = received_object[1]  # input data = client recv data index[1:]
                 # print(img_data)

@@ -55,7 +55,7 @@ class Client(QObject):
     def send(self, pickle_data):
         print(f"보내는 데이터{pickle_data}")
         self.client_socket.send(pickle_data)
-
+        print("보냈음")
     def img_send(self, img_path):
         with open(img_path, 'rb') as f:
             img_data = base64.b64encode(f.read()).decode('utf-8')

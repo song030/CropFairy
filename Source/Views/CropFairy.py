@@ -34,6 +34,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.ml_result = None
         self.dl_result = None
         # ---
+        self.view_mode = None
         # --- 초기화
         self.set_Ui()
 
@@ -51,11 +52,8 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.dlg_result = DialogResult()
 
         self.connect_Event()
-        print("create client")
         self.client = Client()
-        print("connect thread signal")
         self.connect_thread_signal()
-        print("init complete")
 
     # 화면 초기화
     def set_Ui(self):
@@ -92,7 +90,14 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.btn_start.clicked.connect(self.btn_start_click)
 
         # 내역조회
-
+        self.btn_view_bug.clicked.connect(self.btn_view_bug_click)
+        self.btn_view_disease.clicked.connect(self.btn_view_disease_click)
+    def btn_view_bug_click(self):
+        self.view_mode = "bug"
+        self.btn_list_click()
+    def btn_view_disease_click(self):
+        self.view_mode = "disease"
+        self.btn_list_click()
     # 메인으로 이동시 화면 설정
     def move_page_main(self):
         self.mode = ""
@@ -134,12 +139,14 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.btn_view.setEnabled(False)
         self.lbl_title.setText("병해충 조회")
         self.stacke_main.setCurrentWidget(self.page_view)
+        data = ["get_pad_result", self.singin_user_id]
+        self.send_data(data)
 
     # 진단 내역 버튼
     def btn_list_click(self):
         senddata = ["get_pad_result", self.singin_user_id]
         self.send_data(senddata)
-        self.move_page_list()
+        # self.move_page_list()
 
     def btn_back_click(self):
         self.move_page_main()
@@ -195,6 +202,8 @@ class CropFairy(QMainWindow, Ui_CropFairy):
                 self.move_page_main()
 
     def get_ml_result(self, result):
+        send_data2 = ["test"]
+        self.send_data(send_data2)
         self.dlg_loading.hide()
         self.ml_result = result[0]
         self.dlg_warning.set_dialog_type("species_check", text=self.ml_result, bt_cnt=2)
@@ -217,24 +226,37 @@ class CropFairy(QMainWindow, Ui_CropFairy):
     # 반환 받은 유저 진단 내역 테이블 위젯에 집어넣기
     def set_pad_result(self, result):
         result_list = result
-
-        self.table_list.setColumnCount(4)  # 열의 수 설정
-        self.table_list.setHorizontalHeaderLabels(["진단 일시", "품종", "구분", "내용"])
-        self.table_list.verticalHeader().setVisible(False)
-        self.table_list.setColumnWidth(0, 187)
-        self.table_list.setColumnWidth(1, 80)
-        self.table_list.setColumnWidth(2, 110)
-        self.table_list.setColumnWidth(3, 185)
+        # 초기화: 열과 행의 수를 설정하고, 모든 항목을 제거합니다.
+        self.tableWidget.setRowCount(0)  # 행 수를 0으로 설정하여 모든 행을 제거합니다.
+        self.tableWidget.setColumnCount(0)  # 열 수를 0으로 설정하여 모든 열을 제거합니다.
+        self.tableWidget.setColumnCount(4)  # 열의 수 설정
+        self.tableWidget.setHorizontalHeaderLabels(["진단 일시", "품종", "구분", "내용"])
+        self.tableWidget.verticalHeader().setVisible(False)
+        self.tableWidget.setColumnWidth(0, 195)
+        self.tableWidget.setColumnWidth(1, 80)
+        self.tableWidget.setColumnWidth(2, 112)
+        self.tableWidget.setColumnWidth(3, 167)
 
         # todo: 밑에 머신러닝과 딥러닝 결과로 품종 구분 내용 가져와서 집어넣는걸로 바꿔야함
         for result in result_list:  # 3은 열의 수
-            current_row_count = self.table_list.rowCount()
-            self.table_list.insertRow(current_row_count)
-            print(result)
-            for col, info in enumerate(result):
-                item = QTableWidgetItem(f"{info}")
-                self.table_list.setItem(current_row_count, col, item)
+            result_stat = result[0]
+            result_stat = result_stat.split(chr(1))
+            current_row_count = self.tableWidget.rowCount()
+            print(result_stat)
+            result = [result[2]]+[result[1]]+[result_stat[1]]+[result_stat[0]]
 
+            if result_stat[1] == "해충" and self.view_mode == "bug":
+                self.tableWidget.insertRow(current_row_count)
+                print(result)
+                for col, info in enumerate(result):
+                    item = QTableWidgetItem(f"{info}")
+                    self.tableWidget.setItem(current_row_count, col, item)
+            elif self.view_mode == "disease":
+                self.tableWidget.insertRow(current_row_count)
+                print(result)
+                for col, info in enumerate(result):
+                    item = QTableWidgetItem(f"{info}")
+                    self.tableWidget.setItem(current_row_count, col, item)
     # 로그인한 유저의 정보와 로그인 결과 반환받음
     def sing_in_result(self, result):
         if result[0] == False:
