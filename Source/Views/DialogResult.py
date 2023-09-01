@@ -24,6 +24,7 @@ class DialogResult(QDialog, Ui_DlgResult):
         self.lbl_spedies_txt.setText(crop)
         self.lbl_name_txt.setText(pad_name)
 
+        # self.lbl_info_3_txt.setText(info3)
         if pad_name == "정상":
             self.widget_detail.setVisible(False)
             self.lbl_ctg_txt.setText("")

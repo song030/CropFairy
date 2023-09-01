@@ -92,6 +92,8 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         # 내역조회
         self.btn_view_bug.clicked.connect(self.btn_view_bug_click)
         self.btn_view_disease.clicked.connect(self.btn_view_disease_click)
+        # 행 클릭 이벤트 연결
+        self.tableWidget.itemClicked.connect(self.onItemClicked)
     def btn_view_bug_click(self):
         self.view_mode = "bug"
         self.btn_list_click()
@@ -171,7 +173,8 @@ class CropFairy(QMainWindow, Ui_CropFairy):
     def get_dl_result(self, result):
         self.dlg_loading.hide()
 
-        dl_result = result[0]
+        # dl_result = result[0]
+        dl_result = result
         if dl_result != '':
             self.result_dlg(result)
             print("결과 띄우기")
@@ -182,6 +185,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
     # 도출된 결과들 다이얼로그에 띄우기
     def result_dlg(self, result):
+        print(result)
         result = result[0]
         result1 = result[0]
 
@@ -192,9 +196,9 @@ class CropFairy(QMainWindow, Ui_CropFairy):
             self.btn_start.setVisible(False)
         else:
             result2 = result[1]
-
+            print("딥러닝 결과")
             # crop, pad_name, pad_ctg, info1, info2, info3
-            self.dlg_result.set_dialog(self.ml_result, result1[1], result1[2], result2[0], result2[1], result2[2])
+            self.dlg_result.set_dialog(self.ml_result, result1[1], result1[2], result2[1], result2[2], result2[3])
             if self.dlg_result.exec():
                 self.lbl_upload_image.setText(" ")
                 self.btn_start.setVisible(False)
@@ -226,6 +230,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
     # 반환 받은 유저 진단 내역 테이블 위젯에 집어넣기
     def set_pad_result(self, result):
         result_list = result
+        self.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
         # 초기화: 열과 행의 수를 설정하고, 모든 항목을 제거합니다.
         self.tableWidget.setRowCount(0)  # 행 수를 0으로 설정하여 모든 행을 제거합니다.
         self.tableWidget.setColumnCount(0)  # 열 수를 0으로 설정하여 모든 열을 제거합니다.
@@ -257,6 +262,19 @@ class CropFairy(QMainWindow, Ui_CropFairy):
                 for col, info in enumerate(result):
                     item = QTableWidgetItem(f"{info}")
                     self.tableWidget.setItem(current_row_count, col, item)
+
+    def onItemClicked(self, item):
+        row = item.row()
+        col = 3  # 두 번째 열
+        item = self.tableWidget.item(row, col)
+
+        if item is not None:
+            # todo: 여기서 상세정보? 띄워야함
+            value = item.text()
+            print(f"행 {row}, 두 번째 열의 값: {value}")
+        else:
+            print(f"행 {row}, 두 번째 열의 값이 없습니다.")
+
     # 로그인한 유저의 정보와 로그인 결과 반환받음
     def sing_in_result(self, result):
         if result[0] == False:

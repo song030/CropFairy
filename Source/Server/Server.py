@@ -110,7 +110,6 @@ class Server():
                         del self.clients[notified_socket]
                         continue
 
-
             for notified_socket in exception_sockets:
                 self.sockets_list.remove(notified_socket)
                 del self.clients[notified_socket]
@@ -210,7 +209,7 @@ class Server():
                     model = YOLO(path)
                     start = time.time()
                     results = model.predict(source=img_path)
-                    print(time.time()-start)
+                    print(time.time() - start)
 
                     for result in results:
                         if result.boxes:
@@ -236,19 +235,21 @@ class Server():
                     pad_name = pad_1_result[1]
                     pad_ctg = pad_1_result[2]
                     print("1차정보 완")
-                    pad_2_result = self.db_conn.select_pad_info(pad_code)
-                    print(pad_2_result)
-                    print("2차정보 완")
-                    dl_result = f"{pad_name}{header_split}{pad_ctg}"
-                    print(user_id, "딥러닝이 뱉은 결과", crop)
 
-                    self.db_conn.insert_pad_result([user_id, dl_result, crop])
-                    print("진단결과 db저장 완료")
+                    if pad_name != "문제없음":
+                        pad_2_result = self.db_conn.select_pad_info(pad_name)
+                        print("2차정보 완")
+                        dl_result = f"{pad_name}{header_split}{pad_ctg}"
+                        print(user_id, "딥러닝이 뱉은 결과", crop)
 
-                    send_data = ["dl_result", pad_1_result, pad_2_result]  # client send_dat(header, data)list
+                        self.db_conn.insert_pad_result([user_id, dl_result, crop])
+                        print("진단결과 db저장 완료")
 
-                    print(f"진단결과sand내용:{send_data}")
+                        send_data = ["dl_result", pad_1_result, pad_2_result]  # client send_dat(header, data)list
 
+                        print(f"진단결과sand내용:{send_data}")
+                    else:
+                        send_data = ["dl_result", [pad_1_result], ['', '', '']]
                     self.send_to_pickle(client_socket, send_data)
             elif header == 'ai_result_save_to_db':
                 pass
