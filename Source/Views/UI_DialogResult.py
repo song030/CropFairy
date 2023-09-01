@@ -15,10 +15,17 @@ class Ui_DlgResult(object):
     def setupUi(self, DlgResult):
         DlgResult.setObjectName("DlgResult")
         DlgResult.setWindowModality(QtCore.Qt.NonModal)
-        DlgResult.resize(422, 454)
-        DlgResult.setMinimumSize(QtCore.QSize(300, 300))
+        DlgResult.resize(350, 250)
+        DlgResult.setMinimumSize(QtCore.QSize(300, 200))
+        DlgResult.setAutoFillBackground(False)
         DlgResult.setStyleSheet("QWidget{\n"
 "background-color:rgb(196, 215, 178);\n"
+"}\n"
+"\n"
+"QFrame{\n"
+"background-color:white;\n"
+"border:2px solid rgb(196, 215, 178);\n"
+"border-radius:7px;\n"
 "}\n"
 "\n"
 "QPushButton{\n"
@@ -34,66 +41,71 @@ class Ui_DlgResult(object):
 "border-radius:5px;\n"
 "padding:5px;\n"
 "min-height:25px;\n"
-"}\n"
-"\n"
-"QLabel{\n"
-"background-color:white;\n"
-"padding:5px;\n"
 "}")
         DlgResult.setModal(True)
         self.verticalLayout = QtWidgets.QVBoxLayout(DlgResult)
         self.verticalLayout.setContentsMargins(20, 15, 20, 15)
         self.verticalLayout.setSpacing(10)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.gridLayout = QtWidgets.QGridLayout()
-        self.gridLayout.setContentsMargins(5, 5, 5, 5)
+        self.frame = QtWidgets.QFrame(DlgResult)
+        self.frame.setAutoFillBackground(False)
+        self.frame.setStyleSheet("QLabel{\n"
+"border:0px solid;\n"
+"border-radius:0px;\n"
+"padding:5px;\n"
+"}")
+        self.frame.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.frame.setObjectName("frame")
+        self.gridLayout = QtWidgets.QGridLayout(self.frame)
+        self.gridLayout.setContentsMargins(9, -1, -1, -1)
         self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName("gridLayout")
-        self.lbl_spedies_title = QtWidgets.QLabel(DlgResult)
+        self.lbl_spedies_title = QtWidgets.QLabel(self.frame)
         self.lbl_spedies_title.setObjectName("lbl_spedies_title")
         self.gridLayout.addWidget(self.lbl_spedies_title, 0, 0, 1, 1)
-        self.lbl_name_txt = QtWidgets.QLabel(DlgResult)
-        self.lbl_name_txt.setText("")
-        self.lbl_name_txt.setObjectName("lbl_name_txt")
-        self.gridLayout.addWidget(self.lbl_name_txt, 1, 1, 1, 1)
-        self.lbl_spedies_txt = QtWidgets.QLabel(DlgResult)
+        self.lbl_spedies_txt = QtWidgets.QLabel(self.frame)
         self.lbl_spedies_txt.setText("")
         self.lbl_spedies_txt.setObjectName("lbl_spedies_txt")
         self.gridLayout.addWidget(self.lbl_spedies_txt, 0, 1, 1, 1)
-        self.lbl_name_title = QtWidgets.QLabel(DlgResult)
+        self.lbl_name_title = QtWidgets.QLabel(self.frame)
         self.lbl_name_title.setObjectName("lbl_name_title")
         self.gridLayout.addWidget(self.lbl_name_title, 1, 0, 1, 1)
-        self.widget_detail = QtWidgets.QWidget(DlgResult)
+        self.lbl_name_txt = QtWidgets.QLabel(self.frame)
+        self.lbl_name_txt.setText("")
+        self.lbl_name_txt.setObjectName("lbl_name_txt")
+        self.gridLayout.addWidget(self.lbl_name_txt, 1, 1, 1, 1)
+        self.widget_detail = QtWidgets.QWidget(self.frame)
         self.widget_detail.setObjectName("widget_detail")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.widget_detail)
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_3.setSpacing(0)
         self.gridLayout_3.setObjectName("gridLayout_3")
-        self.lbl_info_1_txt = QtWidgets.QLabel(self.widget_detail)
-        self.lbl_info_1_txt.setText("")
-        self.lbl_info_1_txt.setObjectName("lbl_info_1_txt")
-        self.gridLayout_3.addWidget(self.lbl_info_1_txt, 1, 1, 1, 1)
         self.lbl_info_1_title = QtWidgets.QLabel(self.widget_detail)
         self.lbl_info_1_title.setObjectName("lbl_info_1_title")
-        self.gridLayout_3.addWidget(self.lbl_info_1_title, 1, 0, 1, 1)
-        self.lbl_ctg_title = QtWidgets.QLabel(self.widget_detail)
-        self.lbl_ctg_title.setObjectName("lbl_ctg_title")
-        self.gridLayout_3.addWidget(self.lbl_ctg_title, 0, 0, 1, 1)
-        self.lbl_ctg_txt = QtWidgets.QLabel(self.widget_detail)
-        self.lbl_ctg_txt.setText("")
-        self.lbl_ctg_txt.setObjectName("lbl_ctg_txt")
-        self.gridLayout_3.addWidget(self.lbl_ctg_txt, 0, 1, 1, 1)
-        self.lbl_info_2_title = QtWidgets.QLabel(self.widget_detail)
-        self.lbl_info_2_title.setObjectName("lbl_info_2_title")
-        self.gridLayout_3.addWidget(self.lbl_info_2_title, 2, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.lbl_info_1_title, 2, 0, 1, 1)
         self.lbl_info_2_txt = QtWidgets.QLabel(self.widget_detail)
         self.lbl_info_2_txt.setText("")
         self.lbl_info_2_txt.setObjectName("lbl_info_2_txt")
-        self.gridLayout_3.addWidget(self.lbl_info_2_txt, 2, 1, 1, 1)
+        self.gridLayout_3.addWidget(self.lbl_info_2_txt, 3, 1, 1, 1)
+        self.lbl_info_2_title = QtWidgets.QLabel(self.widget_detail)
+        self.lbl_info_2_title.setObjectName("lbl_info_2_title")
+        self.gridLayout_3.addWidget(self.lbl_info_2_title, 3, 0, 1, 1)
+        self.lbl_info_1_txt = QtWidgets.QLabel(self.widget_detail)
+        self.lbl_info_1_txt.setText("")
+        self.lbl_info_1_txt.setObjectName("lbl_info_1_txt")
+        self.gridLayout_3.addWidget(self.lbl_info_1_txt, 2, 1, 1, 1)
+        self.lbl_ctg_txt = QtWidgets.QLabel(self.widget_detail)
+        self.lbl_ctg_txt.setText("")
+        self.lbl_ctg_txt.setObjectName("lbl_ctg_txt")
+        self.gridLayout_3.addWidget(self.lbl_ctg_txt, 1, 1, 1, 1)
+        self.lbl_ctg_title = QtWidgets.QLabel(self.widget_detail)
+        self.lbl_ctg_title.setObjectName("lbl_ctg_title")
+        self.gridLayout_3.addWidget(self.lbl_ctg_title, 1, 0, 1, 1)
         self.gridLayout_3.setColumnStretch(1, 1)
-        self.gridLayout.addWidget(self.widget_detail, 3, 0, 1, 2)
+        self.gridLayout.addWidget(self.widget_detail, 2, 0, 1, 2)
         self.gridLayout.setColumnStretch(1, 1)
-        self.verticalLayout.addLayout(self.gridLayout)
+        self.verticalLayout.addWidget(self.frame)
         spacerItem = QtWidgets.QSpacerItem(20, 300, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -135,7 +147,6 @@ class Ui_DlgResult(object):
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem3)
         self.verticalLayout.addLayout(self.horizontalLayout)
-        self.verticalLayout.setStretch(0, 1)
 
         self.retranslateUi(DlgResult)
         QtCore.QMetaObject.connectSlotsByName(DlgResult)
@@ -143,10 +154,10 @@ class Ui_DlgResult(object):
     def retranslateUi(self, DlgResult):
         _translate = QtCore.QCoreApplication.translate
         DlgResult.setWindowTitle(_translate("DlgResult", "진단결과"))
-        self.lbl_spedies_title.setText(_translate("DlgResult", "품종 : "))
-        self.lbl_name_title.setText(_translate("DlgResult", "내용 : "))
+        self.lbl_spedies_title.setText(_translate("DlgResult", "품종 :  "))
+        self.lbl_name_title.setText(_translate("DlgResult", "내용 :    "))
         self.lbl_info_1_title.setText(_translate("DlgResult", "원인 : "))
-        self.lbl_ctg_title.setText(_translate("DlgResult", "구분 : "))
         self.lbl_info_2_title.setText(_translate("DlgResult", "대처법 : "))
+        self.lbl_ctg_title.setText(_translate("DlgResult", "구분 : "))
         self.btn_analyze.setText(_translate("DlgResult", "추가진단"))
         self.btn_main.setText(_translate("DlgResult", "메인화면"))

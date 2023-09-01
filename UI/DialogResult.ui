@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>422</width>
-    <height>230</height>
+    <width>350</width>
+    <height>250</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -22,9 +22,18 @@
   <property name="windowTitle">
    <string>진단결과</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <property name="styleSheet">
    <string notr="true">QWidget{
 background-color:rgb(196, 215, 178);
+}
+
+QFrame{
+background-color:white;
+border:2px solid rgb(196, 215, 178);
+border-radius:7px;
 }
 
 QPushButton{
@@ -40,17 +49,12 @@ border:2px solid rgb(196, 215, 178);
 border-radius:5px;
 padding:5px;
 min-height:25px;
-}
-
-QLabel{
-background-color:white;
-padding:5px;
 }</string>
   </property>
   <property name="modal">
    <bool>true</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
    <property name="spacing">
     <number>10</number>
    </property>
@@ -67,114 +71,123 @@ padding:5px;
     <number>15</number>
    </property>
    <item>
-    <layout class="QGridLayout" name="gridLayout" columnstretch="0,1">
-     <property name="leftMargin">
-      <number>5</number>
+    <widget class="QFrame" name="frame">
+     <property name="autoFillBackground">
+      <bool>false</bool>
      </property>
-     <property name="topMargin">
-      <number>5</number>
+     <property name="styleSheet">
+      <string notr="true">QLabel{
+border:0px solid;
+border-radius:0px;
+padding:5px;
+}</string>
      </property>
-     <property name="rightMargin">
-      <number>5</number>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
      </property>
-     <property name="bottomMargin">
-      <number>5</number>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
      </property>
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <item row="0" column="0">
-      <widget class="QLabel" name="lbl_spedies_title">
-       <property name="text">
-        <string>품종 : </string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="lbl_name_txt">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="lbl_spedies_txt">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="lbl_name_title">
-       <property name="text">
-        <string>내용 : </string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0" colspan="2">
-      <widget class="QWidget" name="widget_detail" native="true">
-       <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1">
-        <property name="leftMargin">
-         <number>0</number>
+     <layout class="QGridLayout" name="gridLayout" columnstretch="0,1">
+      <property name="leftMargin">
+       <number>9</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="lbl_spedies_title">
+        <property name="text">
+         <string>품종 :  </string>
         </property>
-        <property name="topMargin">
-         <number>0</number>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="lbl_spedies_txt">
+        <property name="text">
+         <string/>
         </property>
-        <property name="rightMargin">
-         <number>0</number>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lbl_name_title">
+        <property name="text">
+         <string>내용 :    </string>
         </property>
-        <property name="bottomMargin">
-         <number>0</number>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="lbl_name_txt">
+        <property name="text">
+         <string/>
         </property>
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <item row="1" column="1">
-         <widget class="QLabel" name="lbl_info_1_txt">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="lbl_info_1_title">
-          <property name="text">
-           <string>원인 : </string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="lbl_ctg_title">
-          <property name="text">
-           <string>구분 : </string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="lbl_ctg_txt">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="lbl_info_2_title">
-          <property name="text">
-           <string>대처법 : </string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLabel" name="lbl_info_2_txt">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QWidget" name="widget_detail" native="true">
+        <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="2" column="0">
+          <widget class="QLabel" name="lbl_info_1_title">
+           <property name="text">
+            <string>원인 : </string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLabel" name="lbl_info_2_txt">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="lbl_info_2_title">
+           <property name="text">
+            <string>대처법 : </string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="lbl_info_1_txt">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="lbl_ctg_txt">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="lbl_ctg_title">
+           <property name="text">
+            <string>구분 : </string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <spacer name="verticalSpacer">

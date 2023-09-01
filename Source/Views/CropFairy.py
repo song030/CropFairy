@@ -94,6 +94,10 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.btn_view_disease.clicked.connect(self.btn_view_disease_click)
         # 행 클릭 이벤트 연결
         self.tableWidget.itemClicked.connect(self.onItemClicked)
+
+    def closeEvent(self, a0) -> None:
+        self.client.disconnect()
+
     def btn_view_bug_click(self):
         self.view_mode = "bug"
         self.btn_list_click()
@@ -103,7 +107,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
     # 메인으로 이동시 화면 설정
     def move_page_main(self):
         self.mode = ""
-        self.stack_control.setVisible(False)
         self.btn_back.setVisible(False)
         self.btn_list.setEnabled(True)
         self.btn_view.setEnabled(True)
@@ -124,8 +127,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
     # 내역조회 화면으로 이동시 화면 설정
     def move_page_list(self):
-        self.stack_control.setCurrentWidget(self.control_page)
-        self.stack_control.setVisible(True)
         self.btn_back.setVisible(True)
         self.btn_list.setEnabled(False)
         self.btn_view.setEnabled(True)
@@ -134,8 +135,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
     # 병해충 조회 화면으로 이동시 화면 설정
     def move_page_view(self):
-        self.stack_control.setCurrentWidget(self.control_page)
-        self.stack_control.setVisible(True)
         self.btn_back.setVisible(True)
         self.btn_list.setEnabled(True)
         self.btn_view.setEnabled(False)
@@ -320,8 +319,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
     # 진단화면으로 이동시 화면 설정
     def move_page_analyze(self):
-        self.stack_control.setCurrentWidget(self.control_analyze)
-        self.stack_control.setVisible(True)
         self.btn_back.setVisible(True)
         self.btn_start.setVisible(False)
         self.btn_list.setEnabled(True)
