@@ -94,20 +94,29 @@ class DataClass:
             return results[0]
         return [False]
 
-    def select_pad_info(self, pad_code):
+    def select_pad_info(self, pad_name):
         """
         병충해 이름을 받아 info 반환
         """
-        print(pad_code)
+        if "탄저병" in pad_name:
+            pad_name = "탄저병"
+        elif "노균병" in pad_name:
+            pad_name = "노균병"
+        elif "흰가루병" in pad_name:
+            pad_name = "흰가루병"
+        # print("정보 반환 db", pad_code)
+
         # 커서 생성
         cur = self.pgdb.cursor()
-        sql_query = f"SELECT * FROM public.\"TB_PAD\" WHERE \"PAD_ID\" = '{pad_code}';"
+        sql_query = f"SELECT * FROM public.\"TB_PAD_INFO\" WHERE \"PAD_NAME\" = '{pad_name}';"
         cur.execute(sql_query)
         # 결과 가져오기
         results = list(cur.fetchall())  # 리스트로 변환
         results = [(list(record)) for record in results]
         # 연결 종료
-        self.end_conn()
+        # self.end_conn()
+
+        print(results)
         # 결과값 리턴
         if len(results) > 0:
             return results[0]

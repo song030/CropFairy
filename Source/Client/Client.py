@@ -221,6 +221,7 @@ class Client(QObject):
         elif header == 'dl_result':  # 품종 판별 결과
             result = received_object[1:]
             result = [result]
+            print("딥러닝 결과")
             self.dl_result.emit(result)
 
         elif header == 'get_pad_info':  # 병충해 정보 반환
