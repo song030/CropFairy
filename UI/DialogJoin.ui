@@ -168,6 +168,9 @@ min-height:25px;
        </item>
        <item>
         <widget class="QLineEdit" name="edt_pwd_1">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
          <property name="placeholderText">
           <string>비밀번호</string>
          </property>
@@ -175,6 +178,9 @@ min-height:25px;
        </item>
        <item>
         <widget class="QLineEdit" name="edt_pwd_2">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
          <property name="placeholderText">
           <string>비밀번호 확인</string>
          </property>

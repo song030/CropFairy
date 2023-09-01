@@ -188,6 +188,7 @@ class Ui_CropFairy(object):
         self.edt_email.setObjectName("edt_email")
         self.verticalLayout_6.addWidget(self.edt_email)
         self.edt_pwd = QtWidgets.QLineEdit(self.widget_login)
+        self.edt_pwd.setEchoMode(QtWidgets.QLineEdit.Password)
         self.edt_pwd.setObjectName("edt_pwd")
         self.verticalLayout_6.addWidget(self.edt_pwd)
         self.layout_button = QtWidgets.QHBoxLayout()

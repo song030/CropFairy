@@ -63,10 +63,6 @@ class Server():
         self.model = joblib.load(model_filename)
         print("머신러닝 모델 로드 완료")
 
-        print("딥러닝 해충모드 모델 로드중")
-        # todo: 딥러닝 모델 넣기
-        print("딥러닝 모델 로드 완료")
-
     def start(self):
         if self.thread_for_run is not None:  # 실행중이면 종료 시키기
             return
