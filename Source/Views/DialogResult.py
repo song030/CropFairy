@@ -25,6 +25,12 @@ class DialogResult(QDialog, Ui_DlgResult):
         self.lbl_name_txt.setText(pad_name)
 
         if pad_name == "정상":
+            self.widget_detail.setVisible(False)
+            self.lbl_ctg_txt.setText("")
+            self.lbl_info_1_txt.setText("")
+            self.lbl_info_2_txt.setText("")
+        else:
+            self.widget_detail.setVisible(True)
             self.lbl_ctg_txt.setText(pad_ctg)
             self.lbl_info_1_txt.setText(info1)
             self.lbl_info_2_txt.setText(info2)
