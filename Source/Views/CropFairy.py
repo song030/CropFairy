@@ -51,8 +51,11 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.dlg_result = DialogResult()
 
         self.connect_Event()
+        print("create client")
         self.client = Client()
+        print("connect thread signal")
         self.connect_thread_signal()
+        print("init complete")
 
     # 화면 초기화
     def set_Ui(self):
@@ -170,19 +173,26 @@ class CropFairy(QMainWindow, Ui_CropFairy):
             print('결과를 못뽑음')
         # self.send_data(send_data)
 
-
     # 도출된 결과들 다이얼로그에 띄우기
     def result_dlg(self, result):
+        result = result[0]
         result1 = result[0]
-        result2 = result[1]
 
-        # crop, pad_name, pad_ctg, info1, info2, info3
-        self.dlg_result.set_dialog(self.ml_result, result1[1], result1[2], result2[0], result2[1], result2[2])
-        if self.dlg_result.exec():
+        if result1[0] == "":
+            self.dlg_warning.set_dialog_type("fail_analyze")
+            self.dlg_warning.exec()
             self.lbl_upload_image.setText(" ")
             self.btn_start.setVisible(False)
         else:
-            self.move_page_main()
+            result2 = result[1]
+
+            # crop, pad_name, pad_ctg, info1, info2, info3
+            self.dlg_result.set_dialog(self.ml_result, result1[1], result1[2], result2[0], result2[1], result2[2])
+            if self.dlg_result.exec():
+                self.lbl_upload_image.setText(" ")
+                self.btn_start.setVisible(False)
+            else:
+                self.move_page_main()
 
     def get_ml_result(self, result):
         self.dlg_loading.hide()
@@ -193,10 +203,8 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         # 품종 맞을때
         if self.dlg_warning.exec():
             self.dlg_loading.show()
-            self.client.img_send(self.img_path)
             print(self.ml_result)
             send_data = ["dl_start", self.mode, self.ml_result, self.singin_user_id]
-
             self.send_data(send_data)
 
         # 품종이 틀렸을 때
@@ -341,7 +349,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         """
         원천 데이터 이미지 라벨링된 범위만큼 이미지 자르로 numpy로 변환후 저장
         """
-        self.client.img_send(self.img_path)
+
         new_height = 640
         new_width = 640
         img_path = self.img_path

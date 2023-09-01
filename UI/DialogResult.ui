@@ -83,24 +83,31 @@ padding:5px;
      <property name="spacing">
       <number>0</number>
      </property>
-     <item row="2" column="0">
-      <widget class="QLabel" name="lbl_name_title">
+     <item row="0" column="1">
+      <widget class="QLabel" name="lbl_spedies_txt">
        <property name="text">
-        <string>내용 : </string>
+        <string/>
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="4" column="1">
+      <widget class="QLabel" name="lbl_info_1_txt">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
       <widget class="QLabel" name="lbl_info_1_title">
        <property name="text">
         <string>원인 : </string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="lbl_ctg_title">
+     <item row="5" column="1">
+      <widget class="QLabel" name="lbl_info_2_txt">
        <property name="text">
-        <string>구분 : </string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -111,45 +118,38 @@ padding:5px;
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="lbl_info_2_title">
-       <property name="text">
-        <string>대처법 : </string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="lbl_spedies_txt">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
+     <item row="2" column="1">
       <widget class="QLabel" name="lbl_ctg_txt">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="5" column="0">
+      <widget class="QLabel" name="lbl_info_2_title">
+       <property name="text">
+        <string>대처법 : </string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lbl_name_title">
+       <property name="text">
+        <string>내용 : </string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
       <widget class="QLabel" name="lbl_name_txt">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QLabel" name="lbl_info_1_txt">
+     <item row="2" column="0">
+      <widget class="QLabel" name="lbl_ctg_title">
        <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLabel" name="lbl_info_2_txt">
-       <property name="text">
-        <string/>
+        <string>구분 : </string>
        </property>
       </widget>
      </item>
