@@ -42,7 +42,8 @@ class Server:
     def models_load(self):
         print("머신러닝 모델 로드중")
         # 모델 파일 경로 및 이름 설정
-        model_filename = '../../model/model_0831_78.pkl'
+        # model_filename = '../../model/model_0831_78.pkl'
+        model_filename = '../../model/last_real_last_model.pkl'
         # 모델 로드
         self.model = joblib.load(model_filename)
         print("머신러닝 모델 로드 완료")
@@ -181,11 +182,11 @@ class Server:
                 else:
                     print("질병 딥러닝")
                     if crop == "고추":
-                        path = r"../../model/peper_best.pt"
+                        path = r"../../model/peper_last.pt"
                     elif crop == "오이":
-                        path = r"../../model/cucumber_best.pt"
+                        path = r"../../model/cucumber_last.pt"
                     elif crop == "토마토":
-                        path = r"../../model/tomato_best.pt"
+                        path = r"../../model/tomato_last.pt"
 
                     model = YOLO(path)
                     start = time.time()
@@ -238,8 +239,8 @@ class Server:
 
                 cv2.imwrite('recv_img/recv_save_img.jpg', img_data)
 
-                new_height = 200
-                new_width = 200
+                new_height = 150
+                new_width = 150
 
                 # 이미지 리사이징
                 data = cv2.resize(img_data, (new_width, new_height))
@@ -260,9 +261,9 @@ class Server:
                 print(f"예측치: {new_predictions}")
                 print(f"결과: {result}")
                 if "고추" in result[0]:
-                    data = "고추"
-                elif "오이" in result[0]:
                     data = "오이"
+                elif "오이" in result[0]:
+                    data = "고추"
                 elif "토마토" in result[0]:
                     data = "토마토"
                 send_data = ["ml_result", data]  # client send_dat(header, data)list
