@@ -65,11 +65,6 @@ class DialogJoin(QDialog, Ui_DlgJoin):
                     self.dialog.set_dialog_type("email_check_not")
                 self.dialog.exec()
 
-        # result = False
-        # if result:
-        #     self.setResult(1)
-        #     self.close()
-
     # 패스워드 확인 함수
     def check_pw(self):
         edt_pw = self.edt_pwd_1.text()
@@ -101,6 +96,4 @@ class DialogJoin(QDialog, Ui_DlgJoin):
             self.dialog.exec()
         else:
             senddata = ["idrd_check", edt_email]
-            print(senddata)
-
             self.cropfairy.send_data(senddata)

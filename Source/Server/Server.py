@@ -1,19 +1,10 @@
-import base64
 import socket
 import pickle
-import sys
 import time
 
 import cv2
 import joblib as joblib
-import numpy as np
 
-from threading import Thread
-from PyQt5.QtCore import QThread, pyqtSignal
-from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
-import json
-import sqlite3
 import select
 from socket import *
 from threading import *
@@ -28,13 +19,7 @@ list_split_1 = chr(2)
 list_split_2 = chr(3)
 
 
-class Server():
-    '''
-    실습실 종혁: 10.10.20.114
-    기숙사 독서실 : 192.168.0.88
-    '''
-    # HOST = '10.10.20.114'
-    # gethostbyname(gethostname())
+class Server:
     HOST = gethostbyname(gethostname())
     PORT = 5050
     BUFFER = 1500000
@@ -55,7 +40,6 @@ class Server():
         self.models_load()
 
     def models_load(self):
-        # todo: 딥러닝 모델 넣기
         print("머신러닝 모델 로드중")
         # 모델 파일 경로 및 이름 설정
         model_filename = '../../model/model_0831_78.pkl'
@@ -112,9 +96,6 @@ class Server():
 
     # client 한테 send 하는 함수
     def send_to_pickle(self, client_socket: socket, send_data: list):
-        # # 서버에서 전송할 데이터 (파이썬 객체)
-        # data_make_send = send_data
-
         # 데이터를 직렬화하여 이진 데이터로 변환
         pickle_data = pickle.dumps(send_data)
         client_socket.send(pickle_data)
@@ -169,30 +150,23 @@ class Server():
                 result2 = self.db_conn.select_pad_info(result[1])  # DB return 값 받아옴
 
                 send_data = ["get_pad_info", result + result2]  # client send_dat(header, data)list
-                print(send_data)
                 self.send_to_pickle(client_socket, send_data)
 
             elif header == 'clicked_pad_info':  # 클릭한 셀의 pad정보 반환
                 input_data = received_object[1]  # input data = client recv data index[1:]
-                print(input_data)
                 result = self.db_conn.return_pad_info2(input_data)  # DB return 값 받아옴
-                print(result)
                 result2 = self.db_conn.select_pad_info(input_data)  # DB return 값 받아옴
-                print(result2)
 
                 send_data = ["re_clicked_pad_info", result + result2]  # client send_dat(header, data)list
-                print(send_data)
                 self.send_to_pickle(client_socket, send_data)
 
             elif header == 'dl_start':
                 mode, crop, user_id = received_object[1:]  # input data = client recv data index[1:]
-                print("질병 딥러닝 들어와?")
                 dl_result_list = []
                 img_path = './recv_img/recv_save_img.jpg'
 
                 pad_code = ""
                 if mode == "bug":
-                    print("해충 딥러닝")
                     path = r"../../model/bug_best.pt"
                     model = YOLO(path)
                     results = model.predict(source=img_path)
@@ -258,26 +232,12 @@ class Server():
                     else:
                         send_data = ["dl_result", [pad_1_result], ['', '', '']]
                     self.send_to_pickle(client_socket, send_data)
-            elif header == 'ai_result_save_to_db':
-                pass
-                # todo: 결과 저장
-                # print("딥러닝 들어와?")
-                # dl_result_list = []
-                # img_path = 'recv_img/recv_save_img.jpg'
-                # print("해충 딥러닝")
-                # print("질병 딥러닝")
-                #
-                # send_data = ["dl_result", result]  # client send_dat(header, data)list
-                # print(send_data)
-                # self.send_to_pickle(client_socket, send_data)
-            elif header == 'test':
-                print("이거는?")
+
             elif header == 'send_to_img_save':  # 이미지 정보 받아와서 모델 평가
                 img_data = received_object[1]  # input data = client recv data index[1:]
-                # print(img_data)
-                # 이미지 저장
+
                 cv2.imwrite('recv_img/recv_save_img.jpg', img_data)
-                # 리사이즈 크기
+
                 new_height = 200
                 new_width = 200
 
@@ -291,18 +251,11 @@ class Server():
                 # 모델 예측값 반환
                 predicted_probabilities = self.model.predict_proba(data)
 
-                # 예측 확률과 임계값 설정
-                threshold = 0.7
-
                 # 예측값 재설정
                 new_predictions = []
 
                 for probabilities in predicted_probabilities:
                     new_predictions.append(probabilities)
-                    # if max(probabilities) >= threshold:
-                    #     new_predictions.append(probabilities)
-                    # else:
-                    #     new_predictions.append("Unknown")
 
                 print(f"예측치: {new_predictions}")
                 print(f"결과: {result}")
@@ -328,29 +281,6 @@ class Server():
                 send_data = ["return_disease_info", data]  # client send_dat(header, data)list
                 print(send_data)
                 self.send_to_pickle(client_socket, send_data)
-                # # # NumPy 파일을 저장할 리스트
-                # data_list = []
-                # np.set_printoptions(linewidth=np.inf, threshold=sys.maxsize)
-                #
-                # image = cv2.imread(img_data)
-                # image_vector = image.flatten()
-                #
-                # image_rgb = cv2.cvtColor(image_vector, cv2.COLOR_BGR2RGB)
-                # # 이미지를 NumPy 배열로 변환
-                # image_np = np.array(image_rgb)
-                # # 이미지.npy 리사이징
-                # resized_image = cv2.resize(image_np, (new_width, new_height))
-                #
-                # # 리사이징한 이미지 넘파이 리스트에 넣기 -> 이미지를 여러장 넣었을때
-                # data_list.append(resized_image)
-
-                # result = self.db_conn.return_pad_info(input_data)  # DB return 값 받아옴
-                # result2 = self.db_conn.select_pad_info(result[1])  # DB return 값 받아옴
-
-                # send_data = ["get_pad_info", result + result2] # client send_dat(header, data)list
-                # print(send_data)
-                # self.send_to_pickle(client_socket, send_data)
-
 
         except:
             pass

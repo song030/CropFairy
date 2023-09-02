@@ -10,7 +10,6 @@ class Loading(QWidget, Ui_DlgLoading):
         self.setupUi(self)
 
         self.setWindowFlags(Qt.FramelessWindowHint)
-        # self.center()
 
         self.movie = QMovie("../../Image/loading.gif", QByteArray(), self)
         self.lbl_loading.setMovie(self.movie)

@@ -1,18 +1,12 @@
-import sys
-import geopy.distance
 import psycopg2 as pg
-import pandas as pd
-from datetime import datetime, timedelta
+from datetime import datetime
 from sqlalchemy import create_engine
-import os
-
 
 class DataClass:
     def __init__(self):
         # print(sys.path)
         self.pgdb = pg.connect(
             host='10.10.20.114',
-            # host='localhost',
             dbname='CropFairy',
             user='postgres',
             password='ilsan1236526',
@@ -81,8 +75,6 @@ class DataClass:
         병충해 코드가 들어오면 정보들 반환
         :return:
         """
-        # pad_code = pad_code[0]
-        # 커서 생성
         cur = self.pgdb.cursor()
         sql_query = f"SELECT * FROM public.\"TB_PAD\" WHERE \"PAD_ID\" = '{pad_code}';"
         cur.execute(sql_query)
@@ -99,8 +91,6 @@ class DataClass:
         병충해 이름이 들어오면 정보들 반환
         :return:
         """
-        # pad_code = pad_code[0]
-        # 커서 생성
         cur = self.pgdb.cursor()
         sql_query = f"SELECT \"PAD_CTG\" FROM public.\"TB_PAD\" WHERE \"PAD_NAME\" = '{pad_name}';"
         cur.execute(sql_query)
@@ -117,19 +107,8 @@ class DataClass:
         병충해 코드가 들어오면 정보들 반환
         :return:
         """
-        pad_ctg = "해충"
         print("db")
-        # pad_code = pad_code[0]
-        # 커서 생성
         cur = self.pgdb.cursor()
-        # sql_query = """
-        # SELECT table1.name, table1.info, table2.category
-        # FROM table1
-        # INNER JOIN table2
-        # ON table1.name = table2.name
-        # WHERE table1.name = '특정이름';
-        # """
-        # sql_query = f"SELECT * FROM public.\"TB_PAD\" WHERE \"PAD_CTG\" = '{pad_ctg}';"
         sql_query = f"SELECT \"TB_PAD\".\"PAD_NAME\", \"TB_PAD\".\"PAD_CTG\", \"TB_PAD_INFO\".\"PAD_INFO3\"FROM public." \
                     f"\"TB_PAD\"INNER JOIN \"TB_PAD_INFO\" ON \"TB_PAD\".\"PAD_NAME\" = \"TB_PAD_INFO\".\"PAD_NAME\"" \
                     f"WHERE \"TB_PAD\".\"PAD_CTG\" = '해충';"
@@ -148,14 +127,11 @@ class DataClass:
         병충해 코드가 들어오면 정보들 반환
         :return:
         """
-        data = "해충"
-        # pad_code = pad_code[0]
-        # 커서 생성
+
         cur = self.pgdb.cursor()
         sql_query = f"SELECT \"TB_PAD\".\"PAD_NAME\", \"TB_PAD\".\"PAD_CTG\", \"TB_PAD_INFO\".\"PAD_INFO3\"FROM public." \
                     f"\"TB_PAD\"INNER JOIN \"TB_PAD_INFO\" ON \"TB_PAD\".\"PAD_NAME\" = \"TB_PAD_INFO\".\"PAD_NAME\"" \
                     f"WHERE \"TB_PAD\".\"PAD_CTG\" != '해충' AND \"TB_PAD\".\"PAD_CTG\" != '문제없음';"
-        # sql_query = f"SELECT * FROM public.\"TB_PAD\" WHERE \"PAD_CTG\" != '{data}' AND \"PAD_CTG\" != '문제없음';"
         cur.execute(sql_query)
         # 결과 가져오기
         results = list(cur.fetchall())  # 리스트로 변환
@@ -175,7 +151,6 @@ class DataClass:
             pad_name = "노균병"
         elif "흰가루병" in pad_name:
             pad_name = "흰가루병"
-        # print("정보 반환 db", pad_code)
 
         # 커서 생성
         cur = self.pgdb.cursor()
@@ -228,10 +203,8 @@ class DataClass:
         # 커서 생성
         cur = self.pgdb.cursor()
         sql_query = f"SELECT \"RESULT_SPECIES\", \"RESULT_STAT\", \"SAVE_TIME\" FROM public.\"TB_RESULT\" WHERE \"USER_ID\" = '{user_id}';"
-        # sql_query = f"SELECT \"RESULT_SPECIES\" \"RESULT_STAT\" \"SAVE_TIME FROM\" public.\"TB_RESULT\" WHERE \"USER_ID\" = '{user_id}';"
         cur.execute(sql_query)
-        # 결과 가져오기
-        # results = list(cur.fetchall())  # 리스트로 변환
+
         results = list(cur)  # 리스트로 변환
         results = [(list(record)) for record in results]
         # 연결 종료
@@ -251,7 +224,6 @@ class DataClass:
         elif type == 'time_only':
             now_format = now.strftime("%H:%M:%S")  # 시 분 초
 
-        # print('[dateimte.py]시간 포멧팅: ', now_format)
         return now_format
 
     def update_user_pw(self, pw, email):
@@ -263,21 +235,3 @@ class DataClass:
         cursor = self.pgdb.cursor()
         cursor.execute(f"update USERS set user_pw='{pw} where user_email='{email}")
         self.pgdb.commit()
-
-# if __name__ == '__main__':
-#     db = DataClass()
-#     a = db.select_dong_population()
-#     print(a)
-
-# list_1 = []
-# dict_1 = {}
-# for i in a:
-#     dong_code = i[0]
-#     population = i[1]
-#     # print(dong_code)
-#     population_data = db.select_dong(dong_code)
-#     list_1.append(population_data[0][0])
-#     dict_1[population_data[0][0]] = population
-# print(dict_1)
-
-# print(a)

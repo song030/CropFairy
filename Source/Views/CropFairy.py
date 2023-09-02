@@ -2,9 +2,9 @@ import cv2
 import numpy as np
 import pickle
 
-from PyQt5.QtWidgets import QDialog, QLabel, QPushButton, QFileDialog, QLineEdit, QTableWidget, QTableWidgetItem
-from PyQt5.QtGui import QBrush, QColor, QPixmap
-from PyQt5.QtCore import QSize, Qt, QDate
+from PyQt5.QtWidgets import QLabel, QFileDialog, QTableWidget, QTableWidgetItem
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import QSize, Qt
 from PyQt5.Qt import QMainWindow
 
 from Source.Views.UI_CropFairy import Ui_CropFairy
@@ -36,8 +36,9 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         # ---
         self.view_count = 0
         self.ai_result_list = None
+
         # --- 초기화
-        self.set_Ui()
+        self.setupUi(self)
 
         # 검정 투명 배경
         self.back = QLabel(self)
@@ -52,23 +53,14 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
         self.dlg_result = DialogResult()
 
-        self.connect_Event()
+        self.connect_event()
         self.client = Client()
         self.connect_thread_signal()
 
-    # 화면 초기화
-    def set_Ui(self):
-        self.setupUi(self)
-        self.set_Font()
-
         self.move_page_main()
 
-    # 글꼴 설정
-    def set_Font(self):
-        pass
-
     # 이벤트 연결
-    def connect_Event(self):
+    def connect_event(self):
         # 공통
         self.dlg_warning.showEvent = lambda e: self.back.show()
         self.dlg_warning.closeEvent = lambda e: self.back.hide()
@@ -98,16 +90,19 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.cb_kind.currentIndexChanged.connect(self.btn_list_click)
         # self.cb_kind.changeEvent.connect(self.set_pad_result)
 
-
     def closeEvent(self, a0) -> None:
         self.client.disconnect()
 
+    # 해충 정보 불러오기
     def btn_view_bug_click(self):
-        self.view_mode = "bug"
-        self.btn_list_click()
+        data = ["return_bug_info"]
+        self.send_data(data)
+
+    # 질병 정보 불러오기
     def btn_view_disease_click(self):
-        self.view_mode = "disease"
-        self.btn_list_click()
+        data = ["return_disease_info"]
+        self.send_data(data)
+
     # 메인으로 이동시 화면 설정
     def move_page_main(self):
         self.mode = ""
@@ -176,16 +171,14 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.client.return_bug_info.connect(self.bug_info)
         self.client.return_disease_info.connect(self.disease_info)
         self.client.re_clicked_pad_info.connect(self.clicked_pad_info_dlg)
+
     # 클릭한 셀의 pad정보 다이얼 로그에 띄우기
     def clicked_pad_info_dlg(self, result):
         self.pad_info_dlg(result)
 
     # 도출된 결과들 다이얼로그에 띄우기
     def pad_info_dlg(self, result):
-        print(result)
         result = result
-        print(result)
-
 
         if result[0] == "":
             self.dlg_warning.set_dialog_type("fail_analyze")
@@ -193,8 +186,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
             self.lbl_upload_image.setText(" ")
             self.btn_start.setVisible(False)
         else:
-            print("딥러닝 결과")
-            # crop, pad_name, pad_ctg, info1, info2, info3
             self.dlg_result.set_dialog2(result[0], result[1], result[2], result[3], result[4])
             if self.dlg_result.exec():
                 self.lbl_upload_image.setText(" ")
@@ -210,7 +201,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
     def bug_info(self, result):
         self.set_pad_list(result, "bug")
 
-
     def set_pad_list(self, result, mode):
         pad_list = result
         self.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
@@ -224,16 +214,13 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.tableWidget.setColumnWidth(1, 80)
         self.tableWidget.setColumnWidth(2, 280)
 
-        # todo: 밑에 머신러닝과 딥러닝 결과로 품종 구분 내용 가져와서 집어넣는걸로 바꿔야함
         for result in pad_list:  # 3은 열의 수
             current_row_count = self.tableWidget.rowCount()
 
             result = [result[0]] + [result[1]] + [result[2]]
 
             if result[1] == "해충" and mode == "bug":
-                print("해충 들어와?")
                 self.tableWidget.insertRow(current_row_count)
-                print(result)
                 for col, info in enumerate(result):
                     item = QTableWidgetItem(f"{info}")
                     self.tableWidget.setItem(current_row_count, col, item)
@@ -241,7 +228,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
             if result[1] != "해충" and mode == "disease":
                 self.tableWidget.insertRow(current_row_count)
-                print(result)
                 for col, info in enumerate(result):
                     item = QTableWidgetItem(f"{info}")
                     self.tableWidget.setItem(current_row_count, col, item)
@@ -254,15 +240,12 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         dl_result = result
         if dl_result != '':
             self.result_dlg(result)
-            print("결과 띄우기")
         else:
             print('결과를 못뽑음')
         # self.send_data(send_data)
 
     # 도출된 결과들 다이얼로그에 띄우기
     def result_dlg(self, result):
-        print(result)
-
         if result == "":
             self.dlg_warning.set_dialog_type("fail_analyze")
             self.dlg_warning.exec()
@@ -272,8 +255,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
             result = result[0]
             result1 = result[0]
             result2 = result[1]
-            print("딥러닝 결과")
-            # crop, pad_name, pad_ctg, info1, info2, info3
             self.dlg_result.set_dialog(self.ml_result, result1[1], result1[2], result2[1], result2[2], result2[3])
             if self.dlg_result.exec():
                 self.lbl_upload_image.setText(" ")
@@ -287,12 +268,10 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.dlg_loading.hide()
         self.ml_result = result[0]
         self.dlg_warning.set_dialog_type("species_check", text=self.ml_result, bt_cnt=2)
-        print("main 들어와?")
 
         # 품종 맞을때
         if self.dlg_warning.exec():
             self.dlg_loading.show()
-            print(self.ml_result)
             send_data = ["dl_start", self.mode, self.ml_result, self.singin_user_id]
             self.send_data(send_data)
 
@@ -319,33 +298,25 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.table_list.setColumnWidth(2, 112)
         self.table_list.setColumnWidth(3, 167)
         cb_kind = self.cb_kind.currentText().strip()
-        # cb_kind = cb_kind.
-        # todo: 밑에 머신러닝과 딥러닝 결과로 품종 구분 내용 가져와서 집어넣는걸로 바꿔야함
+
         for result in ai_result_list:  # 3은 열의 수
             result_stat = result[0]
             result_stat = result_stat.split(chr(1))
             current_row_count = self.table_list.rowCount()
             result = [result[2]] + [result[1]] + [result_stat[1]] + [result_stat[0]]
 
-            print(cb_kind)
-            print(result[1])
             if result[1] == "고추" and cb_kind == "고추":
-                print("고추 들어와?")
                 self.table_list.insertRow(current_row_count)
                 for col, info in enumerate(result):
-                    print(info)
-                    print("셀만드는 ")
                     item = QTableWidgetItem(f"{info}")
                     self.table_list.setItem(current_row_count, col, item)
             if result[1] == "오이" and cb_kind == "오이":
                 self.table_list.insertRow(current_row_count)
-                print(result)
                 for col, info in enumerate(result):
                     item = QTableWidgetItem(f"{info}")
                     self.table_list.setItem(current_row_count, col, item)
             if result[1] == "토마토" and cb_kind == "토마토":
                 self.table_list.insertRow(current_row_count)
-                print(result)
                 for col, info in enumerate(result):
                     item = QTableWidgetItem(f"{info}")
                     self.table_list.setItem(current_row_count, col, item)
@@ -358,15 +329,10 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         data = ["clicked_pad_info", value]
 
         self.send_data(data)
-        # if item is not None:
-        #     # todo: 여기서 상세정보? 띄워야함
-        #     print(f"행 {row}, 두 번째 열의 값: {value}")
-        # else:
-        #     print(f"행 {row}, 두 번째 열의 값이 없습니다.")
 
     # 로그인한 유저의 정보와 로그인 결과 반환받음
     def sing_in_result(self, result):
-        if result[0] == False:
+        if result[0] is False:
             self.dlg_warning.set_dialog_type("login_error")
             self.dlg_warning.exec()
         else:
@@ -398,6 +364,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         print(self.use_email_check, "main")
 
     # -----------------------------------------------------send-------------------------------------------------------
+
     # 클라이언트에서 서버에 보낼 데이터 피클로 변환해서 보내기
     def send_data(self, data_list):
         # a = ["get_pad_info", 102]
@@ -435,16 +402,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         else:
             data = ["sing_in", edt_email, edt_pwd]
             self.send_data(data)
-
-    # 해충 정보 불러오기
-    def btn_view_bug_click(self):
-        data = ["return_bug_info"]
-        self.send_data(data)
-
-    # 질병 정보 불러오기
-    def btn_view_disease_click(self):
-        data = ["return_disease_info"]
-        self.send_data(data)
 
     # 회원가입
     def btn_join_click(self):
@@ -497,60 +454,7 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
         # 이미지.npy 리사이징
         resized_image = cv2.resize(image_np, (new_width, new_height))
-        # image_bytes = pickle.dumps(resized_image)
 
         send_data = ["send_to_img_save", resized_image]
-        # send_data = ["send_to_imginfo", image_np]
         print(send_data)
         self.send_data(send_data)
-
-        # print(data_list)
-        # print("==========================")
-        # print(data_list[0])
-        # # pass
-    # def btn_start_click(self):
-    # # TODO 진단 버튼 시작시 서버로 이미지 발송는 내용 추가하기
-    # """
-    # 원천 데이터 이미지 라벨링된 범위만큼 이미지 자르로 numpy로 변환후 저장
-    # """
-    # img_path = self.img_path
-    #
-    # # 이미지 파일 열기
-    # print("img1")
-    # with open(img_path, 'rb') as f:
-    #     img_data = base64.b64encode(f.read()).decode('utf-8')
-    #     # image_data = image_file.read(2048)
-    # print("img2")
-    #
-    # # while image_data:
-    # #     client.send(image_data)
-    # #     image_data = file.read(2048)
-    # send_data = ["send_to_imginfo", img_data]
-    # # print(send_data)
-    # # self.send_data(send_data)
-    #
-    # # user_info = json.dumps(send_data)
-    # # message = f"{f'insertuser{header_split}{user_info}'}"
-    #
-    # print("img3")
-    # self.send_data(send_data)
-    # # print(data_list)
-    # # print("==========================")
-    # # print(data_list[0])
-    # # pass
-
-    # --------------------------------------------------------------------------------------------------------------
-
-# if __name__ == "__main__":
-#             app = QApplication(sys.argv)
-#
-#             # 글꼴 설정
-#             fontDB = QFontDatabase()
-#             fontDB.addApplicationFont("../../FONT/NanumSquareRoundB.ttf")
-#             fontDB.addApplicationFont("../../FONT/NanumSquareRoundEB.ttf")
-#             fontDB.addApplicationFont("../../FONT/NanumSquareRoundL.ttf")
-#             fontDB.addApplicationFont("../../FONT/ONE Mobile POP.ttf")
-#
-#             crop_fairy = CropFairy()
-#             crop_fairy.show()
-#             app.exec()

@@ -27,7 +27,6 @@ class DialogResult(QDialog, Ui_DlgResult):
         self.btn_ok.setVisible(False)
         self.widget_analyze.setVisible(True)
 
-        # self.lbl_info_3_txt.setText(info3)
         if pad_name == "정상":
             self.widget_detail.setVisible(False)
             self.lbl_ctg_txt.setText("")
@@ -51,15 +50,6 @@ class DialogResult(QDialog, Ui_DlgResult):
         self.btn_ok.setVisible(True)
         self.widget_analyze.setVisible(False)
         self.setFixedHeight(350)
-        # self.lbl_info_3_txt.setText(info3)
-        # if pad_name == "정상":
-        #     self.widget_detail.setVisible(False)
-        #     self.lbl_ctg_txt.setText("")
-        #     self.lbl_info_1_txt.setText("")
-        #     self.lbl_info_2_txt.setText("")
-        # else:
-        #     self.widget_detail.setVisible(True)
-        #     self.lbl_ctg_txt.setText(pad_ctg)
 
     # 이벤트 연결
     def connect_event(self):
