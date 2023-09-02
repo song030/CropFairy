@@ -193,7 +193,6 @@ class Server():
                 pad_code = ""
                 if mode == "bug":
                     print("해충 딥러닝")
-                    # todo: 해충 딥러닝 모델 경로넣기
                     path = r"../../model/bug_best.pt"
                     model = YOLO(path)
                     results = model.predict(source=img_path)
