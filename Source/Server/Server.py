@@ -201,9 +201,9 @@ class Server():
                         if result.boxes:
                             box = result.boxes[0]
                             class_id = int(box.cls)
-                            object_name = model.names[class_id]
+                            pad_code = model.names[class_id]
                             confidence = float(box.conf)
-                            print(object_name, confidence)
+                            print(pad_code, confidence)
                 else:
                     print("질병 딥러닝")
                     if crop == "고추":
@@ -278,8 +278,8 @@ class Server():
                 # 이미지 저장
                 cv2.imwrite('recv_img/recv_save_img.jpg', img_data)
                 # 리사이즈 크기
-                new_height = 150
-                new_width = 150
+                new_height = 200
+                new_width = 200
 
                 # 이미지 리사이징
                 data = cv2.resize(img_data, (new_width, new_height))

@@ -251,28 +251,26 @@ class CropFairy(QMainWindow, Ui_CropFairy):
     def get_dl_result(self, result):
         self.dlg_loading.hide()
 
-        # dl_result = result[0]
         dl_result = result
         if dl_result != '':
             self.result_dlg(result)
             print("결과 띄우기")
         else:
-            # todo: 결과 못뽑음
             print('결과를 못뽑음')
         # self.send_data(send_data)
 
     # 도출된 결과들 다이얼로그에 띄우기
     def result_dlg(self, result):
         print(result)
-        result = result[0]
-        result1 = result[0]
 
-        if result1[0] == "":
+        if result == "":
             self.dlg_warning.set_dialog_type("fail_analyze")
             self.dlg_warning.exec()
             self.lbl_upload_image.setText(" ")
             self.btn_start.setVisible(False)
         else:
+            result = result[0]
+            result1 = result[0]
             result2 = result[1]
             print("딥러닝 결과")
             # crop, pad_name, pad_ctg, info1, info2, info3
@@ -351,7 +349,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
                 for col, info in enumerate(result):
                     item = QTableWidgetItem(f"{info}")
                     self.table_list.setItem(current_row_count, col, item)
-
 
     def onItemClicked(self, item):
         row = item.row()
@@ -438,10 +435,12 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         else:
             data = ["sing_in", edt_email, edt_pwd]
             self.send_data(data)
+
     # 해충 정보 불러오기
     def btn_view_bug_click(self):
         data = ["return_bug_info"]
         self.send_data(data)
+
     # 질병 정보 불러오기
     def btn_view_disease_click(self):
         data = ["return_disease_info"]

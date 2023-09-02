@@ -330,6 +330,8 @@ class Ui_CropFairy(object):
         self.horizontalLayout_4.addWidget(self.cb_kind)
         self.verticalLayout_4.addLayout(self.horizontalLayout_4)
         self.table_list = QtWidgets.QTableWidget(self.page_list)
+        self.table_list.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.table_list.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.table_list.setObjectName("table_list")
         self.table_list.setColumnCount(0)
         self.table_list.setRowCount(0)
@@ -374,6 +376,8 @@ class Ui_CropFairy(object):
         self.horizontalLayout_6.addWidget(self.btn_view_bug)
         self.verticalLayout_7.addLayout(self.horizontalLayout_6)
         self.tableWidget = QtWidgets.QTableWidget(self.page_view)
+        self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.tableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
@@ -384,7 +388,7 @@ class Ui_CropFairy(object):
         CropFairy.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(CropFairy)
-        self.stacke_main.setCurrentIndex(0)
+        self.stacke_main.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(CropFairy)
 
     def retranslateUi(self, CropFairy):

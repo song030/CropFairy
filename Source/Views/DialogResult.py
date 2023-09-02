@@ -24,25 +24,33 @@ class DialogResult(QDialog, Ui_DlgResult):
         print(crop, pad_name, pad_ctg, info1, info2, info3)
         self.lbl_spedies_txt.setText(crop)
         self.lbl_name_txt.setText(pad_name)
+        self.btn_ok.setVisible(False)
+        self.widget_analyze.setVisible(True)
 
         # self.lbl_info_3_txt.setText(info3)
         if pad_name == "정상":
             self.widget_detail.setVisible(False)
             self.lbl_ctg_txt.setText("")
-            self.lbl_info_1_txt.setText("")
-            self.lbl_info_2_txt.setText("")
+            self.lbl_info_1_txt.setPlainText("")
+            self.lbl_info_2_txt.setPlainText("")
+            self.setFixedHeight(300)
         else:
             self.widget_detail.setVisible(True)
             self.lbl_ctg_txt.setText(pad_ctg)
-            # self.lbl_info_1_txt.setText(info1)
-            # self.lbl_info_2_txt.setText(info2)
+            self.lbl_info_1_txt.setPlainText(info1)
+            self.lbl_info_2_txt.setPlainText(info2)
+            self.setFixedHeight(350)
+
     def set_dialog2(self, pad_ctg, pad_name, info1, info2, info3):
         self.lbl_spedies_txt.hide()
         self.lbl_spedies_title.hide()
         self.lbl_name_txt.setText(pad_name)
         self.lbl_ctg_txt.setText(pad_ctg)
-        self.lbl_info_1_txt.setText(info1)
-        self.lbl_info_2_txt.setText(info2)
+        self.lbl_info_1_txt.setPlainText(info1)
+        self.lbl_info_2_txt.setPlainText(info2)
+        self.btn_ok.setVisible(True)
+        self.widget_analyze.setVisible(False)
+        self.setFixedHeight(350)
         # self.lbl_info_3_txt.setText(info3)
         # if pad_name == "정상":
         #     self.widget_detail.setVisible(False)
@@ -52,9 +60,11 @@ class DialogResult(QDialog, Ui_DlgResult):
         # else:
         #     self.widget_detail.setVisible(True)
         #     self.lbl_ctg_txt.setText(pad_ctg)
+
     # 이벤트 연결
     def connect_event(self):
         # 예, 확인 : accept (1)
         # 아니오, 닫기 : reject (0)
         self.btn_analyze.clicked.connect(self.accept)
         self.btn_main.clicked.connect(self.reject)
+        self.btn_ok.clicked.connect(self.accept)
