@@ -88,7 +88,6 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         # 행 클릭 이벤트 연결
         self.tableWidget.itemClicked.connect(self.onItemClicked)
         self.cb_kind.currentIndexChanged.connect(self.btn_list_click)
-        # self.cb_kind.changeEvent.connect(self.set_pad_result)
 
     def closeEvent(self, a0) -> None:
         self.client.disconnect()
@@ -246,7 +245,9 @@ class CropFairy(QMainWindow, Ui_CropFairy):
 
     # 도출된 결과들 다이얼로그에 띄우기
     def result_dlg(self, result):
-        if result == "":
+        print(result)
+        print(result[0])
+        if result[0][0] == "":
             self.dlg_warning.set_dialog_type("fail_analyze")
             self.dlg_warning.exec()
             self.lbl_upload_image.setText(" ")
