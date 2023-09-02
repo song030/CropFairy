@@ -77,12 +77,6 @@ class Client(QObject):
             print(result)
             self.idrd_check_result.emit(result)
 
-
-        elif header == 'sing_up_result':  # 회원가입 요청 결과
-            result = received_object[1]
-            self.idrd_check_result.emit(result)
-
-
         elif header == 'sing_in_result':  # 로그인 요청 결과
             result = received_object[1]
             if not result:
