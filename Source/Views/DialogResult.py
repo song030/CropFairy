@@ -34,12 +34,24 @@ class DialogResult(QDialog, Ui_DlgResult):
         else:
             self.widget_detail.setVisible(True)
             self.lbl_ctg_txt.setText(pad_ctg)
-            self.lbl_ctg_txt.setWordWrap(True)
-            self.lbl_info_1_txt.setText(info1)
-            self.lbl_info_1_txt.setWordWrap(True)
-            self.lbl_info_2_txt.setText(info2)
-            self.lbl_info_2_txt.setWordWrap(True)
-
+            # self.lbl_info_1_txt.setText(info1)
+            # self.lbl_info_2_txt.setText(info2)
+    def set_dialog2(self, pad_ctg, pad_name, info1, info2, info3):
+        self.lbl_spedies_txt.hide()
+        self.lbl_spedies_title.hide()
+        self.lbl_name_txt.setText(pad_name)
+        self.lbl_ctg_txt.setText(pad_ctg)
+        self.lbl_info_1_txt.setText(info1)
+        self.lbl_info_2_txt.setText(info2)
+        # self.lbl_info_3_txt.setText(info3)
+        # if pad_name == "정상":
+        #     self.widget_detail.setVisible(False)
+        #     self.lbl_ctg_txt.setText("")
+        #     self.lbl_info_1_txt.setText("")
+        #     self.lbl_info_2_txt.setText("")
+        # else:
+        #     self.widget_detail.setVisible(True)
+        #     self.lbl_ctg_txt.setText(pad_ctg)
     # 이벤트 연결
     def connect_event(self):
         # 예, 확인 : accept (1)

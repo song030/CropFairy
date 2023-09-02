@@ -34,7 +34,8 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.ml_result = None
         self.dl_result = None
         # ---
-        self.view_mode = None
+        self.view_count = 0
+        self.ai_result_list = None
         # --- 초기화
         self.set_Ui()
 
@@ -89,11 +90,14 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.btn_upload.clicked.connect(self.btn_upload_click)
         self.btn_start.clicked.connect(self.btn_start_click)
 
-        # 내역조회
+        # 질병/해충 조회
         self.btn_view_bug.clicked.connect(self.btn_view_bug_click)
         self.btn_view_disease.clicked.connect(self.btn_view_disease_click)
         # 행 클릭 이벤트 연결
         self.tableWidget.itemClicked.connect(self.onItemClicked)
+        self.cb_kind.currentIndexChanged.connect(self.btn_list_click)
+        # self.cb_kind.changeEvent.connect(self.set_pad_result)
+
 
     def closeEvent(self, a0) -> None:
         self.client.disconnect()
@@ -140,8 +144,10 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.btn_view.setEnabled(False)
         self.lbl_title.setText("병해충 조회")
         self.stacke_main.setCurrentWidget(self.page_view)
-        data = ["get_pad_result", self.singin_user_id]
-        self.send_data(data)
+        if self.view_count == 0:
+            self.view_count = 1
+            data = ["return_disease_info", self.singin_user_id]
+            self.send_data(data)
 
     # 진단 내역 버튼
     def btn_list_click(self):
@@ -167,6 +173,79 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         self.client.get_pad_result.connect(self.set_pad_result)
         self.client.ml_result.connect(self.get_ml_result)
         self.client.dl_result.connect(self.get_dl_result)
+        self.client.return_bug_info.connect(self.bug_info)
+        self.client.return_disease_info.connect(self.disease_info)
+        self.client.re_clicked_pad_info.connect(self.clicked_pad_info_dlg)
+    # 클릭한 셀의 pad정보 다이얼 로그에 띄우기
+    def clicked_pad_info_dlg(self, result):
+        self.pad_info_dlg(result)
+
+    # 도출된 결과들 다이얼로그에 띄우기
+    def pad_info_dlg(self, result):
+        print(result)
+        result = result
+        print(result)
+
+
+        if result[0] == "":
+            self.dlg_warning.set_dialog_type("fail_analyze")
+            self.dlg_warning.exec()
+            self.lbl_upload_image.setText(" ")
+            self.btn_start.setVisible(False)
+        else:
+            print("딥러닝 결과")
+            # crop, pad_name, pad_ctg, info1, info2, info3
+            self.dlg_result.set_dialog2(result[0], result[1], result[2], result[3], result[4])
+            if self.dlg_result.exec():
+                self.lbl_upload_image.setText(" ")
+                self.btn_start.setVisible(False)
+            else:
+                self.move_page_main()
+
+    # 질병 리스트
+    def disease_info(self, result):
+        self.set_pad_list(result, "disease")
+
+    # 해충 리스트
+    def bug_info(self, result):
+        self.set_pad_list(result, "bug")
+
+
+    def set_pad_list(self, result, mode):
+        pad_list = result
+        self.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
+        # 초기화: 열과 행의 수를 설정하고, 모든 항목을 제거합니다.
+        self.tableWidget.setRowCount(0)  # 행 수를 0으로 설정하여 모든 행을 제거합니다.
+        self.tableWidget.setColumnCount(0)  # 열 수를 0으로 설정하여 모든 열을 제거합니다.
+        self.tableWidget.setColumnCount(3)  # 열의 수 설정
+        self.tableWidget.setHorizontalHeaderLabels(["품종", "구분", "예방법"])
+        self.tableWidget.verticalHeader().setVisible(False)
+        self.tableWidget.setColumnWidth(0, 180)
+        self.tableWidget.setColumnWidth(1, 80)
+        self.tableWidget.setColumnWidth(2, 280)
+
+        # todo: 밑에 머신러닝과 딥러닝 결과로 품종 구분 내용 가져와서 집어넣는걸로 바꿔야함
+        for result in pad_list:  # 3은 열의 수
+            current_row_count = self.tableWidget.rowCount()
+
+            result = [result[0]] + [result[1]] + [result[2]]
+
+            if result[1] == "해충" and mode == "bug":
+                print("해충 들어와?")
+                self.tableWidget.insertRow(current_row_count)
+                print(result)
+                for col, info in enumerate(result):
+                    item = QTableWidgetItem(f"{info}")
+                    self.tableWidget.setItem(current_row_count, col, item)
+                    self.tableWidget.setRowHeight(current_row_count, 80)
+
+            if result[1] != "해충" and mode == "disease":
+                self.tableWidget.insertRow(current_row_count)
+                print(result)
+                for col, info in enumerate(result):
+                    item = QTableWidgetItem(f"{info}")
+                    self.tableWidget.setItem(current_row_count, col, item)
+                    self.tableWidget.setRowHeight(current_row_count, 80)
 
     # 딥러닝 품종 판별 결과 회신
     def get_dl_result(self, result):
@@ -226,53 +305,67 @@ class CropFairy(QMainWindow, Ui_CropFairy):
             self.lbl_upload_image.setText(self.upload_text)
             self.btn_start.setVisible(False)
 
-    # 반환 받은 유저 진단 내역 테이블 위젯에 집어넣기
     def set_pad_result(self, result):
-        result_list = result
-        self.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
-        # 초기화: 열과 행의 수를 설정하고, 모든 항목을 제거합니다.
-        self.tableWidget.setRowCount(0)  # 행 수를 0으로 설정하여 모든 행을 제거합니다.
-        self.tableWidget.setColumnCount(0)  # 열 수를 0으로 설정하여 모든 열을 제거합니다.
-        self.tableWidget.setColumnCount(4)  # 열의 수 설정
-        self.tableWidget.setHorizontalHeaderLabels(["진단 일시", "품종", "구분", "내용"])
-        self.tableWidget.verticalHeader().setVisible(False)
-        self.tableWidget.setColumnWidth(0, 195)
-        self.tableWidget.setColumnWidth(1, 80)
-        self.tableWidget.setColumnWidth(2, 112)
-        self.tableWidget.setColumnWidth(3, 167)
+        ai_result_list = result
 
+        self.table_list.setEditTriggers(QTableWidget.NoEditTriggers)
+
+        # 초기화: 열과 행의 수를 설정하고, 모든 항목을 제거합니다.
+        self.table_list.setRowCount(0)  # 행 수를 0으로 설정하여 모든 행을 제거합니다.
+        self.table_list.setColumnCount(0)  # 열 수를 0으로 설정하여 모든 열을 제거합니다.
+        self.table_list.setColumnCount(4)  # 열의 수 설정
+        self.table_list.setHorizontalHeaderLabels(["진단 일시", "품종", "구분", "내용"])
+        self.table_list.verticalHeader().setVisible(False)
+        self.table_list.setColumnWidth(0, 195)
+        self.table_list.setColumnWidth(1, 80)
+        self.table_list.setColumnWidth(2, 112)
+        self.table_list.setColumnWidth(3, 167)
+        cb_kind = self.cb_kind.currentText().strip()
+        # cb_kind = cb_kind.
         # todo: 밑에 머신러닝과 딥러닝 결과로 품종 구분 내용 가져와서 집어넣는걸로 바꿔야함
-        for result in result_list:  # 3은 열의 수
+        for result in ai_result_list:  # 3은 열의 수
             result_stat = result[0]
             result_stat = result_stat.split(chr(1))
-            current_row_count = self.tableWidget.rowCount()
-            print(result_stat)
-            result = [result[2]]+[result[1]]+[result_stat[1]]+[result_stat[0]]
+            current_row_count = self.table_list.rowCount()
+            result = [result[2]] + [result[1]] + [result_stat[1]] + [result_stat[0]]
 
-            if result_stat[1] == "해충" and self.view_mode == "bug":
-                self.tableWidget.insertRow(current_row_count)
+            print(cb_kind)
+            print(result[1])
+            if result[1] == "고추" and cb_kind == "고추":
+                print("고추 들어와?")
+                self.table_list.insertRow(current_row_count)
+                for col, info in enumerate(result):
+                    print(info)
+                    print("셀만드는 ")
+                    item = QTableWidgetItem(f"{info}")
+                    self.table_list.setItem(current_row_count, col, item)
+            if result[1] == "오이" and cb_kind == "오이":
+                self.table_list.insertRow(current_row_count)
                 print(result)
                 for col, info in enumerate(result):
                     item = QTableWidgetItem(f"{info}")
-                    self.tableWidget.setItem(current_row_count, col, item)
-            elif self.view_mode == "disease":
-                self.tableWidget.insertRow(current_row_count)
+                    self.table_list.setItem(current_row_count, col, item)
+            if result[1] == "토마토" and cb_kind == "토마토":
+                self.table_list.insertRow(current_row_count)
                 print(result)
                 for col, info in enumerate(result):
                     item = QTableWidgetItem(f"{info}")
-                    self.tableWidget.setItem(current_row_count, col, item)
+                    self.table_list.setItem(current_row_count, col, item)
+
 
     def onItemClicked(self, item):
         row = item.row()
-        col = 3  # 두 번째 열
+        col = 0  # 첫 번째 열
         item = self.tableWidget.item(row, col)
+        value = item.text()
+        data = ["clicked_pad_info", value]
 
-        if item is not None:
-            # todo: 여기서 상세정보? 띄워야함
-            value = item.text()
-            print(f"행 {row}, 두 번째 열의 값: {value}")
-        else:
-            print(f"행 {row}, 두 번째 열의 값이 없습니다.")
+        self.send_data(data)
+        # if item is not None:
+        #     # todo: 여기서 상세정보? 띄워야함
+        #     print(f"행 {row}, 두 번째 열의 값: {value}")
+        # else:
+        #     print(f"행 {row}, 두 번째 열의 값이 없습니다.")
 
     # 로그인한 유저의 정보와 로그인 결과 반환받음
     def sing_in_result(self, result):
@@ -345,6 +438,14 @@ class CropFairy(QMainWindow, Ui_CropFairy):
         else:
             data = ["sing_in", edt_email, edt_pwd]
             self.send_data(data)
+    # 해충 정보 불러오기
+    def btn_view_bug_click(self):
+        data = ["return_bug_info"]
+        self.send_data(data)
+    # 질병 정보 불러오기
+    def btn_view_disease_click(self):
+        data = ["return_disease_info"]
+        self.send_data(data)
 
     # 회원가입
     def btn_join_click(self):

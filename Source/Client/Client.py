@@ -30,6 +30,9 @@ class Client(QObject):
     get_pad_result = pyqtSignal(list)
     ml_result = pyqtSignal(list)
     dl_result = pyqtSignal(list)
+    return_bug_info = pyqtSignal(list)
+    return_disease_info = pyqtSignal(list)
+    re_clicked_pad_info = pyqtSignal(list)
 
     def __init__(self, client_controller=None):
         super().__init__()
@@ -231,6 +234,20 @@ class Client(QObject):
                 print(f"내역 없음:{result}")
             else:
                 print(f"결과 불러오기 성공:{result}")
+
+        elif header == 'return_bug_info':  # 해충 정보 반환
+            # todo: emit -> 회원 정보 보내서 저장 -> 저장된 유저 식별 코드로 사용내역 저장
+            result = received_object[1]
+            self.return_bug_info.emit(result)
+
+        elif header == 'return_disease_info':  # 질병 정보 반환
+            # todo: emit -> 회원 정보 보내서 저장 -> 저장된 유저 식별 코드로 사용내역 저장
+            result = received_object[1]
+            self.return_disease_info.emit(result)
+
+        elif header == 're_clicked_pad_info':  # 클릭한 셀의 질병 정보 반환
+            result = received_object[1]
+            self.re_clicked_pad_info.emit(result)
 
 # if __name__ == '__main__':
 #     ClientApp()

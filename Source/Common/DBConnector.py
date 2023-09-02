@@ -94,6 +94,77 @@ class DataClass:
             return results[0]
         return [False]
 
+    def return_pad_info2(self, pad_name):
+        """
+        병충해 이름이 들어오면 정보들 반환
+        :return:
+        """
+        # pad_code = pad_code[0]
+        # 커서 생성
+        cur = self.pgdb.cursor()
+        sql_query = f"SELECT \"PAD_CTG\" FROM public.\"TB_PAD\" WHERE \"PAD_NAME\" = '{pad_name}';"
+        cur.execute(sql_query)
+        # 결과 가져오기
+        results = list(cur.fetchall())  # 리스트로 변환
+        results = [(list(record)) for record in results]
+        # 결과값 리턴
+        if len(results) > 0:
+            return results[0]
+        return [False]
+
+    def return_bug_info(self):
+        """
+        병충해 코드가 들어오면 정보들 반환
+        :return:
+        """
+        pad_ctg = "해충"
+        print("db")
+        # pad_code = pad_code[0]
+        # 커서 생성
+        cur = self.pgdb.cursor()
+        # sql_query = """
+        # SELECT table1.name, table1.info, table2.category
+        # FROM table1
+        # INNER JOIN table2
+        # ON table1.name = table2.name
+        # WHERE table1.name = '특정이름';
+        # """
+        # sql_query = f"SELECT * FROM public.\"TB_PAD\" WHERE \"PAD_CTG\" = '{pad_ctg}';"
+        sql_query = f"SELECT \"TB_PAD\".\"PAD_NAME\", \"TB_PAD\".\"PAD_CTG\", \"TB_PAD_INFO\".\"PAD_INFO3\"FROM public." \
+                    f"\"TB_PAD\"INNER JOIN \"TB_PAD_INFO\" ON \"TB_PAD\".\"PAD_NAME\" = \"TB_PAD_INFO\".\"PAD_NAME\"" \
+                    f"WHERE \"TB_PAD\".\"PAD_CTG\" = '해충';"
+        cur.execute(sql_query)
+        # 결과 가져오기
+        results = list(cur.fetchall())  # 리스트로 변환
+        print(results)
+        results = [(list(record)) for record in results]
+        # 결과값 리턴
+        if len(results) > 0:
+            return results
+        return [False]
+
+    def return_disease_info(self):
+        """
+        병충해 코드가 들어오면 정보들 반환
+        :return:
+        """
+        data = "해충"
+        # pad_code = pad_code[0]
+        # 커서 생성
+        cur = self.pgdb.cursor()
+        sql_query = f"SELECT \"TB_PAD\".\"PAD_NAME\", \"TB_PAD\".\"PAD_CTG\", \"TB_PAD_INFO\".\"PAD_INFO3\"FROM public." \
+                    f"\"TB_PAD\"INNER JOIN \"TB_PAD_INFO\" ON \"TB_PAD\".\"PAD_NAME\" = \"TB_PAD_INFO\".\"PAD_NAME\"" \
+                    f"WHERE \"TB_PAD\".\"PAD_CTG\" != '해충' AND \"TB_PAD\".\"PAD_CTG\" != '문제없음';"
+        # sql_query = f"SELECT * FROM public.\"TB_PAD\" WHERE \"PAD_CTG\" != '{data}' AND \"PAD_CTG\" != '문제없음';"
+        cur.execute(sql_query)
+        # 결과 가져오기
+        results = list(cur.fetchall())  # 리스트로 변환
+        results = [(list(record)) for record in results]
+        # 결과값 리턴
+        if len(results) > 0:
+            return results
+        return [False]
+
     def select_pad_info(self, pad_name):
         """
         병충해 이름을 받아 info 반환

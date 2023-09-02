@@ -1,12 +1,8 @@
 
-path: D:\CropFairy\AI\tomato  # dataset root dir
-train: images\train  # train images (relative to 'path')
+path: D:\CropFairy\AI\pepper  # dataset root dir
+train: images\train2  # train images (relative to 'path')
 val: images\test  # val images (relative to 'path')
 
 # Classes
-# tomato
-# names: ['00', '01', '110', '111', '202', '203', '206', '207', '208']
-
-# cucumber
-names: ['00', '108', '109', '201', '206', '207', '208']
-nc: 7
+names: ['00', '01', '103', '104', '203', '206', '207', '208']
+nc: 8

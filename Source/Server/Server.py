@@ -58,7 +58,7 @@ class Server():
         # todo: 딥러닝 모델 넣기
         print("머신러닝 모델 로드중")
         # 모델 파일 경로 및 이름 설정
-        model_filename = '../../model/last_real_last_model.pkl'
+        model_filename = '../../model/model_0831_78.pkl'
         # 모델 로드
         self.model = joblib.load(model_filename)
         print("머신러닝 모델 로드 완료")
@@ -172,6 +172,18 @@ class Server():
                 print(send_data)
                 self.send_to_pickle(client_socket, send_data)
 
+            elif header == 'clicked_pad_info':  # 클릭한 셀의 pad정보 반환
+                input_data = received_object[1]  # input data = client recv data index[1:]
+                print(input_data)
+                result = self.db_conn.return_pad_info2(input_data)  # DB return 값 받아옴
+                print(result)
+                result2 = self.db_conn.select_pad_info(input_data)  # DB return 값 받아옴
+                print(result2)
+
+                send_data = ["re_clicked_pad_info", result + result2]  # client send_dat(header, data)list
+                print(send_data)
+                self.send_to_pickle(client_socket, send_data)
+
             elif header == 'dl_start':
                 mode, crop, user_id = received_object[1:]  # input data = client recv data index[1:]
                 print("질병 딥러닝 들어와?")
@@ -182,7 +194,7 @@ class Server():
                 if mode == "bug":
                     print("해충 딥러닝")
                     # todo: 해충 딥러닝 모델 경로넣기
-                    path = r"../../model"
+                    path = r"../../model/bug_best.pt"
                     model = YOLO(path)
                     results = model.predict(source=img_path)
 
@@ -305,6 +317,18 @@ class Server():
                 print(send_data)
                 self.send_to_pickle(client_socket, send_data)
 
+            elif header == 'return_bug_info':
+                data = self.db_conn.return_bug_info()
+                send_data = ["return_bug_info", data]  # client send_dat(header, data)list
+                print(send_data)
+                self.send_to_pickle(client_socket, send_data)
+                # self.db_conn.return_pad_result()
+
+            elif header == 'return_disease_info':
+                data = self.db_conn.return_disease_info()
+                send_data = ["return_disease_info", data]  # client send_dat(header, data)list
+                print(send_data)
+                self.send_to_pickle(client_socket, send_data)
                 # # # NumPy 파일을 저장할 리스트
                 # data_list = []
                 # np.set_printoptions(linewidth=np.inf, threshold=sys.maxsize)

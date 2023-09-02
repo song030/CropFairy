@@ -7,12 +7,12 @@ pd.set_option('display.max_columns', None) # 전체 열 보기
 pd.set_option('display.max_rows', None) # 전체 행 보기
 pd.set_option('display.width', None) # 모든 value 잘리지 않고 출력하는 방법
 
-target_path = r"D:\CropFairy\AI\cucumber" # ㅣlee 폴더
+target_path = r"D:\CropFairy\AI\tomato" # ㅣlee 폴더
 
 image_path = target_path+"\\images\\train2"
 label_path = target_path+"\\labels\\train2"
 
-json_path = r"D:\104.식물 병 유발 통합 데이터\1.Training\라벨링데이터\TL4_오이"  #json파일 폴더 경로
+json_path = r"D:\104.식물 병 유발 통합 데이터\1.Training\라벨링데이터\TL5_토마토"  #json파일 폴더 경로
 
 image_list = os.listdir(image_path)
 for image in image_list:
@@ -25,11 +25,15 @@ for image in image_list:
         # print(json_data)
 
         code = json_data["annotations"]["disease"]
-        # '00', '01', 'A5', 'A6', 'B2', 'B3', 'B6', 'B7', 'B8'
-        if code == "a3":
-            code = 1
-        elif code == "a4":
+        # 'A5', 'A6', 'B3', 'B8'
+        if code == "a5":
             code = 2
+        elif code == "a6":
+            code = 3
+        elif code == "b3":
+            code = 5
+        elif code == "b8":
+            code = 8
 
         # 질병 코드 변환 넣기
         img_width = json_data["description"]["width"]
